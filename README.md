@@ -9,6 +9,11 @@ Learning to live code with SuperCollider.
 
 [A Gentle Introduction To SuperCollider](https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_Introduction_To_SuperCollider.pdf)
 
+## Using
+
+Reminder for myself. Should have SCVim installed.
+Use :SClangStart
+
 
 ## Contact
 
