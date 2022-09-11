@@ -1,7 +1,7 @@
 
 "Setup.scd".load;
 
-b = Buffer.readChannel(s, "../samples/shouldntbehere.wav", channels: [0]);
+b = Buffer.readChannel(s, "./samples/voxloop.wav", channels: [0]);
 
 ~trate = { VarSaw.ar(10, 0, 0.5).range(10, 11) }
 
