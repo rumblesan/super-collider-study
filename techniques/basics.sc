@@ -1,8 +1,6 @@
 
 s.boot;
 
-s.freeAll;
-
 (
 {SinOsc.ar}.play;
 )
@@ -78,13 +76,3 @@ c.free;
 {WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))}.play;
 
 Env.perc.plot;
-
-
-
-
-
-
-
-
-
-
