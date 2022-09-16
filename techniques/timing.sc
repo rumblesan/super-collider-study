@@ -1,6 +1,16 @@
 
 "Setup.scd".load;
 
+// quant works fine with Pbinds, but you need to make sure everything has a suitable quant set
+
+// e.g. if you want the \clikr to hit at the same time as a \bkick then they both need to
+// have quant values that are multiples of 2. 4 works well
+// if the \clickr \rim pattern has a quant set, but the \bkick doesn't then the kick could
+// still be on the offbeat.
+
+// if you change the quant, then the proxy needs to be re-evaluated
+
+// the proxy will keep its quant value even if you clear/free it
 
 (
   ~kick = Pbind(
@@ -15,29 +25,15 @@
   )
 )
 ~kick.play;
-
-(
-  ~rim = Pbind(
-    \instrument, \rim,
-    \amp, Pseq([0.8], inf),
-    \freq, 200,
-    \decay, 0.7,
-    \dur, Pseq([1, 2, 1], inf),
-  )
-)
-~rim.play;
-~rim.pause;
-~rim.resume;
-
+~kick.quant = 4;
 
 (
   ~click = Pbind(
-    \instrument, \clikr,
-    \amp, 3,
+    \instrument, Pseq([\clikr, \rim, \rim, \rim], inf),
+    \amp, 1,
     \decay, 0.2,
-    \ffreq, 1000,
-    \dur, Pseq([3, Rest(1)], inf),
+    \dur, 1,
   )
 )
-~click.play;
-~click.reset;
+~click.quant = 4;
+~click.play
