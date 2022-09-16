@@ -36,11 +36,9 @@
     Out.ar(out, HPF.ar(osc, hipass));
   }).add;
 
-  SynthDef(\clikr, {arg out, decay=1, freq=200, ffreq=200, amp=0.8;
-    var venv = Env.perc(0.0, decay, 1).kr();
-    var osc = Blip.ar(freq, 200, venv * amp);
-    var filt = RLPF.ar(osc, ffreq, 1);
-
-    Out.ar(out, filt);
+  SynthDef(\clikr, {arg out, gate=1, attack=0.0, decay=1, freq=200, amp=1;
+    var env = Env.asr(attack, amp, decay).kr(doneAction: 2, gate: gate);
+    var osc = Blip.ar(freq, 200);
+    Out.ar(out, osc * env);
   }).add;
 )
