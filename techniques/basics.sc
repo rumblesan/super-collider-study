@@ -1,20 +1,57 @@
+# JITlib basics
 
-s.boot;
+"Setup.scd".load;
+ProxyMixer(p, 8);
+s.plotTree;
 
+// Create a proxy synth
+// It's running in the background making sound on a private bus
+~test = {arg freq=440; SinOsc.ar(freq)};
+
+// connect that bus up to the output so it can be heard
+~test.play
+// disconnect the bus from the output, but leave it playing
+~test.stop
+
+~test.pause;
+~test.resume;
+// get rid of it completely
+~test.clear;
+
+// Not clear what free does either
+~test.free;
+
+
+
+// create a basic synth and add it to the server
 (
-{SinOsc.ar}.play;
+SynthDef(\ping, {arg out=0, freq=220, amp=1, decay=0.5;
+  var osc, env;
+  env = Env.perc(0.01, decay, amp).kr(doneAction: 2);
+  osc = SinOsc.ar(freq);
+  Out.ar(out, osc * env);
+}).add;
 )
 
-c = Pbind(\note, Pwhite(0, 10), \dur, 0.1);
-
-c.play;
-
-Pbind(\degree, Pseries(0, 1, 30), \dur, 0.05).play;
-
-Pbind(\degree, 2).play;
+// create a pattern that's playing the synth and sequencing events
+// this will create a new instance of the synth on every note
+(
+  ~ping = Pbind(
+    \instrument, \ping,
+    \decay, 0.8,
+    \freq, 220,
+    \dur, Pseq([4], inf),
+    \amp, 1,
+  )
+)
+// monitor the synth
+~ping.play;
+// stop monitoring the synth
+~ping.stop;
 
 (
-p = Pbind(
+~ping = Pbind(
+  \instrument, \ping,
   \degree, Pseq([[0, 2, 4], -3, [5, 7, 11], 4], inf),
   \scale, Scale.harmonicMinor,
   \dur, 0.3,
@@ -23,56 +60,24 @@ p = Pbind(
 );
 )
 
-~player = p.play;
+// not totally clear what pause and resume are for
+~ping.pause;
+~ping.resume;
 
-~player.stop;
+// clear pattern
+~ping.clear;
 
 
-~ther = {Saw.ar(freq: MouseX.kr(300, 2500), mul: MouseY.kr(0, 1))}.play;
-~ther.free;
+~ther = {Saw.ar(freq: MouseX.kr(300, 2500), mul: MouseY.kr(0, 1))};
+~ther.play;
+~ther.clear;
 
+// plotting
 { SinOsc.ar }.plot;
 { Saw.ar }.plot;
 { Pulse.ar }.plot;
 
-{SinOsc.kr(1).poll}.play;
-{LFNoise0.kr(10).range(500, 1500).poll}.play;
-
-{Out.ar(0, Saw.ar(freq: [440, 570], mul: Line.kr(0, 1, [10, 16])))}.play;
-
-
-~reverbSend = Bus.audio(s, 2);
-
-~reverb = {Out.ar(0, FreeVerb.ar(In.ar(~reverbSend, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
-
-b = {Out.ar(~reverbSend, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
-
-~reverb.free; b.free;
-
-
-
-s.plotTree;
-
-
-(
-x = {
-var lfn = LFNoise2.kr(1);
-var saw = Saw.ar(
-  freq: 30,
-  mul: LFPulse.kr(
-    freq: LFNoise1.kr(1).range(1, 10),
-    width: 0.1));
-var bpf = BPF.ar(in: saw, freq: lfn.range(500, 2500), rq: 0.01, mul: 20);
-    Pan2.ar(in: bpf, pos: lfn);
-  }.play;
-)
-
-c = { Mix.fill(16, {SinOsc.ar(rrand(100, 3000), mul: 0.01)}) }.play;
-c.free;
-
-
-{WhiteNoise.ar(Line.kr(0.2, 0, 2))}.play;
-
-{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))}.play;
-
 Env.perc.plot;
+
+~pollex = {SinOsc.kr(1).poll};
+~pollex.clear;
