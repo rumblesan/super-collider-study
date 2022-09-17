@@ -37,6 +37,15 @@ b.cheby([1, 0, 1, 0, 1, 0, 1, 1]);
 )
 ~folded.clear;
 
+// works basically the same as the above
+(
+  ~fold2 = { |folding=1|
+    Fold.ar(SinOsc.ar(100) * folding, -1, 1)
+  }
+)
+~fold2.plot
+
+
 (
   ~dist = { |gain=1|
     (SinOsc.ar(100) * gain).tanh
