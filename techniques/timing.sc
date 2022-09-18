@@ -27,6 +27,9 @@
 ~kick.play;
 ~kick.quant = 4;
 
+// NOTE: this doesn't work in proxy space because ~kick is a nodeproxy, not the Pbind itself
+~kick.play(quant: 4);
+
 (
   ~click = Pbind(
     \instrument, Pseq([\clikr, \rim, \rim, \rim], inf),
