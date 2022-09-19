@@ -15,6 +15,11 @@ Reminder for myself. Should have SCVim installed.
 Use :SClangStart
 
 
+## Wavetables
+
+Includes the factory wavetables from the Industrial Music Electronics Piston Honda.
+
+
 ## Contact
 
 Drop me an email at guy@rumblesan.com
