@@ -16,7 +16,7 @@ s.plotTree
     var env, tablepos;
 
     env = Env.asr(attack, amp, release).kr(2, gate: gate);
-    tablepos = wavetableBufNum + offset.mod(1) * wavetableWaves;
+    tablepos = wavetableBufNum + (offset.mod(1) * wavetableWaves);
     Out.ar(out, VOsc.ar(tablepos, freq, mul: env));
   }).add
 )
@@ -28,14 +28,19 @@ s.plotTree
   ~t = Pbind(
     \instrument, \wavetableosc,
     \freq, 50,
-    \wavetableBufNum, d[\wavetables][\ph1].bufnum,
+    \wavetableBufNum, (d[\wavetables][\ph1].bufnum,
     \wavetableWaves, d[\wavetables][\ph1].waves,
-    \offset, ~offset,
+    \offset, ~offsetX,
     \amp, 1,
-    \dur, 1,
+    \dur, 3,
   )
 )
 ~t.play;
+~t.clear;
+
+{VOsc.ar(d[\wavetables][\ph1][0].bufnum, 100)}.plot
+
+d[\wavetables][\ph1][0].plot
 
 (
   SynthDef(\wavetableosc2D,{ |
