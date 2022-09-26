@@ -2,24 +2,15 @@
 "Setup.scd".load;
 s.plotTree
 
-(
-  SynthDef(\outputreverb, {
-    arg out=0, in, drywet=0.2, size=0.5, damp=0.5, gain=1.2;
-    var verb = FreeVerb2.ar(in, in, mix: 1, room: size, damp: damp);
-    var fade = in!2 * (1-drywet) + (verb * drywet);
-    Out.ar(out, fade);
-  }, [0, \ar]).add
-)
+~mix = {Silent.ar}
+~mix.play
+~mix.stop
 
-~mix = {~piston * 0.5}
-
-~verb[0] = \outputreverb;
-~verb.play;
+~verb[0] = \verb;
 ~verb.fadeTime = 4;
-~mix <>> ~verb
 
 ~verb.set(\drywet, 0.1)
-~verb.set(\size, 0.9)
+~verb.set(\size, 0.2)
 ~verb.set(\damp, 0.6)
 
 
@@ -35,3 +26,4 @@ s.plotTree
 ~out = { \in.ar(0!2) }; ~out.play;
 
 ~verb <>> ~out
+~mix <>> ~verb
