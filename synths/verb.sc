@@ -8,9 +8,9 @@ prime numbers up to 1000
     drywet=0.2,
     hipass=50, lopass=6000,
     predelay=0.06,
-    size=1, decay=0.8, diffusion=0.7,
+    size=0.7, decay=0.8, diffusion=0.3,
     downsampling=0, gain=1.0,
-    damping=0.2, width=0.2;
+    damping=0.5, width=0.2;
     var samplerate, signal,
     maxPredelay,
     reflectionCount, reflectionTimes, previousReflectionTime,
@@ -77,6 +77,8 @@ prime numbers up to 1000
 
 
 ~mix = {SinOsc.ar(100)}
+~mix.play
+~mix.stop
 
 ~outverb[0] = \verb;
 ~outverb <<> ~mix
