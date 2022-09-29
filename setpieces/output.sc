@@ -16,10 +16,18 @@ s.plotTree
 
 (
   ~verb[1] = \pset -> Pbind(
-    \size, Pwrand([0.1, 0.9, 1.7], [15, 5, 1].normalizeSum, inf),
-    \dur, Pseq([0.5, 0.5, 0.25], inf),
-    \damp, Pseq([0.6], inf),
-    \drywet, Prand([0.1, 0.1, 0.9], inf),
+    \drywet, 0.2,
+    \hipass, 50,
+    \lopass, 6000,
+    \predelay, 0.06,
+    \size, 0.2,
+    \decay, 0.8,
+    \diffusion, 0.3,
+    \downsampling, 0.0,
+    \gain, 1.0,
+    \damp, 0.6,
+    \width, 0.2,
+    \dur, 0.5,
   )
 )
 
