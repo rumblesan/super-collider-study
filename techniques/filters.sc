@@ -4,9 +4,9 @@
 ~lfo1 = {((SinOsc.kr(1) + 1) * 100) + 100}
 
 (
-  ~resfilt = { |freq=100, cutoff=100, res=1|
+  ~resfilt = { |freq=100, eq=100, rq=1, gain=0|
     var osc = Saw.ar(freq);
-    RLPF.ar(osc, cutoff, res.reciprocal)
+    BPeakEQ.ar(osc, eq, rq.reciprocal, gain)
   }
 )
 
