@@ -1,6 +1,6 @@
 (
 SynthDef(\fm2, {
-  arg out=0, gate=1, freq=220,
+  arg out=0, gate=1, freq=220, amp=0.8,
   attack=0.1, decay=0.1, sustain=1, release=0.5,
   pitchEnvAttack=0.01, pitchEnvDecay=0.5, pitchEnvDepth=1,
   bend=0,
@@ -12,6 +12,6 @@ SynthDef(\fm2, {
 
   var modOsc = SinOsc.ar(freq * ratio, mul: menv, add: 1);
 
-  Out.ar(out, SinOsc.ar(freq * modOsc * penv * (1+bend), mul: venv));
+  Out.ar(out, SinOsc.ar(freq * modOsc * penv * (1+bend), mul: venv * amp));
 }).add;
 )
