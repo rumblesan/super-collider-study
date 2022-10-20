@@ -33,6 +33,13 @@ Task({
   d[\wavetables][\ph7] = WaveTableFile.new(s, "./wavetables/pistonhonda/7.wav", 256, 64);
   d[\wavetables][\ph8] = WaveTableFile.new(s, "./wavetables/pistonhonda/8.wav", 256, 64);
 
+  PathName("./samples").entries.do({ |folderPath|
+    var k = folderPath.folderName.asSymbol;
+    var samples = folderPath.entries.collect({|sf| Buffer.readChannel(s, sf.fullPath, channels:[0])});
+    "loaded % samples from % to %\n".postf(samples.size, folderPath, k);
+    d.add(k -> samples);
+  });
+
   "./synths/*.sc".loadPaths(warn: true, action: {|name| "Loaded file %\n".postf(name)});
 
   StageLimiter.activate;

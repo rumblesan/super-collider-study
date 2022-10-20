@@ -1,18 +1,11 @@
 "Setup.scd".load;
 
-(
-d = Dictionary();
-d.put(\k, Buffer.read(s, "./samples/kick1.wav"));
-d.put(\s, Buffer.read(s, "./samples/snare1.wav"));
-d.put(\v, Buffer.read(s, "./samples/voxloop.wav"));
-)
-
-d[\v].numChannels
+d[\vox].numChannels
 
 (
   ~kick1 = Pbind(
     \instrument, \bplay,
-    \buf, d[\k],
+    \buf, d[\bd][0],
     \dur, 1,
   );
 )
@@ -22,7 +15,7 @@ d[\v].numChannels
 (
   ~snare1 = Pbind(
     \instrument, \bplay,
-    \buf, d[\s],
+    \buf, d[\sn][0],
     \dur, 2,
   );
 )
@@ -32,7 +25,7 @@ d[\v].numChannels
 (
   ~vox = Pbind(
     \instrument, \PhaseVox,
-    \buf, d[\v],
+    \buf, d[\vox][0],
     \rate, 0.2,
     \dur, 3,
     \start, Pseq([0, 0.42, 0.57, 0.1], inf),
