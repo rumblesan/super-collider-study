@@ -39,23 +39,23 @@ SynthDef(\thumper, {arg out=0, freq=50, amp=0.1,
 
 /*
 (
-  ~test = Pbind(
+  ~thumper = Pbind(
     \instrument, \thumper,
     \freq, 50,
     \wavetableBufNum, d[\wavetables][\ph1].bufnum,
     \wavetableWaves, d[\wavetables][\ph1].waves,
-    \waveMod, 6.0,
-    \spread, 1.0,
-    \attack, 0.01,
-    \decay, 0.9,
+    \waveMod, 0.78,
+    \spread, 1.01,
+    \attack, 0.001,
+    \decay, 2.0,
     \amp, 1,
-    \pmod, 4,
-    \pattack, 0.03,
-    \pdecay, 0.2,
-    \fold, 3,
+    \pmod, 10,
+    \pattack, 0.01,
+    \pdecay, 0.1,
+    \fold, 0.5,
     \dur, 4,
   )
 )
-~test.play;
-~test.clear;
+~thumper.play;
+~thumper.clear;
 */
