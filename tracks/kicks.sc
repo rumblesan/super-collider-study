@@ -1,17 +1,10 @@
 "Setup.scd".load;
 
-p.clock.tempo = 180/60;
-
-(
-  m = ProxyMixer(p, 8);
-)
-
-
 (
 
-  ~kickz = Pbind(
+  ~kickz[0] = Pbind(
     \instrument, \modkick,
-    \amp, 0.8,
+    \amp, 0.3,
     \decay, 2,
     \rdecay, 0.08,
     \mdecay, 0.3,
@@ -27,12 +20,17 @@ p.clock.tempo = 180/60;
 ~kickz.stop;
 
 (
-~mainout = {
-  var distortion = 0.3;
-  var d = (1/(distortion + 1));
-  var v = (1/d);
-  Pan2.ar(~kickz.wrap2(d) * v, 0)
-};
+  ~kickz.filter(1, {|in, distortion=0.8|
+    (in * distortion).tanh * 1.2;
+  })
 )
 
-~mainout.play;
+~kickz.set(\distortion, 20)
+
+(
+  ~kickz.filter(2, {|in, ffreq=2000, q=1|
+    RLPF.ar(in, ffreq, q)
+  })
+)
+
+~kickz.set(\ffreq, 5000)
