@@ -1,7 +1,5 @@
-(
-  "Setup.scd".load;
-  m = ProxyMixer(p, 8);
-)
+"Setup.scd".load;
+s.plotTree
 
 (
   SynthDef(\ceed, {arg out, freq = 220, fmod = 1, q = 1, gate = 1, attack = 0.1, release = 0.6;
@@ -14,13 +12,15 @@
 )
 
 (
-
   ~tune = Pbind(
     \instrument, \ceed,
-    \freq, 440,
-    \dur, Pseq([2, 0.5, 0.5, 1, 1, 4, 0.5, 2], inf),
+    \scale, Scale.minor,
+    \degree, Pseq([0, 2, 0, 2, 0, 8, 6, 1], inf),
+    \octave, 5,
+    \dur, 0.5,
   )
 )
+~tune.quant = 4
 ~tune.play;
 ~tune.stop;
 ~tune.clear;
@@ -28,36 +28,29 @@
 b = Buffer.alloc(s, s.sampleRate * 20, 1);
 b.bufnum;
 b.numChannels;
+b.plot
 
 (
-  SynthDef(\record, { arg out, bufnum, input;
-    RecordBuf.ar(input, bufnum);
-  }).play(s, [\out, 0, \bufnum, b, \input, ~tune]);
+  SynthDef(\record, { |in, bufnum, time|
+    var t = time;
+    var env = EnvGen.kr(Env.linen(0, t, 0), doneAction: 2);
+    RecordBuf.ar(in, bufnum);
+  }, [\ar, \ir, \ir]).add;
 )
 
+Synth.new(\record, [\in, ~tune, \bufnum, b, \time, 10], s)
 
 (
-  ~playb = SynthDef(\playback, { arg out, bufnum;
-    var playbuf;
-    playbuf = PlayBuf.ar(1, bufnum);
-    FreeSelfWhenDone.kr(playbuf);
+  SynthDef(\playback, { |out=0, bufnum, time|
+    var playbuf = PlayBuf.ar(1, bufnum);
+    var env = EnvGen.kr(Env.linen(0, time, 0), doneAction: 2);
     Out.ar(out, playbuf);
-  }).play(s, [\out, 0, \bufnum, b]);
+  }).add;
 )
 
-~playb.free;
+~playb = \playback
+~playb.set(\bufnum, b)
+~playb.set(\time, 1)
 
-(
-~rec = {
-  RecordBuf.ar(~tune, b);
-}
-)
-~rec.clear;
-
-(
-~play = {
-  PlayBuf.ar(1, b);
-}
-)
-~play.play;
-~play.clear;
+~out = {~playb}
+~out.play
