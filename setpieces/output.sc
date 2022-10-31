@@ -1,18 +1,8 @@
 
-"Setup.scd".load;
-s.plotTree
-
 ~mix = {Silent.ar}
-~mix.play
-~mix.stop
 
 ~verb[0] = \verb;
 ~verb.fadeTime = 4;
-
-~verb.set(\drywet, 0.1)
-~verb.set(\size, 0.2)
-~verb.set(\damp, 0.6)
-
 
 (
   ~verb[1] = \pset -> Pbind(
