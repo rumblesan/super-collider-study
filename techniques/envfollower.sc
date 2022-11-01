@@ -19,14 +19,25 @@
 ~kickz.stop;
 
 (
-  ~ef = { |gain=1, attack=0.01, release=0.7|
+  SynthDef(\ef, {|out=0, in, gain=1, attack=0.01, release=0.7|
+    var env = EnvDetect.ar(in * gain, attack, release).min(1);
+    Out.ar(out, env);
+  }, [0, \ar]).add;
+)
+
+~ef = \ef
+~ef <<> ~kickz
+~ef.scope
+
+(
+  ~ef1 = { |gain=1, attack=0.01, release=0.7|
     var env = EnvDetect.ar(~kickz * 1, attack, release).min(1);
     env;
   };
 )
 
-~ef.set(\release, 0.1);
-~ef.scope
+~ef1.set(\release, 0.1);
+~ef1.scope
 
 
 (
