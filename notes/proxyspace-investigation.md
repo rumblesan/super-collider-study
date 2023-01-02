@@ -20,8 +20,14 @@ The object being stored in the global variable is then stored in the *NodeProxy*
 The `put` method is where all the logic for having audio sources work in proxy space lives (This may not be quite true, do some more digging).
 The object gets wrapped in a control proxy class, with the object itself being stored in the `source` instance variable, and the `build` method then called on it.
 Which control proxy class is used depends on the type of object being stored, and is decided by a set of extension methods in the **ProxySpace/wrapForNodeProxy.sc** file.
-Going to assume here that the object being used here is a *Function* and so the control class is a *SynthDefControl*.
 
+
+### Path for a Pbind
+
+Pbind is considered a pattern, and so the `buildForProxy` extension method for that will get called. This turns the
+
+### Path for a Function
+A *Function* has no specific **wrapForNodeProxy** implementation for building, so the control class is a *SynthDefControl*.
 In the *SynthDefControl* `build` method, a *ProxySynthDef* class is created which wraps a *SynthDef*.
 Internally a new *Bus* (with as many channels as the synth has) is allocated and stored on the *NodeProxy*.
 
