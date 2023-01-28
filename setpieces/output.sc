@@ -25,3 +25,9 @@
 
 ~verb <>> ~out
 ~mix <>> ~verb
+
+r = Recorder.new(s);
+r.prepareForRecord("./recordings/%.wav".format(Date.getDate.format("%Y%m%d%H%M")), 2);
+r.record(bus: ~out.bus);
+
+r.stopRecording;
