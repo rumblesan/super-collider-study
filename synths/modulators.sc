@@ -1,8 +1,9 @@
 (
-  SynthDef(\percenv, {|out, trig, attack=0.01, decay=0.1, curve=(-4), value=1|
+  SynthDef(\percenv, {|out, trig, attack=0.01, decay=0.1, curve=(-4), value=1, offset=0|
     Out.kr(
       out,
       Env.perc(attack, decay, value, curve).kr(
+        levelBias: offset,
         gate: trig,
       ))
   }, [0, \tr]).add;
