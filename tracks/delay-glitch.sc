@@ -23,7 +23,7 @@ s.plotTree;
     \ptrig, Pseq([1, 1, 0, 1, 1, 0, 0], inf),
     \pmod, Prand([1, 0, 0, 3, 7, 0], inf),
     \pdecay, Prand([0.05], inf),
-    \amp, 1,
+    \amp, -33.dbamp,
   )
 )
 ~ping.play;
@@ -45,7 +45,7 @@ s.plotTree;
     \instrument, \clikr,
     \dur, Pwrand([1, 0.5, 0.25], [3, 6, 19].normalizeSum, inf),
     \freq, Pwrand([220, 55, 200], [20, 3, 10].normalizeSum, inf),
-    \amp, 1,
+    \amp, -33.dbamp,
     \decay, Pwrand([0.1, 0.5, 1], [15, 1, 4].normalizeSum, inf),
     \sustain, Prand([0.1, 0.5, 0.03], inf),
   )
