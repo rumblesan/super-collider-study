@@ -1,8 +1,9 @@
 (
   SynthDef(\granulizer, {arg out=0, in, bufferLength=5,
     density=5, randDensity=0, size=0.1,
-    position=0, rate=1, spread=0.1,
-    feedback=0.1, drywet=0.2;
+    position=0, rate=1, spread=0.0,
+    feedback=0.0, drywet=0.2,
+    amp=0.8;
     var signal = (LocalIn.ar(1) * feedback) + in;
     var audio;
     var frames = bufferLength * SampleRate.ir;
@@ -15,9 +16,10 @@
 
     BufWr.ar(signal, buffer, phase, loop: 1);
     audio = GrainBuf.ar(1, trigs, size, buffer, rate, pos, 2, 0);
+    audio = (audio * 0.8).tanh;
     LocalOut.ar(audio);
     Out.ar(
-      out,
+      out * amp,
       XFade2.ar(in, audio, (drywet * 2) - 1)
     );
   }, [0, \ar, \ir]).add;
