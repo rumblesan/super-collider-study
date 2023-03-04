@@ -1,6 +1,12 @@
 "Setup.scd".load;
 
-~mix = {Silent.ar!2}
+(
+~mix = {
+  Mix.new([
+    Pan2.ar(Silent.ar, 0),
+  ])
+}
+)
 
 ~verb[0] = \verb;
 
