@@ -19,6 +19,7 @@ p.clock.tempo = 150/60;
 p.quant = 1.0;
 
 
+
 Task({
   3.wait;
 
@@ -43,6 +44,9 @@ Task({
   "./synths/*.sc".loadPaths(warn: true, action: {|name| "Loaded file %\n".postf(name)});
 
   StageLimiter.activate;
+
+  f = SixteenFaders.new;
+
   "Ready to go!".postln;
 }).start;
 
