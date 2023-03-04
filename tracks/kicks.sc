@@ -4,7 +4,7 @@
 
   ~kickz[0] = Pbind(
     \instrument, \modkick,
-    \amp, 0.3,
+    \amp, -6.dbamp,
     \decay, 2,
     \rdecay, 0.08,
     \mdecay, 0.3,
@@ -12,7 +12,11 @@
     \ramp, 3,
     \mod, 20,
     \freq, 50,
-    \dur, 2,
+    \dur, Pn(
+      Pfinval(16,
+      Pseq([1, 1, 3, 1, 3, 4], inf)
+      ), inf
+    )
   )
 )
 
@@ -25,12 +29,13 @@
   })
 )
 
-~kickz.set(\distortion, 20)
+~kickz.set(\distortion, 3)
 
 (
   ~kickz.filter(2, {|in, ffreq=2000, q=1|
-    RLPF.ar(in, ffreq, q)
+    RLPF.ar(in, ffreq, q.reciprocal)
   })
 )
 
-~kickz.set(\ffreq, 5000)
+~kickz.set(\ffreq, 800)
+~kickz.set(\q, 4)
