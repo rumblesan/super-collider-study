@@ -1,5 +1,7 @@
 (
-  SynthDef(\karpluscomb, {arg out=0, gate=1, freq=100, decay=1.5, fdiff=1, colour=0, gain=2;
+  SynthDef(\karpluscomb, {arg out=0, gate=1, freq=100,
+    amp=0.8,
+    decay=1.5, fdiff=1, colour=0, gain=2;
     var env, imp, exciters, input, comb;
     env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: 2);
 
@@ -8,10 +10,12 @@
     input = LinSelectX.ar(colour * exciters.size, exciters);
 
     comb = (CombC.ar(imp * input, freq.reciprocal, freq.reciprocal, decay) * 2).tanh;
-    Out.ar(out, comb);
+    Out.ar(out, comb * amp);
   }).add;
 
-  SynthDef(\karpluspluck, {arg out=0, gate=1, freq=100, decay=1.5, fdiff=1, colour=0, damping=0.5;
+  SynthDef(\karpluspluck, {arg out=0, gate=1, freq=100,
+    amp=0.8,
+    decay=1.5, fdiff=1, colour=0, damping=0.5;
     var env, imp, exciters, input, pluck;
     env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: 2);
 
@@ -28,12 +32,13 @@
       damping,
     ) * 2).tanh;
 
-    Out.ar(out, pluck);
+    Out.ar(out, pluck * amp);
   }).add;
 
   SynthDef(\karplusdelay, {arg out=0,
     freq=100, decay=1.5,
     fdiff=1, colour=0,
+    amp=0.8,
     gain=2, feedback=0.9;
     var env, fb, imp, exciters, input, output, filtered, t;
 
@@ -53,6 +58,6 @@
 
     LocalOut.ar(output);
 
-    Out.ar(out, output);
+    Out.ar(out, output * amp);
   }).add;
 )
