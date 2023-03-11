@@ -36,7 +36,7 @@ Task({
 
   PathName("./samples").entries.do({ |folderPath|
     var k = folderPath.folderName.asSymbol;
-    var samples = folderPath.entries.collect({|sf| Buffer.readChannel(s, sf.fullPath, channels:[0])});
+    var samples = SampleFolder.new(s, folderPath);
     "loaded % samples from % to %\n".postf(samples.size, folderPath, k);
     d.add(k -> samples);
   });
