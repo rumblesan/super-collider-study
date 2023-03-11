@@ -16,7 +16,7 @@ p = ProxySpace.push(s);
 p.makeTempoClock;
 //give proxyspace a tempo
 p.clock.tempo = 150/60;
-p.quant = 1.0;
+p.quant = 4.0;
 
 
 
