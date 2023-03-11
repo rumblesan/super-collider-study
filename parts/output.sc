@@ -11,7 +11,7 @@
 ~verb[0] = \verb;
 
 ~verb[1] = \pset -> Pbind(
-  \drywet, 0.0,
+  \drywet, 0.2,
   \hipass, 50,
   \lopass, 6000,
   \predelay, 0.06,
@@ -25,7 +25,7 @@
   \dur, 0.5,
 );
 
-~out = { \in.ar(0!2) }; ~out.play;
+~out = { \in.ar(0!2) * -0.dbamp }; ~out.play;
 
 ~verb <>> ~out;
 ~mix <>> ~verb;
