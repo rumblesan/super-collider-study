@@ -4,7 +4,7 @@ Ndef(\mix,
   {
     Mix.new([
       ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-      //ChannelStrip.ar(SinOsc.ar(50), -3.dbamp, 0),
+      //ChannelStrip.ar(SinOsc.ar(32.midicps), ~faders[1], 0),
     ])
   }
 )
@@ -33,13 +33,3 @@ Ndef(\out, { \in.ar(0!2) * -0.dbamp }); Ndef(\out).play;
 
 Ndef(\verb) <>> Ndef(\out)
 Ndef(\mix) <>> Ndef(\verb)
-
-
-
-r = Recorder.new(s);
-(
-  var path = "./recordings/%.wav".format(Date.getDate.format("%Y%m%d%H%M"));
-  r.record(path: path, numChannels: 2, bus: Ndef(\out).bus);
-)
-
-r.stopRecording;
