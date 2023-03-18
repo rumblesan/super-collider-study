@@ -4,13 +4,13 @@ Ndef(\mix,
   {
     Mix.new([
       ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-      //ChannelStrip.ar(SinOsc.ar(32.midicps), ~faders[1], 0),
+      //ChannelStrip.ar(SinOsc.ar(32.midicps), ~faders[1].kr(1), 0),
     ])
   }
 )
 
 
-Ndef(\verb, \dirtverb)
+Ndef(\verb)[0] = \dirtverb;
 
 Ndef(\verb)[1] = \pset -> Pbind(
   \drywet, 0.4,
