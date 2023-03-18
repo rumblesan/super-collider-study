@@ -11,7 +11,8 @@ s.options.numInputBusChannels = 0;
 s.boot;
 
 
-p = ProxySpace.push(s);
+
+p = Ndef.dictFor(s);
 //start tempo clock
 p.makeTempoClock;
 //give proxyspace a tempo
@@ -22,6 +23,9 @@ p.quant = 4.0;
 
 Task({
   3.wait;
+
+  // for pattern sharing events
+  ~events = Dictionary.new;
 
   d = Dictionary.new;
   d.add(\wavetables -> Dictionary.new);
@@ -45,7 +49,8 @@ Task({
 
   StageLimiter.activate;
 
-  f = SixteenFaders.new;
+  ~faders = SixteenFaders.new(\proxy);
+  "./parts/util/fader.sc".load;
 
   "Ready to go!".postln;
 }).start;

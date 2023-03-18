@@ -1,41 +1,45 @@
 "Setup.scd".load;
 
-(
-~mix = {
-  Mix.new([
-    Pan2.ar(Silent.ar, 0),
-  ])
-}
+Ndef(\mix,
+  {
+    Mix.new([
+      ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
+      //ChannelStrip.ar(SinOsc.ar(50), -3.dbamp, 0),
+    ])
+  }
 )
 
-~verb[0] = \verb;
 
-~verb[1] = \pset -> Pbind(
-  \drywet, 0.2,
-  \hipass, 50,
+Ndef(\verb, \dirtverb)
+
+Ndef(\verb)[1] = \pset -> Pbind(
+  \drywet, 0.4,
+  \hipass, 150,
   \lopass, 6000,
   \predelay, 0.06,
-  \size, 0.2,
-  \decay, 0.8,
-  \diffusion, 0.3,
-  \downsampling, 0.0,
-  \gain, 1.0,
-  \damp, 0.6,
-  \width, 0.2,
+  \size, 0.3,
+  \decay, 0.5,
+  \diffusion, 0.5,
+  \downsampling, 0,
+  \gain, 1.1,
+  \damping, 0.2,
+  \feedbackHipass, 20,
+  \width, 0.3,
   \dur, 0.5,
 );
 
-~out = { \in.ar(0!2) * -0.dbamp }; ~out.play;
 
-~verb <>> ~out;
-~mix <>> ~verb;
+Ndef(\out, { \in.ar(0!2) * -0.dbamp }); Ndef(\out).play;
+
+Ndef(\verb) <>> Ndef(\out)
+Ndef(\mix) <>> Ndef(\verb)
 
 
 
 r = Recorder.new(s);
 (
   var path = "./recordings/%.wav".format(Date.getDate.format("%Y%m%d%H%M"));
-  r.record(path: path, numChannels: 2, bus: ~out.bus);
+  r.record(path: path, numChannels: 2, bus: Ndef(\out).bus);
 )
 
 r.stopRecording;

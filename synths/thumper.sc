@@ -11,6 +11,7 @@ SynthDef(\thumper, {arg out=0, freq=50, amp=0.1,
   waveMod=0, spread=0,
   attack=0.01, decay=0.5,
   pattack=0.01, pdecay=0.5, pmod=0,
+  volAccent=0,
   fold=0;
 
 
@@ -18,7 +19,7 @@ SynthDef(\thumper, {arg out=0, freq=50, amp=0.1,
   snd, folded;
 
   penv = Env.perc(pattack, pdecay, pmod).kr(0);
-  venv = Env.perc(attack, decay, amp).kr(2);
+  venv = Env.perc(attack, decay, amp + volAccent).kr(2);
 
   tablepos = wavetableBufNum + (waveMod * wavetableWaves);
   oscCount = 6;

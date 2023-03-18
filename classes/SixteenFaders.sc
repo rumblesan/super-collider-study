@@ -6,20 +6,20 @@
 
 SixteenFaders {
 	classvar func;
-	var <fader, <proxy, scaling, verbose = false;
+	var <mode, <busses, <proxy, scaling, verbose = false;
 
-	*new {
-		^super.new.init();
+	*new { |mode=\bus|
+		^super.newCopyArgs(mode).init();
 	}
 
 	// Ignore the first one created so that
 	// indexing starts at 1
 	init {
-		fader = 17.collect{
+		busses = 17.collect{
 			Bus.control(Server.default, 1);
 		};
 
-		proxy = fader.collect{|f|
+		proxy = busses.collect{|f|
 			BusPlug.for(f);
 		};
 
@@ -93,19 +93,43 @@ SixteenFaders {
 		var minVal = faderScaling[0];
 		var maxVal = faderScaling[1];
 		var curve = faderScaling[2];
-		if (curve == \exp,
-			{ fader[faderPosition].set(value.linexp(0, 127, minVal, maxVal)) },
-			{ fader[faderPosition].set(value.linlin(0, 127, minVal, maxVal)) },
+		switch(curve,
+			\lin, { busses[faderPosition].set(value.linlin(0, 127, minVal, maxVal)) },
+			\vol, {
+				if (value == 0,
+					{busses[faderPosition].set(0)},
+					{busses[faderPosition].set(value.linlin(0, 127, minVal, maxVal).dbamp)}
+				)
+			},
+			\exp, { busses[faderPosition].set(value.linexp(0, 127, minVal, maxVal)) },
+			{ busses[faderPosition].set(value.linexp(0, 127, minVal, maxVal)) }
 		)
 	}
 
 	setScaling {|faderPositon, minVal, maxVal, curve=\lin|
-		if ((curve == \exp) && (minVal <= 0), {minVal = minVal + 0.001});
-		scaling[faderPositon] = [minVal, maxVal, curve];
+		switch(curve,
+			\lin, {scaling[faderPositon] = [minVal, maxVal, curve]},
+			\vol, {scaling[faderPositon] = [minVal, maxVal, curve]},
+			\exp, {scaling[faderPositon] = [minVal + 0.001, maxVal, curve]},
+			{scaling[faderPositon] = [minVal, maxVal, curve]}
+		)
+		^this;
 	}
 
-	faderAt {|faderPosition|
-			^fader[faderPosition];
+	at {|faderPositon|
+		^this.fader(faderPositon);
+	}
+
+	fader {|faderPosition|
+		switch(mode,
+			\bus, {^this.busAt(faderPosition)},
+			\proxy, {^this.proxyAt(faderPosition)},
+			{^this.proxyAt(faderPosition)}
+		)
+	}
+
+	busAt {|faderPosition|
+			^busses[faderPosition];
 	}
 
 	proxyAt {|faderPosition|
@@ -118,10 +142,5 @@ SixteenFaders {
 
 	disableVerbose {
 		verbose = false;
-	}
-
-	usage {
-      var usage = "Usage: A 'Bus' object is accessed by <instance of object>.fader[n] or \n<instance of object>.faderAt(n). 'n' is the corresponding fader number, \nbut zero-indexed. ('0' gets you the first fader)\n";
-        Post << "|----------------------------------------------------------------------//\n" << usage << "|----------------------------------------------------------------------//\n";
 	}
 }

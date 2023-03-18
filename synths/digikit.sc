@@ -82,9 +82,33 @@
     Out.ar(out, HPF.ar(osc, hipass));
   }).add;
 
-  SynthDef(\clikr, {arg out, gate=1, attack=0.0, decay=1, freq=200, amp=1;
+  SynthDef(\clikr, {arg out, gate=1, attack=0.0, decay=1, freq=200, harmonics=200, amp=1;
     var env = Env.asr(attack, amp, decay).kr(doneAction: 2, gate: gate);
-    var osc = Blip.ar(freq, 200);
+    var osc = Blip.ar(freq, harmonics);
     Out.ar(out, osc * env);
   }).add;
+
+  SynthDef(\fmhat, {
+    arg out=0, gate=1, freq=220, amp=0.8,
+    attack=0.01, decay=0.1, level=1, release=0.5,
+    pitchEnvAttack=0.01, pitchEnvDecay=0.1, pitchEnvDepth=0,
+    bend=0,
+    ratio=1.0, hpcutoff=1000,
+    noiseMod=0.1, noiseLevel=0.4,
+    modEnvAttack=0.1, modEnvDecay=0.01, modDepth=0.1, modEnvRelease=0.5;
+    var venv = Env.perc(attack, decay).kr(2, gate);
+    var penv = Env.perc(pitchEnvAttack, pitchEnvDecay, pitchEnvDepth).kr(gate: gate, levelBias: 1);
+    var menv = Env.adsr(modEnvAttack, modEnvDecay, modDepth, modEnvRelease).kr(2, gate);
+
+    var modOsc = SinOsc.ar(freq * ratio, mul: menv, add: 1);
+    var noiseOsc = WhiteNoise.ar(mul:noiseMod, add: 1.0);
+    var fmOut = SinOsc.ar(freq * modOsc * penv * (1+bend) * noiseOsc, mul: venv * amp);
+    var noise = WhiteNoise.ar() * noiseLevel * venv * amp;
+    var filtered = HPF.ar(fmOut + noise, hpcutoff);
+
+    Out.ar(out, filtered);
+  }).add;
+
+
+
 )

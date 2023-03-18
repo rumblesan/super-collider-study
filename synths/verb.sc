@@ -4,27 +4,31 @@ prime numbers up to 1000
 */
 
 (
-  SynthDef(\verb, {arg out=0, in,
+  SynthDef(\dirtverb, {arg out=0,
     drywet=0.2,
     hipass=50, lopass=6000,
     predelay=0.06,
     size=0.7, decay=0.8, diffusion=0.3,
     downsampling=0, gain=1.0,
-    damping=0.5, width=0.2;
-    var samplerate, signal,
+    damping=0.5, feedbackHipass=50,
+    width=0.2;
+    var in, tankInput, samplerate, signal,
     maxPredelay,
     reflectionCount, reflectionTimes, previousReflectionTime,
     initialDiffusionCount, initialDiffusionTimes, initialDiffusionAmount,
     tankLoops, tankDelays, tankFeedback, loops, verbOut, output;
 
     samplerate = SampleRate.ir;
+
+    in = \in.ar([0, 0]);
+
     signal = in;
     signal = HPF.ar(signal, hipass);
     signal = LPF.ar(signal, lopass);
     maxPredelay = 1;
-    signal = DelayC.ar(signal, predelay, maxPredelay);
+    signal = DelayC.ar(signal, maxPredelay, predelay);
 
-    reflectionCount = 4;
+    reflectionCount = 8;
     reflectionTimes = ([180, 269, 444, 151, 109, 139, 163, 233, 211, 113] / samplerate).keep(reflectionCount);
     previousReflectionTime = 0;
     reflectionTimes.do({ |delayTime, i|
@@ -48,29 +52,38 @@ prime numbers up to 1000
     tankDelays = [ 1447, 727, 613, 673, 1439, 2083, 2011, 1511, 1493, 1277, 2437, 2383, 2341, 997, 1061, 2039, 1997, 1481, 1627, 1129, 743, 983, 1091, 907, 541, 2393, 1801, 2081, 1787, 1453, 977, 2311, 691, 479, 2377, 1693, 1013, 1931, 1049, 2243, 839, 739, 1747, 601, 1823, 1123, 2467, 1297, 1613, 1361, 2207, 593, 619, 1709, 449, 937 ] / samplerate;
     tankFeedback = LocalIn.ar(1);
 
+    tankInput = [signal[0], 0, signal[1], 0];
+
     loops = tankLoops.collect({ |i|
       var delayi = i*3;
-      var loopinput = signal + (tankFeedback * decay);
+      var loopinput = tankInput[i] + (tankFeedback * decay);
       var d1 = tankDelays[delayi];
       var ap1 = AllpassC.ar(loopinput, d1, d1, diffusion);
       var d2 = tankDelays[delayi + 1];
       var ap2 = AllpassC.ar(ap1, d2, d2, diffusion);
-      var d3 = tankDelays[delayi + 2] * size;
-      var outdelay = DelayC.ar(ap1, d3, d3);
-      var distorted = (outdelay * gain).tanh;
+      var d3 = tankDelays[delayi + 2];
+      var outdelay = DelayC.ar(ap1, d3, d3 * size);
+      var distorted = (outdelay * gain).tanh * 1.3;
       var downsampled = SmoothDecimator.ar(distorted, samplerate * (1-downsampling));
       var filtered = OnePole.ar(downsampled, damping);
+      filtered = HPF.ar(filtered, feedbackHipass);
       tankFeedback = filtered;
       tankFeedback;
     });
 
     LocalOut.ar(tankFeedback);
 
-    verbOut = [loops[0] + loops[2], loops[1] + loops[3]] * drywet;
-    output = (in * (1-drywet)) ! 2;
+    verbOut = Splay.ar([
+      (loops[0] * 0.8) + (loops[2] * 0.4) + (loops[1] * 0.3.neg),
+      (loops[1] * 0.8) + (loops[3] * 0.4) + (loops[0] * 0.27.neg)
+    ] * drywet, width);
+    output = [
+      (in[0] * (1 - drywet)) + verbOut[0],
+      (in[1] * (1 - drywet)) + verbOut[1]
+    ];
 
-    Out.ar(out, Splay.ar(verbOut + output, width));
-  }, [0, \ar]).add;
+    Out.ar(out, output);
+  }).add;
 )
 
 /*

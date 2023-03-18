@@ -6,19 +6,19 @@
     \instrument, \karpluspluck,
     \feedback, 0.989,
     \fdiff, Pwrand([0.5, 1.0, 1.5], [3, 10, 5].normalizeSum, inf),
+    \amp, -20.dbamp,
     \gain, 1.2,
     \decay, 2.0,
     \colour, Pwhite(0.25, 0.4, inf),
     \damping, Pexprand(0.35,0.55, inf),
-    \amp, 1.0,
-    \scale, Scale.major,
+    \scale, Scale.minor,
     \root, -3,
     \octave, 5,
     \degree, Pseq(
       [
         0, 4, 7,
-        0, 4, 7,
-        Prand([[4, 9], 4, 0], 2),
+        0, 4, 7
+        //Prand([[4, 9], 4, 0], 2),
       ],
       inf),
     \dur, Pseq([

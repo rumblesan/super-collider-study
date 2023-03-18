@@ -21,7 +21,7 @@
     oscs = Mix.new(oscFreqMods.collect({|f|
       VarSaw.ar(f, width: pulsewidth, mul: oscFreqMods.size.reciprocal);
     }));
-    filtered = RLPF.ar(oscs, freq * (1 + foffset) * (1 + (fenv * fenvDepth)), res);
+    filtered = RLPF.ar(oscs, freq * (1 + foffset) * (1 + (fenv * fenvDepth)), res.reciprocal);
     Out.ar(out, filtered * env);
   }).add;
 )
