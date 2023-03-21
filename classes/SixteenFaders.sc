@@ -4,19 +4,37 @@
 * https://github.com/vsandstrom
 */
 
+FaderProxy {
+	var mode, <bus, <proxy, <>verbose;
+	*new { |bus, proxy, mode=\bus|
+		^super.newCopyArgs(mode, bus, proxy)
+	}
+
+	fader {
+		switch(mode,
+			\bus, {bus},
+			\proxy, {proxy},
+			{proxy}
+		)
+	}
+
+	value { this.fader }
+
+}
+
 SixteenFaders {
 	classvar func;
-	var <mode, <busses, <proxy, scaling, verbose = false;
+	var server, <mode, <busses, <proxy, scaling, verbose = false;
 
-	*new { |mode=\bus|
-		^super.newCopyArgs(mode).init();
+	*new { |server, mode=\bus|
+		^super.newCopyArgs(server, mode).init();
 	}
 
 	// Ignore the first one created so that
 	// indexing starts at 1
 	init {
 		busses = 17.collect{
-			Bus.control(Server.default, 1);
+			Bus.control(server, 1);
 		};
 
 		proxy = busses.collect{|f|
@@ -95,6 +113,7 @@ SixteenFaders {
 		var curve = faderScaling[2];
 		switch(curve,
 			\lin, { busses[faderPosition].set(value.linlin(0, 127, minVal, maxVal)) },
+			\log, { busses[faderPosition].set(value.linlin(0, 127, 1, 10).log10.linlin(0, 1, minVal, maxVal)) },
 			\vol, {
 				if (value == 0,
 					{busses[faderPosition].set(0)},
@@ -106,18 +125,19 @@ SixteenFaders {
 		)
 	}
 
-	setScaling {|faderPositon, minVal, maxVal, curve=\lin|
+	scale {|faderPosition, minVal, maxVal, curve=\lin|
 		switch(curve,
-			\lin, {scaling[faderPositon] = [minVal, maxVal, curve]},
-			\vol, {scaling[faderPositon] = [minVal, maxVal, curve]},
-			\exp, {scaling[faderPositon] = [minVal + 0.001, maxVal, curve]},
-			{scaling[faderPositon] = [minVal, maxVal, curve]}
+			\lin, {scaling[faderPosition] = [minVal, maxVal, curve]},
+			\log, {scaling[faderPosition] = [minVal, maxVal, curve]},
+			\vol, {scaling[faderPosition] = [minVal, maxVal, curve]},
+			\exp, {scaling[faderPosition] = [minVal + 0.001, maxVal, curve]},
+			{scaling[faderPosition] = [minVal, maxVal, curve]}
 		)
-		^this;
+		^FaderProxy(this.busAt(faderPosition), this.proxyAt(faderPosition), mode);
 	}
 
-	at {|faderPositon|
-		^this.fader(faderPositon);
+	at {|faderPosition|
+		^this.fader(faderPosition);
 	}
 
 	fader {|faderPosition|
@@ -134,13 +154,5 @@ SixteenFaders {
 
 	proxyAt {|faderPosition|
 			^proxy[faderPosition];
-	}
-
-	enableVerbose {
-		verbose = true;
-	}
-
-	disableVerbose {
-		verbose = false;
 	}
 }
