@@ -49,7 +49,7 @@ Task({
 
   StageLimiter.activate;
 
-  ~faders = SixteenFaders.new(\proxy);
+  ~faders = SixteenFaders.new(s, \proxy);
   "./parts/util/fader.sc".load;
 
   "Ready to go!".postln;
