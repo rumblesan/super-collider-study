@@ -1,10 +1,11 @@
 
+/*
 (
   SynthDef(\phasevox, {|out=0, buf, position, rate, shift|
 
     var binbuf = LocalBuf.new(2048, 1);
     var hop = (rate / 2);
-    var audio = PlayBuf.ar(1, buf, BufRateScale.ir(buf) * rate, 1 BufDur.kr(buf) * position * 44100);
+    var audio = PlayBuf.ar(1, buf, BufRateScale.ir(buf) * rate, 1, BufDur.kr(buf) * position * 44100);
 
     var signal = (LocalIn.ar(1) * feedback) + in;
     var bufferLength = \bufferLength.ir(5);
@@ -31,3 +32,4 @@
     Out.ar(out, output);
   }).add;
 )
+*/
