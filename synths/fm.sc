@@ -1,19 +1,63 @@
 (
 
-  SynthDef(\fm2, {
-    arg out=0, gate=1, freq=220, amp=0.8,
-    attack=0.1, decay=0.1, level=1, release=0.5,
-    pitchEnvAttack=0.01, pitchEnvDecay=0.1, pitchEnvDepth=0,
-    bend=0,
-    ratio=1.0,
-    modEnvAttack=0.1, modEnvDecay=0.01, modDepth=0.1, modEnvRelease=0.5;
+  SynthDef(\fm2, {arg out=0, gate=1, freq=220, amp=0.8,
+    mod=0, bend=0,
+    attack=0.1, decay=0.5, level=1, release=0.5,
+    ratio1=1, mod1=0, modBend1=0,
+    attack1=0.1, decay1=0.5, level1=1, release1=0.5,
+    output1Mix=0,
+    mod21=0
+    ;
+    var carrier, mix;
     var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var penv = Env.perc(pitchEnvAttack, pitchEnvDecay, pitchEnvDepth).kr(gate: gate, levelBias: 1);
-    var menv = Env.adsr(modEnvAttack, modEnvDecay, modDepth, modEnvRelease).kr(gate: gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
 
-    var modOsc = SinOsc.ar(freq * ratio, mul: menv, add: 1);
+    var modulator1 = SinOsc.ar(
+      (freq * ratio1 * (1 + modBend1)), mul: mod1Env
+    );
 
-    Out.ar(out, SinOsc.ar(freq * modOsc * penv * (1+bend), mul: venv * amp));
+    carrier = SinOsc.ar(
+      (
+        freq +
+        (modulator1 * mod1 * mod * freq)
+      ) * (1 + bend));
+
+    mix = Mix.new([
+      carrier,
+      modulator1 * output1Mix,
+    ]);
+    Out.ar(out, carrier * venv * amp);
+  }).add;
+
+  SynthDef(\fm2perc, {arg out=0, gate=1, freq=220, amp=0.8,
+    mod=0, bend=0,
+    envPMod=0, envModMod=0,
+    attack=0.1, decay=0.5, level=1, release=0.5,
+    ratio1=1, mod1=0, modBend1=0,
+    attack1=0.1, decay1=0.5, level1=1, release1=0.5,
+    modEnvAttack=0.1, modEnvDecay=0.5, modEnvLevel=1, modEnvRelease=0.5,
+    output1Mix=0,
+    mod21=0
+    ;
+    var carrier, mix;
+    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
+    var pEnv = Env.adsr(modEnvAttack, modEnvDecay, modEnvLevel, modEnvRelease).kr(gate: gate);
+
+    var modulator1 = SinOsc.ar(
+      (freq * ratio1 * (1 + modBend1) * (1 + (pEnv * envModMod))), mul: mod1Env
+    );
+
+    carrier = SinOsc.ar(
+      freq * (1 + bend) * (1 + (pEnv * envPMod)),
+      (modulator1 * mod1 * mod)
+    );
+
+    mix = Mix.new([
+      carrier,
+      modulator1 * output1Mix,
+    ]);
+    Out.ar(out, carrier * venv * amp);
   }).add;
 
   SynthDef(\fm3, {arg out, freq=50, gate=1, amp=0.8,

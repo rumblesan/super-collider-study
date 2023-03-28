@@ -5,6 +5,7 @@ Ndef(\mix,
     Mix.new([
       ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
       //ChannelStrip.ar(SinOsc.ar(32.midicps), ~faders[1].kr(1), 0),
+      //ChannelStrip.ar(Ndef(\tc1).ar(1), ~faders[1].kr(1), 0),
     ])
   }
 )

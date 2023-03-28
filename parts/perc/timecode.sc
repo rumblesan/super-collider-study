@@ -1,7 +1,7 @@
 
 p.clock.tempo = 160/60;
 
-Ndef(\tc1, Pbind(
+Ndef(\tc1)[0] = Pbind(
   \instrument, \fm3filter,
   \octave, 4,
   \degree, -3,
@@ -26,11 +26,11 @@ Ndef(\tc1, Pbind(
   ], inf),
   \cutoff, 300,
   \dur, Pseq([1], inf) / 3
-))
+)
 
 (
 Ndef(\tc1).filter(1, {|in, clip=0.95|
-  (in * clip).clip * 1.05;
+  (in * clip).clip * clip.min(1).reciprocal;
 })
 )
 

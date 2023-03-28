@@ -1,19 +1,12 @@
 
 
+Ndef(\v1).quant = 4;
 Ndef(\v1, Pbind(
   \instrument, \fm3,
   \scale, Scale.minor,
-  \octave, 4,
-  \root, -4,
+  \octave, Pseq([Pn(4, 10), 5, Pn(4, 7), 5, 5], inf),
+  \root, -5,
 
-  [\degree, \dur], Pmetro(
-    Pseq([0, 1,
-      Pwrand([0, 2, 7], [10, 2, 1].normalizeSum),
-      0, 7, 0, 2, 0, 7], inf),
-    Pseq([2, 2, 4, 2, 1, 1, 2, 2], inf),
-    "--*-*---",
-    inf,
-    0.25),
 
   \attack, 0.01,
   \decay, Pseq([
@@ -50,6 +43,13 @@ Ndef(\v1, Pbind(
   \attack2, 0.0,
   \decay2, 0.01,
   \level2, 0,
-))
-Ndef(\v1).play;
-Ndef(\v1).stop;
+) <> Pn(Pfindur(32, Pacid(
+    \degree, Pseq([0, 1,
+      Pwrand([0, 2, 7], [10, 2, 1].normalizeSum),
+      0, 7, 0, 2, 0, 7], inf),
+    \pulses, Pseq([2, 2, 4, 2, 1, 1, 2, 2], inf),
+    \types, Pseq("--*-*---", inf),
+    \repeats, inf,
+    \dur, 1/4)), inf)
+)
+Ndef(\v1).clear;

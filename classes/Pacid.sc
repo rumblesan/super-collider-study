@@ -1,21 +1,46 @@
 Pacid : Pattern {
-  var pitches, pulses, types, repeats, pulseDuration;
-  *new { |pitches, pulses, types, repeats, pulseDuration=0.25|
-    	^super.newCopyArgs(pitches, pulses, types, repeats, pulseDuration)
-  }
+  var <>patternpairs;
 
-  storeArgs { ^[pitches, pulses, types, pulseDuration, repeats] }
+	*new { arg ... pairs;
+		if (pairs.size.odd, { Error("Pacid should have even number of args.\n").throw; });
+		^super.newCopyArgs(pairs)
+	}
+
+  storeArgs { ^patternpairs }
   embedInStream { |inevent|
 
+    var streampairs = Dictionary.newFrom(patternpairs);
+		var config = Dictionary.newFrom([
+      \degree, Pseq([0], inf),
+      \pulses, Pseq([1], inf),
+      \types, Pseq(".", inf),
+      \dur, 0.25,
+      \repeats, inf,
+    ]);
+
     var event = inevent.copy;
-    var pitchStream = pitches.asStream;
-    var pulseStream = pulses.asStream;
+    var pitchStream;
+    var pulseStream;
+    var typeStream;
+    var pulseDuration;
+
+    config.keys.do({|key|
+      if (streampairs.trueAt(key) != false, {
+        config.put(key, streampairs.at(key))
+      });
+    });
+
+    pitchStream = config[\degree].asStream;
+    pulseStream = config[\pulses].asStream;
+    typeStream = config[\types].asStream;
+    pulseDuration = config[\dur];
+
     if (inevent.isNil) { ^nil.yield };
 
-    repeats.value(event).do({ |r, i|
+    config[\repeats].value(event).do({ |r, i|
       var pulseCount = pulseStream.next(event);
       if (pulseCount > 0, {
-        var gateType = types.wrapAt(i);
+        var gateType = typeStream.next(event);
         var pitch    = pitchStream.next(event);
         if (pitch.isNil) { ^inevent.yield };
         switch(

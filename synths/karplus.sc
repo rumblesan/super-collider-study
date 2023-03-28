@@ -14,7 +14,7 @@
   }).add;
 
   SynthDef(\karpluspluck, {arg out=0, gate=1, freq=100,
-    amp=0.8,
+    amp=0.8, gain=1,
     decay=1.5, fdiff=1, colour=0, damping=0.5;
     var env, imp, exciters, input, pluck;
     env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: 2);
@@ -30,7 +30,7 @@
       freq.reciprocal,
       decay,
       damping,
-    ) * 2).tanh;
+    ) * gain).tanh;
 
     Out.ar(out, pluck * amp);
   }).add;

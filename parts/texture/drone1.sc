@@ -37,7 +37,7 @@ Ndef(\higher, Pbind(
   \fattack, 5,
   \attack, 3,
   \release, 4,
-  \amp, f.proxy[2],
+  \amp, 1,
   \dur, Pwrand([10, 4], [11, 2].normalizeSum, inf),
 ))
 Ndef(\higher).quant = 10;

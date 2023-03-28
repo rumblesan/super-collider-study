@@ -2,11 +2,12 @@
 Ndef(\low, Pbind(
   \instrument, \fm3filter,
   \octave, 4,
+  \scale, Scale.minor,
   \root, -5,
   \degree, Prand([0, 3, -2], inf),
   \mod, 0.5,
-  \attack, 0.01,
-  \release, 0.4,
+  \attack, 0.2,
+  \release, 2.0,
   \gain, 0.4,
   \amp, 2,
 
@@ -24,7 +25,7 @@ Ndef(\low, Pbind(
   \dur, 8,
 ))
 
-Ndef(\low).quant = 4
+Ndef(\low).quant = 8
 
 Ndef(\low).free
 
@@ -42,8 +43,9 @@ Ndef(\low).map(\bend, Ndef(\lowThump));
 
 Ndef(\lowThump, Pcontrol(
   \percenv,
-  \curve, -8,
-  \value, 4,
+  \curve, -22,
+  \decay, 0.2,
+  \value, 3,
   \dur, Pseq([4, 1, 4, 1, 2], inf),
 ))
 Ndef(\lowThump).quant = 4
@@ -67,3 +69,4 @@ Ndef(\notbass, Pbind(
   \cutoff, 300,
   \dur, Pseq([12 ], inf),
 ))
+Ndef(\notbass).clear

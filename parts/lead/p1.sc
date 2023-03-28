@@ -3,15 +3,15 @@ Ndef(\p1, Pbind(
   \instrument, \fm3,
 
   \scale, Scale.minor,
-  \octave, 4,
+  \octave, 5,
   \root, -5,
   \degree, Pseq([0, 0, 0, 0, 0, 0, 7, 0], inf),
 
   \amp, Pseq([1, 1, 0.8, 1, 1, 0.8, 0.8, 0.8], inf),
 
   \attack, 0.001,
-  \decay, 0,
-  \legato, 0.8,
+  \decay, 0.1,
+  \legato, 0.2,
   \mod, Pseq([1.3, 1, 1], inf),
 
   \mod1, 1,
@@ -34,3 +34,4 @@ Ndef(\p1, Pbind(
     ), inf
   )
 ))
+Ndef(\p1).clear

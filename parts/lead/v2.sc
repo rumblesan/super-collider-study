@@ -4,7 +4,7 @@ Ndef(\v2, Pbind(
   \instrument, \hd,
   \scale, Scale.minor,
   \octave, 4,
-  \root, -4,
+  \root, -5,
 
   \attack, 0.01,
   \decay, 0.2,
@@ -31,11 +31,6 @@ Ndef(\v2, Pbind(
   \dur, Pseq([3, 3, 1, 1, 3, 3, 1, 1, 0.5, 0.5, 0.5], inf),
 ))
 
-(
-  s.plotTree
-  s.dumpOSC(1)
-)
-
 
 Ndef(\extenv, Pcontrol(
   \percenv,
@@ -50,4 +45,4 @@ Ndef(\extenv).quant = 4;
 
 Ndef(\v2).map(\bend, Ndef(\extenv))
 
-Ndef(\v2).scope
+Ndef(\v2).clear

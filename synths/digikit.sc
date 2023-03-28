@@ -11,7 +11,7 @@
     var rampenv = Env.perc(rampattack, rampdecay, ramp).kr() + 1;
 
     var venv = Env.perc(attack, decay, amp).kr(2);
-    var osc = SinOsc.ar(freq * modosc * rampenv, mul: venv);
+    var osc = SinOsc.ar(freq * rampenv, modosc, mul: venv);
 
     Out.ar(out, (osc * gain).tanh);
   }).add;
@@ -41,13 +41,17 @@
   SynthDef(\bkick, {arg out, amp=0.8,
     freq=50, attack=0.01, decay=0.8,
     ramp=2.0, rampattack=0.0, rampdecay=0.2,
+    noise=0.3, noiseattack=0.0, noisedecay=0.05,
     gain = 1.0;
 
     var venv = Env.perc(attack, decay, amp).kr(2);
 
     var penv = Env.perc(rampattack, rampdecay, ramp).kr(0);
-
-    var osc = SinOsc.ar(freq + (penv * freq), mul: venv);
+    var nenv = Env.perc(noiseattack, noisedecay, noise).kr(0);
+    var osc = Mix.new([
+      SinOsc.ar(freq + (penv * freq), mul: venv),
+      WhiteNoise.ar * nenv;
+    ]);
 
     Out.ar(out, (osc * gain).tanh);
   }).add;
@@ -73,6 +77,27 @@
   ~kickz.stop;
   */
 
+
+  SynthDef(\snaredrum, {arg out=0, freq=100,
+    decay = 0.6,
+    noiseMod = 0.2,
+    filterDecay = 0.2,
+    noise = 0.3, noiseDecay = 0.1;
+
+    var fenv = Env.perc(0.0, filterDecay).kr();
+    var venv = Env.perc(0.0, decay).kr(2);
+    var nenv = Env.perc(0.0, noiseDecay).kr(0);
+
+    var snaposc = LPF.ar(HPF.ar(WhiteNoise.ar(1),500), 10000) * nenv;
+    var drumosc = Pulse.ar(freq, (0.5 + (snaposc * noiseMod)));
+    var filtered = LPF.ar(drumosc,(fenv * 1000) + 30);
+    var output = Mix.new([
+      filtered,
+      snaposc * noise
+    ]);
+
+    Out.ar(out, output * venv);
+  }).add;
 
   SynthDef(\rim, {arg out, freq=50, hipass=200, decay=0.2, click=0.3, amp=0.8;
     var cenv = Env.perc(0.0, 1.8, click).kr();

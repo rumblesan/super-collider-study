@@ -8,7 +8,7 @@ Ndef(\samphats, Pbind(
   \start, Pwhite(0.4, 0.5, inf),
   \legato, 0.2,
   \dur, Pseq([2], inf),
-  \amp, -12.dbamp,
+  \amp, 1,
   \dur, Pseq([
     Pn(1, 4),
     Rest(2),

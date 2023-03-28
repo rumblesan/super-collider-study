@@ -1,41 +1,32 @@
 
 "Setup.scd".load;
 
-(
-  ~fmbass = Pbind(
-    \instrument, \fm2,
-    \freq, 100,
-    \pitchEnvDepth, 5,
-    \pitchEnvDecay, 0.05,
-    \pitchEnv, 0.3,
-    \modDepth, 0.5,
-    \bend, 0,
-    \attack, 0.25,
-    \decay, 3,
-    \legato, 0.6,
-    \ratio, 0.49,
-    \amp, 0.4,
-    \dur, 8,
-  )
-)
-~fmbass.quant = 8
-~fmbass.play
-~fmbass.clear
+Ndef(\lbass, Pbind(
+  \instrument, \pm2,
+  \root, -5,
+  \octave, 3,
+  \degree, 0,
 
-~fmbass.map(\bend, ~penv1)
+  \attack, 0.1,
+  \decay, 0.3,
+  \level, 0.0,
+  \release, 0.5,
 
-(
-  ~penv1[0] = {
-    |attack=0.01, decay=0.1, t_trig=1|
-    Env.perc(attack, decay).kr(gate: t_trig)
-  };
-  ~penv1[1] = \set -> Pn(Pfindur(16, Pbind(
-    \t_trig, 1,
-    \attack, Pwrand([0.01, 0.1], [20, 1].normalizeSum, inf),
-    \decay, Pwrand([0.1, 0.3, 0.01], [10, 3, 3].normalizeSum, inf),
-    \dur, 0.5,
-  )) , inf)
-)
+  \pattack, 0.01,
+  \pdecay, 0.03,
+  \pdepth, Prand([3, 4, 0], inf),
 
-~penv1.scope
-~penv1.clear
+  \mod, 3.1,
+  \ratio, Pseq([Pn(1, 5), 1.2, Pn(1, 7), 1.233], inf) * 2,
+  \attack1, 0.3,
+  \decay1, 0.3,
+  \level1, 0.0,
+  \release1, 0.5,
+
+  \amp, Pseq([1, 0.8, 0.8], inf),
+  \legato, 0.8,
+  \dur, 1/2,
+))
+Ndef(\lbass).quant = 8
+Ndef(\lbass).play
+Ndef(\lbass).clear

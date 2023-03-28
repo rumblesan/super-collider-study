@@ -1,13 +1,18 @@
 
 Ndef(\notson, Pbind(
   \instrument, \fm3filter,
+  \root, -5,
   \octave, Pwrand([4, 5, 6], [15, 0, 0].normalizeSum, inf),
-  \degree, -3,
+  \scale, Scale.major,
+  \degree, Pseq([
+    0, 2, Pn(0, 2), Prand([0, 2, 7]),
+    2, 0, Pn(5, 2), Prand([0, 2, 7]),
+  ], inf),
   \ratio1, 1.5,
   \mod, 0.2,
   \mod1, 1,
   \attack, 0.01,
-  \release, Pwhite(0.1, 0.3, inf),
+  \release, 0.01,
   \amp, Pseq([
     Pseq([1.2, 1, 1.2, 1], 2),
     Pseq([1.2], 4),
@@ -17,16 +22,16 @@ Ndef(\notson, Pbind(
   \gain, 2.1,
   \cutoff, 300,
 
-  \dur, 4,
-  //\dur, Pseq([
-    //3, 1,1,Rest(1), 2,
-    //3, 1, Rest(1), 1, 2, 2, 3, 1
-  //], inf) / 2,
+  //\dur, 4,
+  \dur, Pseq([
+    3, 1,1,Rest(1), 2,
+    3, 1, Rest(1), 1, 2, 2, 3, 1
+  ], inf) / 4,
 ))
 
 Ndef(\notson).quant = 4
 
-Ndef(\notson).free
+Ndef(\notson).clear
 
 Ndef(\notson).map(\cutoff, Ndef(\notsonCutoff));
 
@@ -43,6 +48,7 @@ Ndef(\notson).map(\bend, Ndef(\notsonThump));
 Ndef(\notsonThump, Pcontrol(
   \percenv,
   \curve, -8,
+  \decay, 0.1,
   \value, 8,
   \dur, Pseq([4, 1, 4, 1, 2], inf),
 ))
