@@ -4,24 +4,6 @@
 * https://github.com/vsandstrom
 */
 
-FaderProxy {
-	var mode, <bus, <proxy, <>verbose;
-	*new { |bus, proxy, mode=\bus|
-		^super.newCopyArgs(mode, bus, proxy)
-	}
-
-	fader {
-		switch(mode,
-			\bus, {bus},
-			\proxy, {proxy},
-			{proxy}
-		)
-	}
-
-	value { this.fader }
-
-}
-
 SixteenFaders {
 	classvar func;
 	var server, <mode, <busses, <proxy, scaling, verbose = false;
@@ -133,7 +115,7 @@ SixteenFaders {
 			\exp, {scaling[faderPosition] = [minVal + 0.001, maxVal, curve]},
 			{scaling[faderPosition] = [minVal, maxVal, curve]}
 		)
-		^FaderProxy(this.busAt(faderPosition), this.proxyAt(faderPosition), mode);
+		^this.fader(faderPosition);
 	}
 
 	at {|faderPosition|
