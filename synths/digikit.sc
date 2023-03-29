@@ -99,6 +99,26 @@
     Out.ar(out, output * venv);
   }).add;
 
+
+  SynthDef(\digiclap, {arg out=0,
+    attack = 0.01,
+    decay = 0.05,
+    freq = 500,
+    filterFreq = 1500,
+    feedback = 0.1,
+    q = 0.9,
+    gain = 3,
+    density = 8;
+
+    var delayTime = 0.01;
+    var noise = (BPF.ar(SinOscFB.ar(freq, feedback),filterFreq, q) * gain).tanh;
+    var clps = 10.collect({|i|
+      Env.perc(attack, decay).delay(i * density.reciprocal * delayTime).kr() * noise;
+    });
+
+    Out.ar(out, Mix.new(clps));
+  }).add;
+
   SynthDef(\clap, {arg out=0,
     attack = 0.01,
     decay = 0.05,
