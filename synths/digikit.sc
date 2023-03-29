@@ -99,6 +99,23 @@
     Out.ar(out, output * venv);
   }).add;
 
+  SynthDef(\clap, {arg out=0,
+    attack = 0.01,
+    decay = 0.05,
+    filterFreq = 1500,
+    q = 0.9,
+    gain = 3,
+    density = 8;
+
+    var delayTime = 0.01;
+    var noise = (BPF.ar(WhiteNoise.ar(1),filterFreq, q) * gain).tanh;
+    var clps = 10.collect({|i|
+      Env.perc(attack, decay).delay(i * density.reciprocal * delayTime).kr() * noise;
+    });
+
+    Out.ar(out, Mix.new(clps));
+  }).add;
+
   SynthDef(\rim, {arg out, freq=50, hipass=200, decay=0.2, click=0.3, amp=0.8;
     var cenv = Env.perc(0.0, 1.8, click).kr();
     var venv = Env.perc(0.0, decay, amp).kr(2);
