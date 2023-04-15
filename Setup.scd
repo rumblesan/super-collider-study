@@ -45,6 +45,9 @@ Task({
     d.add(k -> samples);
   });
 
+  d.add(\irs -> ImpulseResponseFolder(s, PathName("./irs"), 2048));
+  "loaded % impulse responses from % to %\n".postf(d[\irs].lookup.size, PathName("./irs"), \irs);
+
   "./synths/*.sc".loadPaths(warn: true, action: {|name| "Loaded file %\n".postf(name)});
 
   StageLimiter.activate;
