@@ -1,8 +1,8 @@
 ImpulseResponseFolder {
-  var <folderPath, <fftsize, <lookup, <buffers;
+  var <folderPath, <fftsizes, <lookup, <buffers;
 
-  *new { |server, folderPath, fftsize=2048|
-    ^super.newCopyArgs(folderPath, fftsize).init(server)
+  *new { |server, folderPath, fftsizes|
+    ^super.newCopyArgs(folderPath, fftsizes).init(server)
   }
 
   init { |server|
@@ -13,10 +13,12 @@ ImpulseResponseFolder {
 
     folderPath.entries.do({|sf, i|
       if (sf.extension == "wav", {
-        var b = ImpulseResponse(server, sf.fullPath, fftsize);
-        var key = sf.fileNameWithoutExtension.asSymbol;
-        buffers = buffers.add(b);
-        lookup[key] = b;
+        fftsizes.do({|fftsize|
+          var b = ImpulseResponse(server, sf.fullPath, fftsize);
+          var key = "%-%".format(sf.fileNameWithoutExtension, fftsize).asSymbol;
+          buffers = buffers.add(b);
+          lookup[key] = b;
+        });
       });
     });
     "loaded % samples from %\n".postf(lookup.size, folderPath);
