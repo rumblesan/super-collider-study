@@ -52,6 +52,8 @@ prime numbers up to 1000
     tankDelays = [ 1447, 727, 613, 673, 1439, 2083, 2011, 1511, 1493, 1277, 2437, 2383, 2341, 997, 1061, 2039, 1997, 1481, 1627, 1129, 743, 983, 1091, 907, 541, 2393, 1801, 2081, 1787, 1453, 977, 2311, 691, 479, 2377, 1693, 1013, 1931, 1049, 2243, 839, 739, 1747, 601, 1823, 1123, 2467, 1297, 1613, 1361, 2207, 593, 619, 1709, 449, 937 ] / samplerate;
     tankFeedback = LocalIn.ar(1);
 
+    tankFeedback = Select.ar(CheckBadValues.ar(tankFeedback, 0, 0), [tankFeedback, DC.ar(0), DC.ar(0), tankFeedback]);
+
     tankInput = [signal[0], 0, signal[1], 0];
 
     loops = tankLoops.collect({ |i|
