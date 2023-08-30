@@ -1,14 +1,11 @@
 "Setup.sc".load;
 
-Ndef(\mix,
-  {
-    Mix.new([
-      ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-      //ChannelStrip.ar(Ndef(\perc).ar(1), ~faders[1].kr(1), 0),
-      //ChannelStrip.ar({SinOsc.ar(50)}, -6.dbamp, 0),
-    ])
-  }
-)
+Ndef(\mix, {
+  Mix.new([
+    ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
+    ChannelStrip.ar({SinOsc.ar(50)}, -3.dbamp, 0),
+  ])
+})
 
 Ndef(\verb)[0] = \dirtverb;
 
@@ -16,15 +13,15 @@ Ndef(\verb).set(
   \drywet, 0.3,
   \hipass, 10,
   \lopass, 18000,
-  \predelay, 0.01,
-  \size, 0.5,
+  \predelay, 0.07,
+  \size, 0.002,
   \decay, 0.55,
-  \diffusion, 0.89,
+  \diffusion, 0.19,
   \downsampling, 0.0,
-  \gain, 1.0,
-  \damping, 0.8,
-  \feedbackHiPass, 10,
-  \width, 0.3,
+  \gain, 1.2,
+  \damping, 0.5,
+  \feedbackHiPass, 60,
+  \width, 0.6,
 )
 
 Ndef(\verb)[1] = \pset -> Pbind(
@@ -38,7 +35,13 @@ Ndef(\verb)[1] = \pset -> Pbind(
 );
 
 
-Ndef(\out, { \in.ar(0!2) * -0.dbamp }); Ndef(\out).play;
+Ndef(\out, { \in.ar(0!2) * -3.dbamp }); Ndef(\out).play;
 
 Ndef(\verb) <>> Ndef(\out)
 Ndef(\mix) <>> Ndef(\verb)
+
+
+p
+p.clock.tempo = 170/60;
+
+Ndef(\out).proxyspace.clean(Ndef(\out))
