@@ -1,11 +1,32 @@
 "Setup.sc".load;
 
-Ndef(\mix, {
-  Mix.new([
-    ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-    ChannelStrip.ar({SinOsc.ar(50)}, -3.dbamp, 0),
-  ])
+p.clock.tempo = 160/60;
+
+Ndef(\mix, {|samplerate = 1.0, bits = 16|
+  var mix = Mix.new([
+    //ChannelStrip.ar(Ndef(\kick).ar(1), -3.dbamp, 0),
+    //Ducker.ar(Ndef(\kick).ar(1) * 1, 0.01, 0.1) *
+      Mix.new([
+        ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
+        //ChannelStrip.ar({SinOsc.ar(150)}, -3.dbamp, 0),
+      ])
+  ]);
+  Decimator.ar(mix, samplerate * 44100, bits),
 })
+
+Ndef(\mix).set(\samplerate, 0.9)
+Ndef(\mix).set(\bits, 8)
+Ndef(\mix).map(\bits, Ndef(\mixbits))
+
+Ndef(\mixbits,
+  Pcontrol(
+    \mod,
+    \value, Pseq([16], inf),
+    \slew, Pseq([0], inf),
+    \dur, Pseq([2], inf)
+  )
+)
+Ndef(\mixbits).quant = 4;
 
 Ndef(\verb)[0] = \dirtverb;
 
