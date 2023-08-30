@@ -1,10 +1,3 @@
-
-/*
-  "Setup.scd".load;
-  s.plotTree
-*/
-
-
 (
 SynthDef(\thumper, {arg out=0, freq=50, amp=0.1,
   wavetableBufNum, wavetableWaves=64,

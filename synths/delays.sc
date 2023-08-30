@@ -13,10 +13,7 @@
       XFade2.ar(in, filtered, (drywet * 2) - 1));
   }, [0, \ar]).add;
 
-  SynthDef(\fourtapdelay, {arg out=0,
-    delay=0.25, timeScale=1, feedback=0.1,
-    lopass=6000,
-    drywet=0.2;
+  SynthDef(\fourtapdelay, {
 
     var delayFeedback, signal,
     maxDelay = 2.0,
@@ -25,25 +22,27 @@
     filtered, output;
 
     var in = \in.ar(0);
+    var drywet = \drywet.kr(0.2);
 
-    delay = delay.min(maxDelay);
+    var delay = \delay.kr(0.25).min(maxDelay);
     delayFeedback = LocalIn.ar(1);
 
-    signal = in + (delayFeedback * (feedback / taps));
+    signal = in + (delayFeedback * (\feedback.kr(0.1) / taps));
 
     tapSignals = taps.collect({ |j|
       var i = (j+1);
-      var delayTime = delay * i * timeScale;
+      var delayTime = delay * i * \timescale.kr(1);
       DelayC.ar(signal, maxDelay * i, delayTime);
     });
     delayOutput = Mix.new(tapSignals);
-    filtered = LPF.ar(delayOutput, lopass);
+    filtered = LPF.ar(delayOutput, \lopass.kr(6000));
+    filtered = HPF.ar(filtered, \hipass.kr(50));
 
     LocalOut.ar(filtered);
 
     output = (filtered * drywet) + (in * (1-drywet));
 
-    Out.ar(out, output);
+    Out.ar(\out.kr(0), output);
   }).add;
 )
 

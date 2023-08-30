@@ -1,4 +1,5 @@
 
+/*
 (
   SynthDef(\convverb, {arg out=0, drywet=0.2, fftsize=2048;
     var in = \in.ar(0!2);
@@ -10,3 +11,4 @@
     Out.ar(out, output);
   }).add;
 )
+*/

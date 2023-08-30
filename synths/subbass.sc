@@ -1,33 +1,36 @@
 (
-  SynthDef(\subbass, { arg out=0, freq=50, gate=1, amp=1,
-    detune=0.01, pulsewidth=0.5,
-    filterOffset=0,
-    attack=0.1, release=0.5;
-    var oscCount, env, oscs, filtered;
-    oscCount = 2;
-    env = Env.asr(attack, amp, release).kr(2, gate: gate);
-    oscs = Mix.new(oscCount.collect({|i|
-      var d = (i * detune * freq);
-      Pulse.ar(freq + d, pulsewidth);
+  SynthDef(\subbass, {
+    var freq = \freq.kr(50);
+    var env = Env.asr(
+      \attack.kr(0.1),
+      1,
+      \release.kr(0.5)
+    ).kr(Done.freeSelf, \gate.kr(1));
+
+    var oscCount = 2;
+    var snd = Mix.new(oscCount.collect({|i|
+      var d = (i * \detune.kr(0.01) * freq);
+      Pulse.ar(freq + d, \pulsewidth.kr(0.5));
     }));
-    filtered = RLPF.ar(oscs, freq * (1 + filterOffset), 0.85);
-    Out.ar(out, filtered * env);
+    snd = (snd * \gain.kr(1)).tanh * 1.2;
+    snd = RLPF.ar(snd, freq * (1 + \filteroffset.kr(0)), 0.85);
+    snd = snd * \amp.kr(1);
+    Out.ar(\out.kr(0), snd);
   }).add;
 )
 
 
 /*
-(
-  ~bass = Pbind(
-    \instrument, \subbass,
-    \octave, 3,
-    \detune, 0.02,
-    \filterOffset, 0.3,
-    \freq, Pseq([50], inf),
-    \amp, 0.7,
-    \dur, Pseq([2, 2, 1], inf),
-  )
+Ndef(\bass,
+    Pbind(
+        \instrument, \subbass,
+        \degree, Pseq([-3, -2, 0, 1], inf),
+        \octave, 3,
+        \attack, 0.1,
+        \decay, 16,
+        \amp, 1,
+        \dur, 16,
+    )
 )
-
-~bass.play
+Ndef(\bass).clear;
 */
