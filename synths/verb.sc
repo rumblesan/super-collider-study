@@ -9,7 +9,7 @@ prime numbers up to 1000
     hipass=50, lopass=6000,
     predelay=0.06,
     size=0.7, decay=0.8, diffusion=0.3,
-    downsampling=0, gain=1.0,
+    downsampling=0, bits=24, gain=1.0,
     damping=0.5, feedbackHipass=50,
     width=0.2;
     var in, tankInput, samplerate, signal,
@@ -66,7 +66,7 @@ prime numbers up to 1000
       var d3 = tankDelays[delayi + 2];
       var outdelay = DelayC.ar(ap1, d3, d3 * size);
       var distorted = (outdelay * gain).tanh * 1.3;
-      var downsampled = SmoothDecimator.ar(distorted, samplerate * (1-downsampling));
+      var downsampled = SmoothDecimator.ar(distorted, samplerate * (1-downsampling), bits);
       var filtered = OnePole.ar(downsampled, damping);
       filtered = HPF.ar(filtered, feedbackHipass);
       tankFeedback = filtered;
