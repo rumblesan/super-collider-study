@@ -4,8 +4,8 @@ p.clock.tempo = 160/60;
 Ndef(\tc1)[0] = Pbind(
   \instrument, \fm3filter,
   \octave, 4,
-  \degree, -3,
-  \ratio1, 1.5,
+  \degree, -5,
+  \ratio1, 1.0,
   \mod, Pseq([
     Pseq([0.2, 0.2, 0.7]),
     Pseq([0.2, 0.7], 2),
@@ -35,13 +35,15 @@ Ndef(\tc1).filter(1, {|in, clip=0.95|
 )
 
 Ndef(\tc1).map(\clip, Ndef(\tc1clip))
+Ndef(\tc1).unmap(\clip)
 
 Ndef(\tc1clip, Pcontrol(
   \mod,
   \value, Pseq([1, 1.8, 1, 1, 1.3, 5], inf),
   \slew, 0,
   \dur, 1/2
-))
+)
+)
 
 Ndef(\tc1clip).quant = 4;
 

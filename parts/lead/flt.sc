@@ -20,5 +20,6 @@ Ndef(\dc5, Pbind(
 
   \amp, 1,
   \dur, Pseq([16], inf),
-))
+)
+)
 Ndef(\dc5).clear;

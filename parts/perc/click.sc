@@ -12,5 +12,6 @@ Ndef(\click, Pbind(
   \dur, Pseq([
     Pn(0.5, 4), 1
   ], inf) / 2,
-))
+)
+)
 Ndef(\click).clear;

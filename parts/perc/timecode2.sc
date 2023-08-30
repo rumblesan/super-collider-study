@@ -20,7 +20,7 @@ Ndef(\tc2)[0] = Pbind(
   \timingOffset, (Pseq([0, 0.02, 0, 0], inf) + Pwhite(0, 0.01, inf)),
   \gain, Pseq([1], inf),
   \cutoff, 1300,
-  \dur, Pseq([1], inf) / 3
+  \dur, Pseq([1, 2, 1, 1/2, 1/2, 2], inf) / 2
 )
 )
 
@@ -35,10 +35,12 @@ Ndef(\tc2).map(\clip, Ndef(\tc2clip))
 Ndef(\tc2clip, Pcontrol(
   \mod,
   \value, Pseq([5, 4, 5, 0.1], inf),
-  \slew, 0,
+  \slew, 0.01,
   \dur, 1/2
-))
+)
+)
 
 Ndef(\tc2clip).quant = 4;
 
+Ndef(\tc2clip).free
 Ndef(\tc2).free
