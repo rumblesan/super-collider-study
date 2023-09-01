@@ -8,10 +8,10 @@ Ndef(\mix, {|samplerate = 1.0, bits = 16|
     //Ducker.ar(Ndef(\kick).ar(1) * 1, 0.01, 0.1) *
       Mix.new([
         ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-        //ChannelStrip.ar({SinOsc.ar(150)}, -3.dbamp, 0),
+        //ChannelStrip.ar({SinOsc.ar(50)}, -3.dbamp, 0),
       ])
   ]);
-  Decimator.ar(mix, samplerate * 44100, bits),
+  Decimator.ar(mix, samplerate * 44100, bits)
 })
 
 Ndef(\mix).set(\samplerate, 0.9)
