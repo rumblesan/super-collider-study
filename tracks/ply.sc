@@ -3,17 +3,19 @@
 Ndef(\kick,
     Pbind(
         \instrument, \modkick,
+        \degree, Pseq([Pn(0, 3), -3, Pn(0, 8), 14 ], inf),
         \degree, 0,
-        \octave, 3,
+        \root, -5,
+        \octave, Pwrand([4, 5, 6], [15, 0, 0].normalizeSum, inf),
         \attack, 0.1,
-        \decay, 1.5,
+        \decay, 0.5,
         \ramp, Pwrand([3, 16], [20, 1].normalizeSum, inf),
         \rampdecay, 0.01,
-        \gain, Pseq([Pn(2, 4), 5, Pn(3, 4), 7], inf),
-        \moddepth, Pwrand([0, 1], [20, 13].normalizeSum, inf),
-        \moddecay, 0.5,
+        \gain, Pseq([Pn(2, 4), 8, Pn(3, 4), 17], inf),
+        \moddepth, Pwrand([0, 1, 3], [20, 13, 7].normalizeSum, inf),
+        \moddecay, 0.05,
         \amp, 1,
-        \dur, 2.5,
+        \dur, 3.5, // 3.5, 2.5
     )
 )
 Ndef(\kick).quant = 4;
@@ -25,15 +27,20 @@ Ndef(\rhythmdelay1).set(
     \delay, 1.0,
     \timeScale, 1.0,
     \drywet, 1.0,
-    \feedback, 0.8,
+    \feedback, 0.0,
     \lopass, 10000,
     \dur, 2,
 )
 
 Ndef(\rhythmdelay1) <<> Ndef(\kick)
+Ndef(\rhythmdelay1).clear
 
 Ndef(\rhythmdelay1)[1] = \pset -> Pbind(
-    \timeScale, Pseq([1, 1.3], inf),
-    \feedback, Pwrand([0.8, 0.2, 1.1], [15, 3, 1].normalizeSum, inf),
-    \dur, 4,
+    \timeScale, Pwrand([
+        Pseq([1, 1.3], 3),
+        0.1
+    ], [15, 3].normalizeSum, inf),
+    //\feedback, Pwrand([0.8, 0.2, 1.1], [15, 3, 1].normalizeSum, inf),
+    \feedback, 0.3,
+    \dur, 2,
 );

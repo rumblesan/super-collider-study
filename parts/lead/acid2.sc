@@ -7,9 +7,9 @@ Ndef(\higher, PmonoArtic(
   \scale, Scale.minor,
   \legato, Pseq([0.8, 0.8, 1, 0.8, 0.8, 1, 0.8], inf),
   \wave, 0.9,
-  \gain, 0.5,
+  \gain, 0.8,
   \cutoff, 300,
-  \envmod, 1.5,
+  \envmod, 2.5,
   \resonance, 0.7,
   \attack, 0.01,
   \decay, 0.1,
@@ -21,9 +21,9 @@ Ndef(\higher, PmonoArtic(
   \frelease, 0.5,
   \freqlag, Pif( Pkey(\legato) > 0.8, 1.0, 0.1),
 ) <> Pn(Pfindur(16, Pacid(
-    \degree, Pseq([0, 0, 7, 0, 7, 0, 0, 0], inf),
+    \degree, Pseq([0, 5, 7, 0, 7, 3, 0, 0], inf),
     \pulses, Pseq([2, 2, 2, 2, 4, 2, 4, 2], inf),
-    \types, Pseq(". -.- * ", inf),
+    \types, Pseq(".*-.- * ", inf),
     \repeats, inf,
     \dur, 1/2)), inf)
 )

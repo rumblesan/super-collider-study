@@ -54,7 +54,8 @@ Ndef(\waveenv).quant = 4;
 Ndef(\kick,
     Pbind(
         \instrument, \bkick,
-        \degree, -2,
+        \root, -5,
+        \degree, 0,
         \octave, 3,
         \attack, 0.01,
         \decay, 1.0,
@@ -74,8 +75,9 @@ Ndef(\lead,
     Pbind(
         \instrument, \wavetableosc2D,
         \degree, Pseq([
-            Pn(-2, 5),
-            Pn(0, 7),
+            Pn(2, 5),
+            Pn(-2, 3),
+            Pn(3, 7),
             Pn(-2, 3),
             Pn(4, 8),
         ], inf),
@@ -100,7 +102,7 @@ Ndef(\lead).map(\offsetY, Ndef(\ymod))
 Ndef(\ymod,
     Pcontrol(
         \mod,
-        \value, Pseq([0.1, 0.15, 0.075, 0.1, 1.1], inf),
+        \value, Pseq([0.01, 0.015, 0.075, 0.01, 0.1], inf),
         \slew, 0.05,
         \dur, Pseq([1, 2, 1, 1, 4, 2, 1], inf)/2,
     )
@@ -117,7 +119,7 @@ Ndef(\gldelay) <<> Ndef(\lead)
     \delay, Pseq([0.4,
       //Prand([0.9, 0.4]),
       Prand([0.01, 0.1])], inf),
-    \delay, Pseq([0.4, 0.9], inf),
+    //\delay, Pseq([0.4, 0.9], inf),
     //\delay, 0.25,
     //\feedback, Pwrand([0.1, 0.4, 0.98], [2, 10, 1].normalizeSum, inf),
     //\lopass, 3000,

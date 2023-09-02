@@ -17,7 +17,7 @@ Ndef(\notson, Pbind(
     Pseq([1.2, 1, 1.2, 1], 2),
     Pseq([1.2], 4),
   ], inf),
-  \legato, 0.3,
+  \legato, Pseq([0.1, 0.1, 0.3, 0.1, 0.5, 0.1, 0.5], inf),
   \resonance, 0.3,
   \gain, 2.1,
   \cutoff, 300,
