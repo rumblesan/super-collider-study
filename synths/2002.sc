@@ -50,7 +50,7 @@
 (
   SynthDef(\pblip, {
     var snd = LFPulse.ar(\freq.kr(220), 0, \width.kr(0.5));
-    var venv = Env.perc(\attack.kr(0.0), \decay.kr(0.05)).kr(Done.freeSelf, \gate.kr(1.0));
+    var venv = Env.perc(\attack.kr(0.0), \decay.kr(0.05)).kr(Done.freeSelf);
     Out.ar(\out.kr(0), snd * venv * \amp.kr(1.0));
   }).add;
 )

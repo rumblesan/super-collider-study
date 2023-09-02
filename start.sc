@@ -35,18 +35,19 @@ Ndef(\verb).set(
   \hipass, 10,
   \lopass, 18000,
   \predelay, 0.07,
-  \size, 0.2,
+  \size, 0.8,
   \decay, 0.55,
   \diffusion, 0.19,
   \downsampling, 0.0,
   \gain, 1.0,
   \damping, 0.5,
-  \feedbackHiPass, 60,
+  \feedbackHiPass, 160,
   \width, 0.6,
 )
 
 Ndef(\verb)[1] = \pset -> Pbind(
   //\downsampling, Pwrand([0, 0.8, 0.9, 0.97], [10, 0, 2, 3].normalizeSum, inf),
+  //\downsampling, Pseq([Pn(0.8, 10), Pn(0.9, 12), Pn(0.8, 8), Pn(0.92, 8)], inf),
   //\drywet, Pwrand([0.2, 0.5, 0.9], [10, 2, 1].normalizeSum, inf),
   //\gain, Pwrand([1, 1.5, 4], [10, 2, 5].normalizeSum, inf),
   //\dur, Pwrand([2, 1, 0.5], [3, 7, 1].normalizeSum, inf) / 2,

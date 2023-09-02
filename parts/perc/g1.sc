@@ -5,9 +5,9 @@ Ndef(\g1, Pbind(
   \wavetableWavesX, d[\wavetables][\ph1].waves/8,
   \wavetableWavesY, d[\wavetables][\ph1].waves/8,
   \scale, Scale.minor,
-  \root, -2,
+  \root, -5,
 
-  \degree, 0,
+  \degree, Pwrand([0, -3, 5], [10, 7, 2].normalizeSum, inf),
   \attack, 0.01,
   \decay, 0.01,
   \legato, 0.1,

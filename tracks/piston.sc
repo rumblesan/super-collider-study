@@ -17,12 +17,13 @@ Ndef(\piston, Pn(Pfindur(16, PmonoArtic(
     0.25),
   \offsetX, Pseq([Pn(0, 3), 0.1, Pn(0, 5), 0.07], inf),
   \offsetY, Pwrand([0, 0.3, 0.7], [10, 3, 1].normalizeSum, inf),
-  \legato, Pwrand([0.8, 1], [7, 1].normalizeSum, inf),
+  \legato, Pwrand([0.3, 0.8, 1], [0, 7, 1].normalizeSum, inf),
   \attack, 0.01,
   \release, 0.01,
   \pitchMod, 0,
   \amp, 1,
-)), inf))
+)), inf)
+)
 
 Ndef(\piston).quant = 4
 Ndef(\piston).clear
@@ -37,5 +38,7 @@ Ndef(\pistonKick, Pcontrol(
   \value, 5,
   \offset, 0,
   \dur, Pseq([3, 3, 2, Rest(4)], inf),
-))
+)
+)
 Ndef(\pistonKick).quant = 4;
+Ndef(\pistonKick).clear

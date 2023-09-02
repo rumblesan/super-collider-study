@@ -38,14 +38,16 @@ Ndef(\clicker).clear;
 
 Ndef(\delaymix, {
   Mix.new([
-    //Ndef(\ping).ar(1),
-    Ndef(\clicker).ar(1) * -6.dbamp,
+    Ndef(\ping).ar(1),
+    //Ndef(\clicker).ar(1) * -6.dbamp,
   ])
 })
 Ndef(\delaymix).scope
+Ndef(\delaymix).clear
 
 Ndef(\gldelay)[0] = \simpledelay;
 Ndef(\gldelay) <<> Ndef(\delaymix)
+Ndef(\gldelay).clear
 
 (
   Ndef(\gldelay)[1] = \pset -> Pbind(
@@ -54,7 +56,7 @@ Ndef(\gldelay) <<> Ndef(\delaymix)
       Prand([0.9, 0.4]),
       Prand([0.01, 0.1])], inf),
     //\delay, Pseq([0.4, 0.9], inf),
-    //\delay, 0.25,
+    \delay, 0.25,
     \feedback, Pwrand([0.1, 0.4, 0.98], [2, 10, 1].normalizeSum, inf),
     //\lopass, 3000,
     //\feedback, 0.5,

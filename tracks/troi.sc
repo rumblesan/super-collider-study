@@ -59,6 +59,7 @@ Ndef(\foldmod,
   )
 )
 Ndef(\foldmod).quant = 4;
+Ndef(\foldmod).clear
 
 Ndef(\foldmod,
   Pcontrol(
@@ -73,6 +74,7 @@ Ndef(\foldmod,
 Ndef(\foldmod) <<> Ndef(\kick);
 
 Ndef(\foldmod).scope
+Ndef(\foldmod).clear
 
 
 Ndef(\perc,
@@ -116,5 +118,5 @@ Ndef(\lead, PmonoArtic(
   \dur, 1,
 )
 )
-Ndef(\acid).quant = 4;
-Ndef(\acid).clear;
+Ndef(\lead).quant = 4;
+Ndef(\lead).clear;

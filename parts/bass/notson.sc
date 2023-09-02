@@ -27,7 +27,8 @@ Ndef(\notson, Pbind(
     3, 1,1,Rest(1), 2,
     3, 1, Rest(1), 1, 2, 2, 3, 1
   ], inf) / 4,
-))
+)
+)
 
 Ndef(\notson).quant = 4
 
@@ -72,4 +73,7 @@ Ndef(\notbass, Pbind(
   \gain, 2.1,
   \cutoff, 300,
   \dur, Pseq([12 ], inf),
-))
+)
+)
+
+Ndef(\notson).clear
