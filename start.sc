@@ -1,15 +1,5 @@
 "Setup.sc".load;
 
-/*
-* ply
-* piston + parts/click
-* delay-glitch + softkick
-* thumper
-* troi
-* parts/acid
-* alles
-*/
-
 p.clock.tempo = 165/60;
 
 Ndef(\mix, {|samplerate = 1.0, bits = 16|
@@ -17,8 +7,8 @@ Ndef(\mix, {|samplerate = 1.0, bits = 16|
     //ChannelStrip.ar(Ndef(\kick).ar(1), ~faders[1].kr(1), 0),
     //Ducker.ar(Ndef(\kick).ar(1) * 0.5, 0.01, 0.2) *
       Mix.new([
-        //ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
-        //ChannelStrip.ar({SinOsc.ar(50)}, -3.dbamp, 0),
+        ChannelStrip.ar(Silent.ar, -3.dbamp, 0),
+        //ChannelStrip.ar({SinOsc.ar(50)}, ~faders[1].kr(1), 0),
       ])
   ]);
   Decimator.ar(mix, samplerate * 44100, bits)
@@ -62,9 +52,9 @@ Ndef(\verb)[1] = \pset -> Pbind(
   //\downsampling, Pwrand([0, 0.8, 0.9, 0.97], [10, 0, 2, 3].normalizeSum, inf),
   //\downsampling, Pseq([Pn(0.8, 10), Pn(0.9, 12), Pn(0.8, 8), Pn(0.92, 8)], inf),
   //\drywet, Pwrand([0.2, 0.5, 0.9], [10, 2, 1].normalizeSum, inf),
-  \gain, Pwrand([1, 1.5, 2], [10, 2, 5].normalizeSum, inf),
+  //\gain, Pwrand([1, 1.5, 2], [10, 2, 5].normalizeSum, inf),
   //\dur, Pwrand([2, 1, 0.5], [3, 7, 1].normalizeSum, inf) / 2,
-  \size, Pseq([0.4, Pn(0.8, 5), 0.01, 0.9, 0.1, Pn(0.7, 6), 0.01], inf),
+  //\size, Pseq([0.4, Pn(0.8, 5), 0.01, 0.9, 0.1, Pn(0.7, 6), 0.01], inf),
   //\damping, Pwrand([0.8, 0.2, 0.91], [15, 4, 2].normalizeSum, inf),
   \dur, 0.5,
 );
