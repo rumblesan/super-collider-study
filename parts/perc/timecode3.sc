@@ -35,7 +35,8 @@ Ndef(\gmod, Pcontrol(
   \value, Pseq([1.1, Pn(1, 3), Pn(2, 2), 1.1, 1.0, 1.7], inf),
   \slew, 0.1,
   \dur, 1/3,
-))
+)
+)
 Ndef(\gmod).quant = 4;
 
 Ndef(\tc3).map(\clip, Ndef(\cmod))
@@ -44,5 +45,6 @@ Ndef(\cmod, Pcontrol(
   \value, Pseq([0.1, Pn(1, 3), Pn(0.2, 2), 0.1, 1.0, 0.7, 0.1], inf),
   \slew, 0.1,
   \dur, 0.5,
-))
+)
+)
 Ndef(\cmod).quant = 4;

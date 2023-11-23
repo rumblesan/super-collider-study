@@ -15,7 +15,7 @@ Ndef(\bass,
   )
 )
 Ndef(\bass).clear;
-Ndef(\bass).quant = 8;
+Ndef(\bass).quant = 16;
 
 Ndef(\bass).map(\clipgain, Ndef(\clippinglow))
 Ndef(\bass).unmap(\clipgain)

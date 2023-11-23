@@ -14,9 +14,7 @@
   }).add;
 )
 
-10.collect({|i| i + 1})
-
-~faders.scale(5, 100, 2000)
+~faders.scale(9, 100, 2000)
 
 Ndef(\xone1,
   Pbind(
@@ -24,7 +22,7 @@ Ndef(\xone1,
     \degree, 0,
     \octave, 6,
     \moddepth, 0.5,
-    \ffreq, ~faders.proxyAt(5),
+    \ffreq, ~faders.proxyAt(9),
     \spread, Pshuf([1,1,1,1,1,2,10,1,1,1,1,7,1], inf),
     \attack, 0.01,
     \decay, Pwrand([0.03, 0.05], [10, 1].normalizeSum, inf),

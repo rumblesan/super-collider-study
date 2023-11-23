@@ -31,11 +31,12 @@ Ndef(\pads, Pbind(
   \detune, 0.02,
   \foffset, 4,
   \amp, -6.dbamp,
-  \dur, 8,
+  \dur, 16,
 )
 )
 Ndef(\pads).clear;
 Ndef(\pads).scope
+Ndef(\pads).quant = 16;
 
 Ndef(\kick, Pbind(
   \instrument, \bkick,

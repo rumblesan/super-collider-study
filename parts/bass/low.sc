@@ -21,9 +21,10 @@ Ndef(\low, Pbind(
   \legato, 0.8,
   \resonance, 0.3,
   \cutoff, 600,
-
+  \amp, -3.dbamp,
   \dur, 8,
-))
+)
+)
 
 Ndef(\low).quant = 8
 
@@ -36,7 +37,8 @@ Ndef(\lowmod1, Pcontrol(
   \value, Pwhite(0.0, 0.5, inf) * 8,
   \slew, 0.15,
   \dur, 0.5
-))
+)
+)
 Ndef(\lowmod1).quant = 4;
 
 Ndef(\low).map(\bend, Ndef(\lowThump));
@@ -47,7 +49,8 @@ Ndef(\lowThump, Pcontrol(
   \decay, 0.2,
   \value, 3,
   \dur, Pseq([4, 1, 4, 1, 2], inf),
-))
+)
+)
 Ndef(\lowThump).quant = 4
 
 

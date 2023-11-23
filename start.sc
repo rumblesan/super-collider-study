@@ -1,6 +1,6 @@
 "Setup.sc".load;
 
-p.clock.tempo = 165/60;
+p.clock.tempo = 160/60;
 
 Ndef(\mix, {|samplerate = 1.0, bits = 16|
   var mix = Mix.new([
@@ -28,9 +28,11 @@ Ndef(\mixbits,
 )
 Ndef(\mixbits).quant = 4;
 
-~faders.scale(14, 1, 4)
-~faders.scale(15, 0.01, 0.95)
-~faders.scale(16, 0.3, 0.99)
+(
+  ~faders.scale(14, 1, 4);
+  ~faders.scale(15, 0.01, 0.95);
+  ~faders.scale(16, 0.3, 0.99);
+)
 
 Ndef(\verb)[0] = \dirtverb;
 Ndef(\verb).set(

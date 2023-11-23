@@ -16,7 +16,8 @@ Ndef(\trmp, Pbind(
   \attack, 0.01,
   \decay, 0.5,
   \amp, 1,
-))
+)
+)
 Ndef(\trmp).clear;
 
 Ndef(\leaddly)[0] = \fourtapdelay

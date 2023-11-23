@@ -14,10 +14,13 @@ Ndef(\rad, Pbind(
   \legato, 0.05,
   \amp, Pseq([1, 0.8, 0.8], inf),
   \dur, Pseq([Pn(1, 4), Rest(1), Pn(1, 3),Rest(1), Pn(1, 6), Rest(1)], inf)/4,
-))
+)
+)
 Ndef(\rad).quant = 4;
 Ndef(\rad).play;
 Ndef(\rad).stop;
+
+Ndef(\sdelay).clear;
 
 Ndef(\sdelay)[0] = \simpledelay
 
