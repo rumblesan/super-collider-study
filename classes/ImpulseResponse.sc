@@ -1,27 +1,28 @@
 ImpulseResponseFolder {
   var <folderPath, <fftsizes, <lookup, <buffers;
 
-  *new { |server, folderPath, fftsizes|
-    ^super.newCopyArgs(folderPath, fftsizes).init(server)
+  *new { |server, folderPath, fftsizes, action|
+    ^super.newCopyArgs(folderPath, fftsizes).init(server, action)
   }
 
-  init { |server|
-    var files;
+  init { |server, action|
+    var wavFiles = folderPath.entries.select({ |file| file.extension == "wav" });
     lookup = Dictionary.new;
-    files = folderPath.entries;
     buffers = Array.new();
 
-    folderPath.entries.do({|sf, i|
-      if (sf.extension == "wav", {
-        fftsizes.do({|fftsize|
-          var b = ImpulseResponse(server, sf.fullPath, fftsize);
-          var key = "%-%".format(sf.fileNameWithoutExtension, fftsize).asSymbol;
+    Continuation.iterator([wavFiles, fftsizes].allTuples,
+      {|sfSize, continuation|
+        var sf = sfSize[0];
+        var fftsize = sfSize[1];
+        var key = "%_%".format(sf.fileNameWithoutExtension, fftsize).asSymbol;
+        var b = ImpulseResponse(server, sf.fullPath, fftsize, {
+          "    loaded % at fft size %\n".postf(sf.fullPath, fftsize);
           buffers = buffers.add(b);
           lookup[key] = b;
+          continuation.value;
         });
-      });
-    });
-    "loaded % samples from %\n".postf(lookup.size, folderPath);
+      },
+    ).value({ action.value(this); });
   }
 
   at {|key|
@@ -37,17 +38,17 @@ ImpulseResponseFolder {
 ImpulseResponse {
   var <filepath, <fftsize, <buffer, <bufnum;
 
-  *new { |server, filepath, fftsize|
-    ^super.newCopyArgs(filepath, fftsize).init(server)
+  *new { |server, filepath, fftsize, action|
+    ^super.newCopyArgs(filepath, fftsize).init(server, action)
   }
 
-  init { |server|
-    var b, irSpectrumSize;
+  init { |server, finalAction|
     Buffer.readChannel(server, filepath, channels:[0], action: {|loaded|
-      irSpectrumSize = PartConv.calcBufSize(fftsize, loaded);
+      var irSpectrumSize = PartConv.calcBufSize(fftsize, loaded);
       buffer = Buffer.alloc(server, irSpectrumSize, 1);
       buffer.preparePartConv(loaded, fftsize);
       bufnum = buffer.bufnum;
+      finalAction.value(this);
     });
   }
 

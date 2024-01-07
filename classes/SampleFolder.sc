@@ -1,23 +1,22 @@
 SampleFolder {
   var <folderPath, <lookup, <buffers;
 
-  *new { |server, folderPath|
-    ^super.newCopyArgs(folderPath).init(server)
+  *new { |server, folderPath, action|
+    ^super.newCopyArgs(folderPath, Dictionary.new, Array.new).init(server, action)
   }
 
-  init { |server|
-    var files;
-    lookup = Dictionary.new;
-    files = folderPath.entries;
-    buffers = Array.new();
-
-    folderPath.entries.do({|sf, i|
-      var b = Buffer.readChannel(server, sf.fullPath, channels:[0]);
-      var key = sf.fileNameWithoutExtension.asSymbol;
-      buffers = buffers.add(b);
-      lookup[key] = b;
-    });
-    "loaded % samples from %\n".postf(files.size, folderPath);
+  init { |server, finalAction|
+    Continuation.iterator(folderPath.entries,
+      { |sampleFile, continuation|
+        var key = sampleFile.fileNameWithoutExtension.asSymbol;
+        var b = Buffer.readChannel(server, sampleFile.fullPath, channels:[0], action:
+        {
+          lookup[key] = b;
+          buffers = buffers.add(b);
+          continuation.value;
+        });
+      },
+    ).value({|samplefolder| finalAction.value(this) });
   }
 
   at {|key|
