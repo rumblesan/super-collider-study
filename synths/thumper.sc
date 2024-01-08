@@ -1,55 +1,37 @@
 (
-SynthDef(\thumper, {arg out=0, freq=50, amp=0.1,
-  wavetableBufNum, wavetableWaves=64,
-  waveMod=0, spread=0,
-  attack=0.01, decay=0.5,
-  pattack=0.01, pdecay=0.5, pmod=0,
-  volAccent=0,
-  fold=0;
 
+SynthDef(\thumper, {
 
-  var penv, venv, oscCount, tablepos, oscs,
-  snd, folded;
+  var penv = Env.perc(\pattack.kr(0.01), \pdecay.kr(0.1), \pmod.kr(0.1), \pcurve.kr(-4.0)).kr(0);
+  var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.5), \amp.kr(0)).kr(2);
+  var nenv = Env.perc(\nattack.kr(0.01), \ndecay.kr(0.2), \noise.kr(0)).kr(0);
+  var menv = Env.perc(\mattack.kr(0.01), \mdecay.kr(0.2), \modEnv.kr(0)).kr(0);
 
-  penv = Env.perc(pattack, pdecay, pmod).kr(0);
-  venv = Env.perc(attack, decay, amp + volAccent).kr(2);
+  var noiseSig = WhiteNoise.ar * nenv;
+  var makeup = 16;
+  var oscCount = 6;
+  var freq = \freq.kr(50);
+  var spread = \spread.kr(0);
+  var modosc = Silent.ar;
+  var snd = Mix.new(oscCount.collect({|i|
+    var f, osc;
+    f = freq;
+    f = f * (1 + penv);
+    f = f * (1 + (i * spread));
+    f = f * (1 + (modosc * \mod.kr(0) * menv));
+    osc = LinSelectX.ar(\wave.kr(0.0), [
+      SinOsc.ar(f), BlitB3Tri.ar(f), Saw.ar(f), Pulse.ar(f)
+    ]) * (1/6);
+    modosc = osc;
+    osc;
+  }));
 
-  tablepos = wavetableBufNum + (waveMod * wavetableWaves);
-  oscCount = 6;
-  oscs = oscCount.collect({|i|
-    var f = freq * (1 + (i * spread)) * (1 + penv);
-    var g = 1/(i+1);
-    VOsc.ar(tablepos, f, mul: g)
-  });
-
-  snd = Mix.new(oscs) * 0.5;
-  folded = Fold.ar(snd * (fold + 1), -1, 1);
-  Out.ar(out, folded * venv);
+  snd = (snd * venv) + noiseSig;
+  snd = snd * venv;
+  snd = Fold.ar(snd * (\fold.kr(0) + 1), -1, 1);
+  snd = Clip.ar(snd * (\clip.kr(0.95) + 1), -1.0, 1.0);
+  snd = (snd * \gain.kr(1)).tanh * 3.dbamp;
+  Out.ar(\out.kr(0), snd);
 }).add;
-)
 
-// Wavetables are loaded in the setup file and can be found
-// in the d[\wavetables] dictionary
-
-/*
-(
-  ~thumper = Pbind(
-    \instrument, \thumper,
-    \freq, 50,
-    \wavetableBufNum, d[\wavetables][\ph1].bufnum,
-    \wavetableWaves, d[\wavetables][\ph1].waves,
-    \waveMod, 0.78,
-    \spread, 1.01,
-    \attack, 0.001,
-    \decay, 2.0,
-    \amp, 1,
-    \pmod, 10,
-    \pattack, 0.01,
-    \pdecay, 0.1,
-    \fold, 0.5,
-    \dur, 4,
-  )
 )
-~thumper.play;
-~thumper.clear;
-*/
