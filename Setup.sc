@@ -19,6 +19,9 @@ Task({
     //give proxyspace a tempo
     p.clock.tempo = 150/60;
     p.quant = 4.0;
+    p.fadeTime = 0.001;
+
+    r = Rest(1);
 
     d = Dictionary.new;
     d.add(\wavetables -> Dictionary.new);
