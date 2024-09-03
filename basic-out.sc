@@ -1,3 +1,7 @@
+"Setup.sc".load;
+
+p.clock.tempo = 160/60;
+
 Ndef(\mix, {|samplerate = 1.0, bits = 16|
   var mix = Mix.new([
     ChannelStrip.ar(Silent.ar, -0.dbamp, 0),
