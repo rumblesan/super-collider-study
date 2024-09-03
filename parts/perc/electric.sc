@@ -12,6 +12,7 @@ Ndef(\bass,
   )
 )
 Ndef(\bass).clear;
+Ndef(\bass).quant = 4;
 
 Ndef(\bass).map(\gain, Ndef(\bassdist));
 Ndef(\bassdist,
