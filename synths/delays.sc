@@ -1,16 +1,16 @@
 (
-  SynthDef(\simpledelay, {arg out=0, in,
-    delay=0.4, feedback=0.1, lopass=6000,
-    drywet=0.2;
-
+  SynthDef(\simpledelay, {arg out=0, in;
     var maxDelay = 4;
-    var signal = (LocalIn.ar(1) * feedback) + in;
-    var delayed = DelayN.ar(signal, maxDelay, delay);
-    var filtered = LPF.ar(delayed, lopass);
+    var signal = (LocalIn.ar(1) * \feedback.kr(0.1)) + in;
+    var delayed = DelayN.ar(signal, maxDelay, \delay.kr(0.4));
+    var filtered = LPF.ar(delayed, \lopass.kr(6000));
 
     LocalOut.ar(filtered);
     Out.ar(out,
-      XFade2.ar(in, filtered, (drywet * 2) - 1));
+      Pan2.ar(
+        XFade2.ar(in, delayed, (\drywet.kr(0.2) * 2) - 1)
+      )
+    );
   }, [0, \ar]).add;
 
   SynthDef(\fourtapdelay, {
