@@ -8,9 +8,10 @@
     var rampenv = Env.perc(\rampattack.kr(0.01), \rampdecay.kr(0.2), curve: \rampcurve.kr((-4))).ar();
 
     var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.5), \amp.kr(0.8)).ar(Done.freeSelf);
-    var osc = SinOsc.ar(freq * (rampenv * \ramp.kr(0.3) + 1), (modosc + 1), mul: venv);
+    var osc = SinOsc.ar(freq * (rampenv * \ramp.kr(0.3) + 1) * (modosc + 1), mul: venv);
 
-    Out.ar(\out.kr(0), (osc * \gain.kr(1.3)).tanh);
+    var snd = (osc * \gain.kr(1.3)).tanh;
+    Out.ar(\out.kr(0), HPF.ar(snd, \hipass.kr(50)));
   },
     variants:(
       synthetic: (moddepth: 18, moddecay: 0.03, decay: 2, ratio: 2.7, ramp: 16, rampattack: 0.0, rampdecay: 0.1, gain: 2)
@@ -203,7 +204,7 @@ Synth(\bkick, [\out, 0, \ramp, 5])
 
   SynthDef(\fmhat, {
     arg out=0, gate=1, freq=220, amp=0.8,
-    attack=0.01, decay=0.1, level=1, release=0.5,
+    attack=0.01, decay=0.1, level=1,
     pitchEnvAttack=0.01, pitchEnvDecay=0.1, pitchEnvDepth=0,
     bend=0,
     ratio=1.0, hpcutoff=1000,

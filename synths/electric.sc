@@ -4,7 +4,7 @@
   SynthDef(\sinbass, {
     var snd, venv;
     venv = Env.asr(\attack.kr(1), 1, \release.kr(3)).kr(Done.freeSelf, \gate.kr(1));
-    snd = SinOsc.ar(\freq.ar(50));
+    snd = SinOsc.ar(\freq.ar(50) + \bend.ar(0));
     snd = ((snd * \gain.ar(1.0)).tanh) * 1.3;
     snd = snd * \amp.ar(1.0);
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
