@@ -3,7 +3,7 @@ p.clock.tempo = 160/60;
 
 Ndef(\tc1)[0] = Pbind(
   \instrument, \fm3filter,
-  \octave, 4,
+  \octave, 5,
   \degree, -5,
   \ratio1, 1.0,
   \mod, Pseq([

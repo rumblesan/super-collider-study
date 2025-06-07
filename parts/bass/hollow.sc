@@ -1,7 +1,6 @@
+// NEEDS WORK
 
-"Setup.scd".load;
-
-Ndef(\lbass, Pbind(
+Ndef(\bass, Pbind(
   \instrument, \pm2,
   \root, -5,
   \octave, 3,
@@ -25,8 +24,9 @@ Ndef(\lbass, Pbind(
 
   \amp, Pseq([1, 0.8, 0.8], inf),
   \legato, 0.8,
-  \dur, 1/2,
-))
+  \dur, 8,
+)
+)
 Ndef(\lbass).quant = 8
 Ndef(\lbass).play
 Ndef(\lbass).clear

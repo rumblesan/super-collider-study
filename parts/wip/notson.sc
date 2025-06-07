@@ -1,5 +1,5 @@
 
-Ndef(\notson, Pbind(
+Ndef(\bass, Pbind(
   \instrument, \fm3filter,
   \root, -5,
   \octave, Pwrand([4, 5, 6], [15, 0, 0].normalizeSum, inf),
@@ -30,30 +30,31 @@ Ndef(\notson, Pbind(
 )
 )
 
-Ndef(\notson).quant = 4
+Ndef(\bass).quant = 4
 
-Ndef(\notson).clear
+Ndef(\bass).clear
 
-Ndef(\notson).map(\cutoff, Ndef(\notsonCutoff));
+Ndef(\bass).map(\cutoff, Ndef(\bassCutoff));
 
-Ndef(\notsonCutoff, Pcontrol(
+Ndef(\bassCutoff, Pcontrol(
   \mod,
   \value, Pseq([Pn(500, 3), 2100, 300, Pn(1000, 2), 1000], inf),
   \slew, 0.1,
   \dur, 0.5
-))
-Ndef(\notsonCutoff).quant = 4;
+)
+)
+Ndef(\bassCutoff).quant = 4;
 
-Ndef(\notson).map(\bend, Ndef(\notsonThump));
+Ndef(\bass).map(\bend, Ndef(\bassThump));
 
-Ndef(\notsonThump, Pcontrol(
+Ndef(\bassThump, Pcontrol(
   \percenv,
   \curve, -8,
   \decay, 0.1,
   \value, 8,
   \dur, Pseq([4, 1, 4, 1, 2], inf),
 ))
-Ndef(\notsonThump).quant = 4
+Ndef(\bassThump).quant = 4
 
 
 
@@ -76,4 +77,4 @@ Ndef(\notbass, Pbind(
 )
 )
 
-Ndef(\notson).clear
+Ndef(\bass).clear

@@ -1,5 +1,4 @@
-
-"Setup.scd".load;
+// NEEDS WORK
 
 Ndef(\gloss, Pbind(
   \instrument, \splay,

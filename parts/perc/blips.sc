@@ -1,6 +1,6 @@
+// NEEDS WORK
 
-
-Ndef(\flick)[0] = Pbind(
+Ndef(\blips)[0] = Pbind(
   \instrument, \fm2perc,
   \root, -5,
   \octave, 4,

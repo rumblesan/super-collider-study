@@ -12,5 +12,6 @@ Ndef(\dclap, Pbind(
   \gain, 11,
   \amp, 1,
   \dur, 2,
-))
+)
+)
 Ndef(\dclap).clear;

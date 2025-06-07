@@ -1,17 +1,19 @@
+// NEEDS WORK
+
 Ndef(\pluck)[0] = Pbind(
   \instrument, \karpluspluck,
   \feedback, 0.95,
   \fdiff, 1.5,
   \amp, 1,
   \gain, 10.0,
-  \decay, 6.0,
-  \colour, Pwrand([0.3, 0.5], [10, 3].normalizeSum, inf),
+  \decay, 2.0,
+  \colour, 0.7,
   \damping, 0.9,
   \scale, Scale.minor,
   \root, -5,
   \octave, 3,
-  //\degree, Pwrand([-5, -3, 0, 2], [15, 10, 10, 3].normalizeSum, inf),
-  \degree, Pseq([0], inf),
+  \degree, Pwrand([-5, -3, 0, 2], [15, 10, 10, 3].normalizeSum, inf),
+  //\degree, Pseq([0], inf),
   \dur, Pseq([5, 5, 3, 5, 3], inf),
 )
 Ndef(\pluck).quant = 4;

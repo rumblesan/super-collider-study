@@ -1,9 +1,9 @@
 
-Ndef(\softkick).quant = 4;
-Ndef(\softkick)[0] = Pbind(
+Ndef(\kick).quant = 4;
+Ndef(\kick)[0] = Pbind(
   \instrument, \modkick,
   \amp, Pseq([1.3, 1, 1], inf),
-  \decay, 1,
+  \decay, 0.5,
   \rdecay, 0.02,
   \mdecay, 0.3,
   \pfreq, 50,
@@ -14,4 +14,4 @@ Ndef(\softkick)[0] = Pbind(
   \dur, Pseq([3, 3, 2], inf)/2,
   )
 )
-Ndef(\softkick).clear
+Ndef(\kick).clear

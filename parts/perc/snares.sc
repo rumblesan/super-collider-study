@@ -1,6 +1,6 @@
 
 
-Ndef(\basicSnare, Pbind(
+Ndef(\snare, Pbind(
   \instrument, \snaredrum,
   \amp, 1,
   \noise, 0.3,
@@ -10,5 +10,6 @@ Ndef(\basicSnare, Pbind(
   \freq, 150,
   \noiseMod, 0.25,
   \dur, 2,
-))
+)
+)
 Ndef(\basicSnare).clear;

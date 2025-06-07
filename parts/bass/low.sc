@@ -1,5 +1,6 @@
+// NEEDS WORK
 
-Ndef(\low, Pbind(
+Ndef(\bass, Pbind(
   \instrument, \fm3filter,
   \octave, 4,
   \scale, Scale.minor,
@@ -26,24 +27,24 @@ Ndef(\low, Pbind(
 )
 )
 
-Ndef(\low).quant = 8
+Ndef(\bass).quant = 8
 
-Ndef(\low).free
+Ndef(\bass).free
 
-Ndef(\low).map(\mod1, Ndef(\lowmod1));
+Ndef(\bass).map(\mod1, Ndef(\bass));
 
-Ndef(\lowmod1, Pcontrol(
+Ndef(\bassmod1, Pcontrol(
   \mod,
   \value, Pwhite(0.0, 0.5, inf) * 8,
   \slew, 0.15,
   \dur, 0.5
 )
 )
-Ndef(\lowmod1).quant = 4;
+Ndef(\bassmod1).quant = 4;
 
-Ndef(\low).map(\bend, Ndef(\lowThump));
+Ndef(\bass).map(\bend, Ndef(\bassThump));
 
-Ndef(\lowThump, Pcontrol(
+Ndef(\bassThump, Pcontrol(
   \percenv,
   \curve, -22,
   \decay, 0.2,
@@ -51,7 +52,7 @@ Ndef(\lowThump, Pcontrol(
   \dur, Pseq([4, 1, 4, 1, 2], inf),
 )
 )
-Ndef(\lowThump).quant = 4
+Ndef(\bassThump).quant = 4
 
 
 
@@ -71,5 +72,6 @@ Ndef(\notbass, Pbind(
   \gain, 2.1,
   \cutoff, 300,
   \dur, Pseq([12 ], inf),
-))
+)
+)
 Ndef(\notbass).clear

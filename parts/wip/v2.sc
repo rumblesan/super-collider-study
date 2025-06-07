@@ -29,7 +29,8 @@ Ndef(\v2, Pbind(
     1, Pwhite(-0.2, -1, 1),
     1], inf),
   \dur, Pseq([3, 3, 1, 1, 3, 3, 1, 1, 0.5, 0.5, 0.5], inf),
-))
+)
+)
 
 
 Ndef(\extenv, Pcontrol(
@@ -40,7 +41,8 @@ Ndef(\extenv, Pcontrol(
   \value, 2,
   \offset, 0,
   \dur,Pseq([1, 2, 3, 4], inf)
-))
+)
+)
 Ndef(\extenv).quant = 4;
 
 Ndef(\v2).map(\bend, Ndef(\extenv))

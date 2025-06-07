@@ -22,7 +22,8 @@ Ndef(\thumper, Pbind(
     Pseq([2, 2, 2, 2]),
   ], inf)
 
-))
+)
+)
 
 Ndef(\thumper).quant = 4;
 Ndef(\thumper).clear;

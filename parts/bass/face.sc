@@ -1,5 +1,6 @@
+// NEEDS WORK
 
-Ndef(\face, PmonoArtic(
+Ndef(\bass, PmonoArtic(
   \face,
   \scale, Scale.minor,
   \root, -5,
@@ -19,11 +20,12 @@ Ndef(\face, PmonoArtic(
   \fold, 0.8,
   \gain, 1,
   \dur, 2,
-))
+)
+)
 
 
-Ndef(\face).quant = 16;
-Ndef(\face, PmonoArtic(
+Ndef(\bass).quant = 16;
+Ndef(\bass, PmonoArtic(
   \face,
   \scale, Scale.minor,
   \root, -5,
@@ -43,16 +45,18 @@ Ndef(\face, PmonoArtic(
   \fold, 1,
   \gain, 2,
   \dur, 16,
-))
-Ndef(\face).unmap(\lfoRate)
-Ndef(\face).map(\lfoRate, Ndef(\lfomod))
+)
+)
+Ndef(\bass).unmap(\lfoRate)
+Ndef(\bass).map(\lfoRate, Ndef(\lfomod))
 
 Ndef(\lfomod, Pcontrol(
   \mod,
   \value, Pseq([0, 1, 0.5, 1, 0, 0, 1, 1], inf) * 4,
   \slew, 0,
   \dur, 2
-))
+)
+)
 Ndef(\lfomod).quant = 4;
 
-Ndef(\face).clear;
+Ndef(\bass).clear;

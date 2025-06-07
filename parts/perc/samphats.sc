@@ -1,9 +1,10 @@
+// NEEDS WORK
 
 Ndef(\samphats, Pbind(
   \instrument, \splay,
   \bufnum, d[\texture][\vinyl],
-  \rate, 1.0,
-  \release, 0.1,
+  \rate, 8.0,
+  \release, Pwhite(0.01, 0.09, inf),
   \attack, 0.0,
   \start, Pwhite(0.4, 0.5, inf),
   \legato, 0.2,
@@ -17,7 +18,8 @@ Ndef(\samphats, Pbind(
     Pn(1, 5),
     Rest(1)
   ], inf)/4,
-))
+)
+)
 
 Ndef(\samphats).quant = 4;
 Ndef(\samphats).free

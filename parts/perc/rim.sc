@@ -1,6 +1,6 @@
 
 
-Ndef(\click, Pbind(
+Ndef(\rim, Pbind(
   \instrument, \rim,
   \degree, 0,
   \attack, 0.01,
@@ -14,4 +14,4 @@ Ndef(\click, Pbind(
   ], inf) / 2,
 )
 )
-Ndef(\click).clear;
+Ndef(\rim).clear;

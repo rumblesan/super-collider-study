@@ -1,3 +1,4 @@
+// TODO SEEMS BROKEN
 
 Ndef(\rad, Pbind(
   \instrument, \splay,
@@ -18,7 +19,7 @@ Ndef(\rad, Pbind(
 )
 Ndef(\rad).quant = 4;
 Ndef(\rad).play;
-Ndef(\rad).stop;
+Ndef(\rad).clear;
 
 Ndef(\sdelay).clear;
 

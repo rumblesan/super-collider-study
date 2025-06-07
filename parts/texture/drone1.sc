@@ -1,9 +1,9 @@
-
-"Setup.scd".load;
+// NEEDS WORK
 
 Ndef(\cort, Pbind(
   \instrument, \sawpad,
   \octave, Pwrand([3, 4], [10, 3].normalizeSum, inf),
+  \octave, 5,
   \scale, Scale.minor,
   \root, -5,
   \detune, 0.009,
@@ -17,7 +17,8 @@ Ndef(\cort, Pbind(
   \release, 4,
   \amp, 1,
   \dur, 16,
-))
+)
+)
 Ndef(\cort).quant = 16;
 Ndef(\cort).clear;
 
@@ -39,7 +40,8 @@ Ndef(\higher, Pbind(
   \release, 4,
   \amp, 1,
   \dur, Pwrand([10, 4], [11, 2].normalizeSum, inf),
-))
+)
+)
 Ndef(\higher).quant = 10;
 Ndef(\higher).clear;
 
