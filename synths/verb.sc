@@ -6,12 +6,12 @@ prime numbers up to 1000
 (
   SynthDef(\dirtverb, {arg out=0,
     drywet=0.2,
-    hipass=50, lopass=6000,
+    hipass=150, lopass=12000,
     predelay=0.06,
-    size=0.7, decay=0.8, diffusion=0.3,
+    size=0.7, decay=0.1, diffusion=0.3,
     downsampling=0, decismooth=0.5, gain=1.0,
-    damping=0.5, feedbackHipass=50,
-    width=0.2;
+    damping=0.5, feedbackHipass=200,
+    width=0.3;
     var in, tankInput, samplerate, signal,
     maxPredelay,
     reflectionCount, reflectionTimes, previousReflectionTime,
@@ -20,7 +20,7 @@ prime numbers up to 1000
 
     samplerate = SampleRate.ir;
 
-    in = \in.ar([0, 0]);
+    in = Mix.new([\in.ar([0, 0]), PinkNoise.ar(-90.dbamp)!2]);
 
     signal = in;
     signal = HPF.ar(signal, hipass);
