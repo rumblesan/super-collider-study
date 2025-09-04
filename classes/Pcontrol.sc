@@ -7,3 +7,9 @@ Pcontrol : Pmono {
 		^event !? { player };
 	}
 }
+
+NPatControl {
+	*new { |name ... args|
+		^Ndef(name, Pcontrol(*args))
+	}
+}
