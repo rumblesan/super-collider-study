@@ -18,19 +18,3 @@
     Out.ar(\out.kr(0), snd);
   }).add;
 )
-
-
-/*
-Ndef(\bass,
-    Pbind(
-        \instrument, \subbass,
-        \degree, Pseq([-3, -2, 0, 1], inf),
-        \octave, 3,
-        \attack, 0.1,
-        \decay, 16,
-        \amp, 1,
-        \dur, 16,
-    )
-)
-Ndef(\bass).clear;
-*/

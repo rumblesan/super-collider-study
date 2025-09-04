@@ -1,11 +1,8 @@
 
-(
-Ndef(\ping, Pbind(
+NPatLoop(\ping, 16,
   \instrument, \ping,
   \decay, Pwrand([0.4, 1], [10, 2].normalizeSum, inf),
   \octave, 5,
-  \root, -5,
-  \scale, Scale.minor,
   \degree, Pwrand([0, 2, 7, -12, 10], [1, 3, 4, 0].normalizeSum, inf),
   \dur, Pseq([4, 4, 1, 0.25, 0.25, 0.5], inf),
   \ptrig, Pseq([1, 1, 0, 1, 1, 0, 0], inf),
@@ -13,7 +10,6 @@ Ndef(\ping, Pbind(
   \pdecay, Prand([0.05], inf),
   \distamp, 0,
   \amp, 1,
-))
 )
 
 Ndef(\ping).quant = 4;

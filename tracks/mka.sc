@@ -4,8 +4,8 @@ p.clock.tempo = 160/60;
 Ndef(\kick, Pbind(
   \instrument, \bkick,
   \freq, 50,
-  \attack, 0.1,
-  \decay, Pseq([0.5, 0.5, 0.01, 0.01, 0.5, 0.9, 0.01, 0.01], inf),
+  \attack, Pwrand([0.1, 0.9], [10, 1].normalizeSum, inf)
+  \decay, 0.1,
   \ramp, 25,
   \rampattack, 0.0,
   \rampdecay, 0.035,
@@ -13,7 +13,9 @@ Ndef(\kick, Pbind(
   \gain, 2,
 
   \amp, 1,
-  \dur, Pseq([3, 3, 2, 3, 3, 2], inf) / 2,
+  \dur, Pseq([
+    3, 3, 2, 1,1,1, 3, 2
+  ], inf) / 2,
 )
 )
 Ndef(\kick).clear;
@@ -47,7 +49,7 @@ Ndef(\mkalead, Pbind(
   \decay2, 0.1,
   \dur, Pn(
     Pfinval(16,
-      Pseq([Rest(1), Pn(1/3, 3), Rest(0.5), Prand([Pn(1/3, 3), 1])], inf)
+      Pseq([Rest(1), Pn(1/3, 3), Rest(0.5), Prand([Pn(1/3, 3), 1])], inf) * 4
     ), inf
   )
 ))
@@ -60,7 +62,11 @@ Ndef(\mkapad, Pbind(
   \scale, Scale.minor,
   \octave, 4,
   \root, -5,
-  \degree, Pseq([[0, 3, 5]], inf),
+  \degree, Pseq([
+    [0, 3, 5],
+    [0, 3, 5] + 3,
+    [0, 3, 5] + 5,
+  ], inf),
 
   \amp, 1,
 

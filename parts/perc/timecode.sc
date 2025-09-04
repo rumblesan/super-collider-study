@@ -1,31 +1,21 @@
 
 p.clock.tempo = 160/60;
 
-Ndef(\tc1)[0] = Pbind(
+Npat(\tc1,
   \instrument, \fm3filter,
-  \octave, 5,
-  \degree, -5,
-  \ratio1, 1.0,
-  \mod, Pseq([
-    Pseq([0.2, 0.2, 0.7]),
-    Pseq([0.2, 0.7], 2),
-  ], inf),
+  \octave, 6,
+  \ratio1, Pseq([Pn(1.7, 4), Pn(3.6, 4), Pn(1, 2), Pn(6, 6)], inf),
+  \mod, Pseq([Pn(0.2, 5), Pn(3.4, 3), Pn(0.2, 2), Pn(1.7, 1)], inf) * 3,
   \mod1, 8,
-  \attack, 0.01,
-  \release, 0.01,
-  \amp, Pseq([
-    Pseq([1, 0.8, 0.8],2),
-    Pseq([1, 0.8],2),
-  ], inf
-  ),
-  \legato, 0.8,
+  \attack, 0.00,
+  \release, Pwhite(0.2, 0.55, inf),
+  \legato, 0.3,
   \resonance, 0.3,
-  \gain, Pseq([
-    Pseq([3, 1.5, 1.5], 2),
-    Pseq([3, 1.5], 2),
-  ], inf),
-  \cutoff, 300,
-  \dur, Pseq([1], inf) / 3
+  \gain, Pseq([3], inf),
+  \cutoff, 200,
+  \dur, Pseq([
+    1, 1, Pn(0.5, 3), 1, 0.5, 1, Pn(0.5, 4)
+  ], inf) / 4
 )
 
 (

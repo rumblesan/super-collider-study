@@ -13,7 +13,7 @@ Ndef(\blips)[0] = Pbind(
     0.25),
   \attack, 0.01,
   \attack1, 0.001,
-  \release, Pwrand([0.05, 0.1, 0.3], [5, 10, 5].normalizeSum, inf),
+  \release, Pwrand([0.05, 0.1, 0.3], [5, 0, 0].normalizeSum, inf),
   \envPMod, 3,
   \envModMod, 5,
   \mod, 3,
@@ -24,4 +24,4 @@ Ndef(\blips)[0] = Pbind(
   \legato, Pwrand([0.1, 0.3, 0.7], [20, 7, 2].normalizeSum, inf),
   \amp, Pseq([1.1, 1, 1, 1.1, 1.1, 1, 1.1, 1], inf),
 )
-Ndef(\flick).clear;
+Ndef(\blips).clear;

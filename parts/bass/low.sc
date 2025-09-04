@@ -1,37 +1,33 @@
-// NEEDS WORK
-
-Ndef(\bass, Pbind(
+NpatLoop(\bass, 16,
   \instrument, \fm3filter,
-  \octave, 4,
-  \scale, Scale.minor,
-  \root, -5,
-  \degree, Prand([0, 3, -2], inf),
-  \mod, 0.5,
-  \attack, 0.2,
-  \release, 2.0,
-  \gain, 0.4,
-  \amp, 2,
+  \octave, 3,
+  \degree, 0,
+  \mod, Pseq([Pn(0.3, 3), 2, 3, Pn(0.4, 3)], inf),
+  \attack, 0.00,
+  \release, 0.00,
+  \gain, Pseq([Pn(0.4, 2), 2, Pn(0.4, 2), 0.7], inf) * 3,
 
-  \mod1, 1,
-  \ratio1, 1.5,
+  \mod1, 5,
+  \ratio1, 13.5,
   \output1Mix, 0.0,
   \mod2, 0.1,
-  \ratio2, 0.5,
+  \ratio2, 3.5,
   \output2Mix, 0.0,
 
   \legato, 0.8,
   \resonance, 0.3,
   \cutoff, 600,
-  \amp, -3.dbamp,
-  \dur, 8,
-)
+  \dur, Pseq([
+    3, 3, 2, 2, 0.5, 0.5,
+    1.5, 2, 0.5, 0.5, 1.5
+  ], inf),
 )
 
 Ndef(\bass).quant = 8
 
 Ndef(\bass).free
 
-Ndef(\bass).map(\mod1, Ndef(\bass));
+Ndef(\bass).map(\mod1, Ndef(\bassmod1));
 
 Ndef(\bassmod1, Pcontrol(
   \mod,

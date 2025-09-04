@@ -1,8 +1,8 @@
 
-Ndef(\dclap, Pbind(
+NPatLoop(\dclap, 16,
   \instrument, \digiclap,
-  \feedback, Pwrand([0.5, 2, 7], [10, 3, 1].normalizeSum, inf),
-  \degree, Pseq([0, 0, 2, 0, 0, 0, 2], inf),
+  \feedback, 0.5,
+  \degree, 0,
   \filterFreq, 1000,
   //\attack, 0.01,
   \decay, 0.008,
@@ -11,7 +11,7 @@ Ndef(\dclap, Pbind(
   //\q, 0.9,
   \gain, 11,
   \amp, 1,
-  \dur, 2,
+  \dur, Pbjorklund2(5, 8, inf) * (4/3),
 )
-)
+Ndef(\dclap).quant = 8;
 Ndef(\dclap).clear;

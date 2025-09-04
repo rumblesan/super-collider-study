@@ -8,20 +8,16 @@ Ndef(\piston, Pn(Pfindur(16, PmonoArtic(
   \wavetableWavesY, d[\wavetables][\ph1].waves/8,
   \scale, Scale.minor,
   \root, -5,
-  \octave, 3,
-  [\degree, \dur], Pmetro(
-    Pseq([0, 3, 7, 0, 7, 5], inf),
-    Pseq([2,2,4,2,1,3], inf),
-    ".-  .-.-",
-    inf,
-    0.25),
+  \octave, Pwrand([4, 3], [10, 2].normalizeSum, inf),
+  \degree, 0,
   \offsetX, Pseq([Pn(0, 3), 0.1, Pn(0, 5), 0.07], inf),
   \offsetY, Pwrand([0, 0.3, 0.7], [10, 3, 1].normalizeSum, inf),
-  \legato, Pwrand([0.3, 0.8, 1], [1, 5, 1].normalizeSum, inf),
+  \legato, 0.18,
   \attack, 0.01,
-  \release, 0.01,
+  \release, Pwhite(0.05, 0.15, inf),
   \pitchMod, 0,
   \amp, 1,
+  \dur, Pseq([1, 1, 3, 1, 1, 1, 2], inf) / 4,
 )), inf)
 )
 
