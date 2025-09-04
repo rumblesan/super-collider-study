@@ -36,6 +36,6 @@
       modulator2 * output2Mix,
     ]);
     filter = BMoog.ar(mix * gain, cutoff, resonance) * venv * amp;
-    Out.ar(out, filter!2);
+    Out.ar(out, Pan2.ar(filter, \pan.kr(0)));
   }).add;
 )

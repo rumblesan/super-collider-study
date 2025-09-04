@@ -9,25 +9,8 @@
     var f = RHPF.ar(RLPF.ar(n, lpfreq, q), hpfreq, q);
     var g = (f * gain).clip2;
     var env = Env.asr(attack, amp, decay).kr(2, gate: gate);
-    Out.ar(out, g * env);
+    var snd = g * env;
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 )
-
-/*
-(
-  ~nperc = Pbind(
-    \instrument, \fnoise,
-    \attack, 0.01,
-    \decay, 0.1,
-    \hpfreq, 1500,
-    \gain, 0.7,
-    \legato, 0.05,
-    \amp, 0.7,
-    \dur, 2,
-  )
-)
-~nperc.quant = 4
-~nperc.play
-~nperc.stop
-*/

@@ -87,36 +87,3 @@ prime numbers up to 1000
     Out.ar(out, output);
   }).add;
 )
-
-/*
-
-
-~mix = {SinOsc.ar(100)}
-~mix.play
-~mix.stop
-
-~outverb[0] = \verb;
-~outverb <<> ~mix
-~outverb.play;
-~outverb.clear;
-
-~outverb.set(\drywet, 0.5);
-~outverb.set(\hipass, 90);
-~outverb.set(\lopass, 6000);
-
-~lfo = {SinOsc.ar(0.1, add: 2) * 0.1}
-
-~outverb[1] = \pset -> Pbind(
-  \predelay, Pseq([0.1, 0.003, 0.01, 0.1, 0.2], inf),
-  \size, Pwrand([0.01, 0.9, 0.5], [3, 0, 7].normalizeSum, inf),
-  \diffusion, 0.9,
-  \downsampling, Pwrand([0, 0.9, 0.93, 0.99], [7, 3, 9, 1].normalizeSum, inf),
-  \gain, Pwrand([1.5, 2.7], [15, 0].normalizeSum, inf),
-  \damping, ~lfo,
-  \width, Pwrand([0, 0.3, 0.9], [10, 3, 1].normalizeSum, inf),
-  \dur, Pseq([0.5, 0.5, 0.25, 0.25], inf),
-)
-
-
-
-*/

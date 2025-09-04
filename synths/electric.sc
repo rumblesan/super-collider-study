@@ -1,4 +1,3 @@
-
 (
 
   SynthDef(\sinbass, {
@@ -17,9 +16,7 @@
     blip = Env.perc(0.0, \blipdecay.ar(0.5), 1.0, \curve.ar(-4.0)).ar(Done.freeSelf);
     snd = LPF.ar(((blip * 0.3) + pulse), \freq.ar(200), \q.ar(0.7)) * \amp.kr(1.0);
     snd = (snd * \gain.ar(20)).clip2;
-    Out.ar(\out.kr(0),
-      Pan2.ar(snd, \pan.kr(0))
-    );
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\ping, {
@@ -32,18 +29,18 @@
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.ar(0)));
   }).add;
 
-  SynthDef('elkick',
-    {
-      var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.8)).kr(Done.freeSelf);
+  SynthDef('elkick', {
+    var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.8)).kr(Done.freeSelf);
 
-      var penv = Env.perc(\rampattack.kr(0.0), \rampdecay.kr(0.02)).ar() * \ramp.kr(2.0);
-      var nenv = Env.perc(\noiseattack.kr(0.0), \noisedecay.kr(0.05)).ar() * \noise.kr(0.3);
-      var osc = Mix.new([
-        SinOsc.ar(\freq.kr(50) * (penv + 1)) * venv,
-        WhiteNoise.ar * nenv;
-      ]);
+    var penv = Env.perc(\rampattack.kr(0.0), \rampdecay.kr(0.02)).ar() * \ramp.kr(2.0);
+    var nenv = Env.perc(\noiseattack.kr(0.0), \noisedecay.kr(0.05)).ar() * \noise.kr(0.3);
+    var osc = Mix.new([
+      SinOsc.ar(\freq.kr(50) * (penv + 1)) * venv,
+      WhiteNoise.ar * nenv;
+    ]);
+    var snd = ((osc * \gain.kr(1.0)).tanh) * \amp.kr(0.8);
 
-      Out.ar(\out.kr(0), (osc * \gain.kr(1.0)).tanh) * \amp.kr(0.8);
-    }).add;
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.ar(0)));
+  }).add;
 
 )

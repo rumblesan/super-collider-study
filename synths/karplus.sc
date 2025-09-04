@@ -10,7 +10,7 @@
     input = LinSelectX.ar(colour * exciters.size, exciters);
 
     comb = (CombC.ar(imp * input, freq.reciprocal, freq.reciprocal, decay) * 2).tanh;
-    Out.ar(out, comb * amp);
+    Out.ar(out, Pan2.ar(comb * amp, \pan.kr(0)));
   }).add;
 
   SynthDef(\karpluspluck, {arg out=0, gate=1, freq=100,
@@ -32,7 +32,7 @@
       damping,
     ) * gain).tanh;
 
-    Out.ar(out, pluck * amp);
+    Out.ar(out, Pan2.ar(pluck * amp, \pan.kr(0)));
   }).add;
 
   SynthDef(\karplusdelay, {arg out=0,
@@ -58,6 +58,6 @@
 
     LocalOut.ar(output);
 
-    Out.ar(out, output * amp);
+    Out.ar(out, Pan2.ar(output * amp, \pan.kr(0)));
   }).add;
 )

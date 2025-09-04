@@ -11,18 +11,6 @@ SynthDef(\pad, {arg out, freq = 60, amp = 0.1, gate = 1, fmod = 1;
 }).add;
 );
 
-//(
-  //~pad = Pbind(
-    //\instrument, \pad,
-    //\note, Pseq([1, 3, 8, 6 -5, 5], inf),
-    //\dur, Pseq([1, 1, 2, 1, 2], inf) / 4,
-    //\fmod, Pseq([1, 1.3, 2, 2.1, 1.6], inf),
-    //\amp, 2,
-  //)
-//)
-//~pad.play;
-//~pad.clear;
-
 (
   SynthDef(\bassTone, {arg out, freq = 60, amp = 0.7, gate = 1;
     var pwmod, osc, env, lpf;
@@ -33,16 +21,3 @@ SynthDef(\pad, {arg out, freq = 60, amp = 0.1, gate = 1, fmod = 1;
     Out.ar(out, Splay.ar(lpf));
   }).add;
 );
-
-
-//(
-  //~bassseq = Pbind(
-    //\instrument, \bassTone,
-    //\note, Pseq([1], inf),
-    //\ctranspose, -24,
-    //\dur, Pseq([0.5, Rest(0.5)], inf),
-    //\amp, 1,
-  //)
-//)
-//~bassseq.play;
-//~bassseq.clear;

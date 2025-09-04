@@ -8,7 +8,6 @@
     output1Mix=0,
     mod21=0
     ;
-    var carrier, mix;
     var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
     var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
 
@@ -16,17 +15,14 @@
       (freq * ratio1 * (1 + modBend1)), mul: mod1Env
     );
 
-    carrier = SinOsc.ar(
+    var carrier = SinOsc.ar(
       (
         freq +
         (modulator1 * mod1 * mod * freq)
       ) * (1 + bend));
 
-    mix = Mix.new([
-      carrier,
-      modulator1 * output1Mix,
-    ]);
-    Out.ar(out, carrier * venv * amp);
+    var snd = carrier * venv * amp;
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\fm2perc, {arg out=0, gate=1, freq=220, amp=0.8,
@@ -39,7 +35,6 @@
     output1Mix=0,
     mod21=0
     ;
-    var carrier, mix;
     var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
     var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
     var pEnv = Env.adsr(modEnvAttack, modEnvDecay, modEnvLevel, modEnvRelease).kr(gate: gate);
@@ -48,16 +43,13 @@
       (freq * ratio1 * (1 + modBend1) * (1 + (pEnv * envModMod))), mul: mod1Env
     );
 
-    carrier = SinOsc.ar(
+    var carrier = SinOsc.ar(
       freq * (1 + bend) * (1 + (pEnv * envPMod)),
       (modulator1 * mod1 * mod)
     );
 
-    mix = Mix.new([
-      carrier,
-      modulator1 * output1Mix,
-    ]);
-    Out.ar(out, carrier * venv * amp);
+    var snd = carrier * venv * amp;
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\fm3, {arg out, freq=50, gate=1, amp=0.8,
@@ -71,7 +63,6 @@
     output2Mix=0,
     mod21=0
     ;
-    var carrier, mix;
     var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
     var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
     var mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
@@ -82,19 +73,20 @@
       (freq * mod21 * modulator2 * mod), mul: mod1Env
     );
 
-    carrier = SinOsc.ar(
+    var carrier = SinOsc.ar(
       (
         freq +
         (modulator1 * mod1 * mod * freq) +
         (modulator2 * mod2 * mod * freq)
       ) * (1 + bend));
 
-    mix = Mix.new([
+    var mix = Mix.new([
       carrier,
       modulator1 * output1Mix,
       modulator2 * output2Mix,
     ]);
-    Out.ar(out, carrier * venv * amp);
+    var snd = carrier * venv * amp;
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\fm4, {arg out, freq=50, gate=1, amp=0.8,
@@ -113,22 +105,21 @@
     output3Mix=0,
     mod31=0
     ;
-    var venv, modulator3, mod3Env, modulator2, mod2Env, modulator1, mod1Env, carrier, mix;
-    venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    mod3Env = Env.adsr(attack3, decay3, level3, release3).kr(gate: gate);
-    mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
-    mod1Env = Env.adsr(attack1, decay1, level2, release1).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
+    var mod3Env = Env.adsr(attack3, decay3, level3, release3).kr(gate: gate);
+    var mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
+    var mod1Env = Env.adsr(attack1, decay1, level2, release1).kr(gate: gate);
 
-    modulator3 = SinOsc.ar(freq * ratio3 + (freq * modBend3), mul: mod3Env);
-    modulator2 = SinOsc.ar(freq * ratio2 + (freq * modBend2), mul: mod2Env);
-    modulator1 = SinOsc.ar(
+    var modulator3 = SinOsc.ar(freq * ratio3 + (freq * modBend3), mul: mod3Env);
+    var modulator2 = SinOsc.ar(freq * ratio2 + (freq * modBend2), mul: mod2Env);
+    var modulator1 = SinOsc.ar(
       (freq * ratio1 + (freq * modBend1)) +
       (freq * mod21 * modulator2 * mod) +
       (freq * mod31 * modulator3 * mod),
       mul: mod1Env
     );
 
-    carrier = SinOsc.ar(
+    var carrier = SinOsc.ar(
       freq +
       (modulator1 * mod1 * mod * freq) +
       (modulator2 * mod2 * mod * freq) +
@@ -136,16 +127,9 @@
       (freq * bend)
     );
 
-    mix = Mix.new([
-      carrier,
-      modulator1 * output1Mix,
-      modulator2 * output2Mix,
-      modulator3 * output3Mix,
-    ]);
+    var snd = carrier * venv * amp;
 
-    mix = LeakDC.ar(mix);
-
-    Out.ar(out, carrier * venv * amp);
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }, variants: (
     organ: [
       mod: 1, attack: 0.2, decay: 0.5, level: 1.0, release: 2.5,

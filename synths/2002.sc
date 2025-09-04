@@ -11,8 +11,9 @@
     snd = (snd * \fold.kr(1.3)).fold2;
     snd = (snd * \clip.kr(1.3)).clip2;
     snd = (snd.amclip(SinOsc.ar(freq * \ratio.ar(3))));
+    snd = snd * venv;
 
-    Out.ar(\out.kr(0), snd * venv);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   },
     variants: (
       low:  [attack: 0.0, release: 0.03, clip: 1, fold: 1, ratio: 2],
@@ -32,8 +33,9 @@
     var snd = SinOsc.ar(freq);
     snd = Decimator.ar(snd, (\samplerate.kr(1.0) * (1 - sampenv)) * 44100, \bits.kr(24));
     snd = (snd * \gain.kr(1.3)).clip2;
+    snd = snd * venv;
 
-    Out.ar(\out.kr(0), snd * venv);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 
@@ -42,7 +44,8 @@
     var snd = LFPulse.ar(\freq.kr(220), 0, \width.kr(0.5));
     var venv = Env.perc(\attack.kr(0.0), \decay.kr(0.05)).kr(Done.freeSelf);
     venv = venv * (1 + \penv.kr(1));
-    Out.ar(\out.kr(0), snd * venv * \amp.kr(1.0));
+    snd = snd * venv * \amp.kr(1.0);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )
 

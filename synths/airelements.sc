@@ -12,6 +12,6 @@
 
     snd = snd * venv;
 
-    Out.ar(\out.kr(0), snd);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )

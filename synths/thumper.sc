@@ -31,7 +31,7 @@ SynthDef(\thumper, {
   snd = Fold.ar(snd * (\fold.kr(0) + 1), -1, 1);
   snd = Clip.ar(snd * (\clip.kr(0.95) + 1), -1.0, 1.0);
   snd = (snd * \gain.kr(1)).tanh * 3.dbamp;
-  Out.ar(\out.kr(0), snd);
+  Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
 }).add;
 
 )

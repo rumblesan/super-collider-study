@@ -7,11 +7,11 @@
     wavetableBufNum,
     wavetableWaves,
     offset=0|
-    var env, tablepos;
 
-    env = Env.asr(attack, amp, release).kr(2, gate: gate);
-    tablepos = wavetableBufNum + (offset.mod(1) * wavetableWaves);
-    Out.ar(out, VOsc.ar(tablepos, freq * (1 + pitchMod), mul: env));
+    var env = Env.asr(attack, amp, release).kr(2, gate: gate);
+    var tablepos = wavetableBufNum + (offset.mod(1) * wavetableWaves);
+    var snd = VOsc.ar(tablepos, freq * (1 + pitchMod), mul: env);
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\wavetableosc2D,{ |out=0, freq=100, gate=1, amp=1,
@@ -20,12 +20,12 @@
     wavetableBufNum,
     wavetableWavesX, wavetableWavesY,
     offsetX=0, offsetY=0|
-    var env, x, y,  tablepos;
 
-    env = Env.asr(attack, amp, release).kr(2, gate: gate);
-    x = offsetX.mod(1) * wavetableWavesX;
-    y = offsetY.mod(1) * wavetableWavesY * (wavetableWavesX - 1);
-    tablepos = wavetableBufNum + x + y;
-    Out.ar(out, VOsc.ar(tablepos, (freq * (1 + pitchMod)), mul: env));
+    var env = Env.asr(attack, amp, release).kr(2, gate: gate);
+    var x = offsetX.mod(1) * wavetableWavesX;
+    var y = offsetY.mod(1) * wavetableWavesY * (wavetableWavesX - 1);
+    var tablepos = wavetableBufNum + x + y;
+    var snd = VOsc.ar(tablepos, freq * (1 + pitchMod), mul: env);
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )

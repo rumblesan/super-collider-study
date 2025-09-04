@@ -13,8 +13,9 @@
     var menv = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
 
     var modOsc = SinOsc.ar(freq * ratio, mul: menv);
+    var snd = SinOsc.ar(freq * penv * (1+bend), phase: modOsc * mod, mul: venv * amp);
 
-    Out.ar(out, SinOsc.ar(freq * penv * (1+bend), phase: modOsc * mod, mul: venv * amp));
+    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 )

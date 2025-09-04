@@ -1,10 +1,4 @@
-
-/*
-  "Setup.scd".load;
-  s.plotTree
-*/
-
-
+// WIP
 (
 SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
   detune=0,
@@ -18,7 +12,7 @@ SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
 
   ;
 
-  var lfo, widthLfo, modEnv, volEnv, oscCount, tablepos, oscs, snd;
+  var lfo, widthLfo, modEnv, volEnv, snd;
 
   lfo = SinOsc.kr(lfoRate, mul: lfoMod.min(0.999));
   widthLfo = SinOsc.kr(widthModRate, mul: widthMod, add: 0.5);
@@ -39,6 +33,7 @@ SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
   ]) * 0.25;
   snd = Fold.ar(snd * (fold + 1), -1, 1);
   snd = BMoog.ar(snd * gain, cutoff * (1 + lfo), q) * volEnv * amp;
-  Out.ar(out, snd * volEnv);
+  snd = snd * volEnv;
+  Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
 }).add;
 )

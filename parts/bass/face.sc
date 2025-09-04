@@ -1,4 +1,4 @@
-// NEEDS WORK
+// WIP
 
 Ndef(\bass, PmonoArtic(
   \face,

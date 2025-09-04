@@ -13,12 +13,13 @@
       var fenv = Env.adsr(fattack, fdecay, flevel, frelease).kr(gate: gate);
       var venv = Env.adsr(attack, decay, level, release).kr(2, gate: gate);
       var osc = XFade2.ar(Pulse.ar(f), Saw.ar(f), (wave * 2) - 1) * gain;
-      var sig = Mix.new([
+      var snd = Mix.new([
         osc,
         Pulse.ar(f/2) * sub,
       ]);
-      sig = HPF.ar(sig, hipass);
-      sig = BMoog.ar(sig, ((fenv * envmod) + 1) * cutoff, resonance) * gain.min(1).reciprocal;
-      Out.ar(out, sig * venv * amp)
+      snd = HPF.ar(snd, hipass);
+      snd = BMoog.ar(snd, ((fenv * envmod) + 1) * cutoff, resonance) * gain.min(1).reciprocal;
+      snd = snd * venv * amp;
+      Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )

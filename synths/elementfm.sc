@@ -21,6 +21,6 @@
     snd = snd * \amp.kr(1);
     snd = HPF.ar(snd, \hipass.kr(100));
 
-    Out.ar(\out.kr(0), snd);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )
