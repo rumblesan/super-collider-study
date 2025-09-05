@@ -8,7 +8,7 @@ Pcontrol : Pmono {
 	}
 }
 
-NPatControl {
+NpatControl {
 	*new { |name ... args|
 		^Ndef(name, Pcontrol(*args))
 	}
