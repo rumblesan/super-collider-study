@@ -1,48 +1,50 @@
 WaveTableFile {
-  var <filepath, <waves, <frames,
+  var <filePath, <waves, <frames,
   <bufnum, <buffers;
 
-  *new { |server, filepath, frameCount, waveCount, action|
-    ^super.newCopyArgs(filepath, waveCount, frameCount).init(server, action)
+  *new { |filePath, waveCount, frameCount|
+    ^super.newCopyArgs(filePath, waveCount, frameCount)
   }
 
-  init { |server, finalAction|
-    var tempfile, raw, recurLoad;
-    tempfile = SoundFile.openRead(filepath);
-    if (tempfile.numFrames < (waves * frames), {
-      "% file is not large enough to have % wavetables of % samples\n".postf(filepath, waves, frames);
+  *loadFolderAsync { |server, filePath, waveCount, frameCount, finalAction|
+    var tempfile, raw, waveTableFile, waveTableBuffers;
+    tempfile = SoundFile.openRead(filePath);
+    if (tempfile.numFrames < (waveCount * frameCount), {
+      "% file is not large enough to have % wavetables of % samples\n".postf(filePath, waveCount, frameCount);
       ^nil
     });
-    raw = FloatArray.newClear(waves * frames);
+    raw = FloatArray.newClear(waveCount * frameCount);
     tempfile.readData(raw);
     tempfile.close;
+    waveTableFile = WaveTableFile.new(filePath, waveCount, frameCount);
     // buffers are double the size because of the wavetable structure
-    buffers = Buffer.allocConsecutive(waves, server, frames * 2, 1);
+    waveTableBuffers = Buffer.allocConsecutive(waveCount, server, frameCount * 2, 1);
 
-    Continuation.iterator(buffers,
+    Continuation(waveTableBuffers,
       { |buffer, continuation, idx|
         var offset, signal, wavetable;
-        offset = idx * frames;
+        offset = idx * frameCount;
         signal = Signal.newFrom(
-          raw.copyRange(offset, offset + (frames - 1))
+          raw.copyRange(offset, offset + (frameCount - 1))
         );
         wavetable = signal.asWavetable;
         buffer.loadCollection(wavetable, action: continuation);
       },
-    ).value(finalAction);
-
-    bufnum = buffers[0].bufnum;
+      {
+        waveTableFile.add(waveTableBuffers);
+        finalAction.value(waveTableFile);
+      }
+    ).value();
   }
 
   at {|index|
     ^buffers[index]
   }
 
+  add {|waveTableBuffers|
+    buffers = waveTableBuffers;
+    bufnum = buffers[0].bufnum;
+    ^this;
+  }
+
 }
-
-
-/*
-  s.boot;
-  x = WaveTableFile.new(s, "./wavetables/pistonhonda/1.wav", 256, 64);
-  x[0].plot
-*/

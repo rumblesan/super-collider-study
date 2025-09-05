@@ -25,61 +25,65 @@ Task({
 
     d = Dictionary.new;
     d.add(\wavetables -> Dictionary.new);
-
-    "Loading Wavetables".postln;
     List[
-      (\ph1 -> "wavetables/pistonhonda/1.wav"), (\ph2 -> "wavetables/pistonhonda/2.wav"),
-      (\ph3 -> "wavetables/pistonhonda/3.wav"), (\ph4 -> "wavetables/pistonhonda/4.wav"),
-      (\ph5 -> "wavetables/pistonhonda/5.wav"), (\ph6 -> "wavetables/pistonhonda/6.wav"),
-      (\ph7 -> "wavetables/pistonhonda/7.wav"), (\ph8 -> "wavetables/pistonhonda/8.wav"),
+      (\ph1 -> "wavetables/pistonhonda/1.wav"),
+      (\ph2 -> "wavetables/pistonhonda/2.wav"),
+      (\ph3 -> "wavetables/pistonhonda/3.wav"),
+      (\ph4 -> "wavetables/pistonhonda/4.wav"),
+      (\ph5 -> "wavetables/pistonhonda/5.wav"),
+      (\ph6 -> "wavetables/pistonhonda/6.wav"),
+      (\ph7 -> "wavetables/pistonhonda/7.wav"),
+      (\ph8 -> "wavetables/pistonhonda/8.wav"),
     ].do({ |pair|
       var key = pair.key;
-      var filepath = pair.value.resolveRelative;
-      d[\wavetables][key] = WaveTableFile.new(s, filepath, 256, 64, {
-        "    loaded wavetables from %\n".postf(filepath);
+      var filePath = pair.value.resolveRelative;
+      WaveTableFile.loadFolderAsync(s, filePath, 64, 256, { |waveTableFile|
+        d[\wavetables][key] = waveTableFile;
+        "Wavetables:         loaded wavetables from % to %\n".postf(filePath, key);
       });
     });
 
-    "Loading Samples".postln;
-    Continuation.iterator(
+    Continuation(
       PathName("samples".resolveRelative).entries,
       { |folderPath, continuation|
-        var k = folderPath.folderName.asSymbol;
-        var samples = SampleFolder.new(s, folderPath, {
-          "    loaded % samples from % to %\n".postf(samples.size, folderPath, k);
+        "Samples:            loading from %\n".postf(folderPath);
+        SampleFolder.loadFolderAsync(s, folderPath, {| sampleFolder |
+          var k = folderPath.folderName.asSymbol;
+          d.add(k -> sampleFolder);
+          "Samples:            loaded % samples to %\n".postf(sampleFolder.size, k);
           continuation.value;
         });
-        d.add(k -> samples);
       },
-    ).value({ "Finished Loading Samples".postln });
+      { "Samples:            finished loading".postln },
+    ).value();
 
-    "Loading Impulse Responses".postln;
-    d.add(\irs -> ImpulseResponseFolder(
-      s,
-      PathName("irs".resolveRelative),
-      [512, 2048],
-      { |irs|
-        "    loaded % impulse responses from % to %\n".postf(
-          irs.lookup.size, irs.folderPath, \irs
-        );
-      }
-    ));
-
-    "Loading Synths".postln;
-    Continuation.iterator("synths/*.sc".resolveRelative.pathMatch,
+    Continuation(
+      "synths/*.sc".resolveRelative.pathMatch,
       { |synthFilePath, continuation|
+        "Synths:             loading %\n".postf(synthFilePath);
         synthFilePath.loadPaths(warn: true, action: {|name|
-          "    loaded synth file %\n".postf(name);
+          "Synths:             loaded %\n".postf(name);
           0.01.wait;
           continuation.value;
         });
       },
-    ).value({ "Finished Loading Synths".postln });
+      { "Synths:             finished".postln; },
+    ).value();
+
+    ImpulseResponseFolder.loadFolderAsync(
+      s,
+      PathName("irs".resolveRelative),
+      [512, 2048],
+      { |irs|
+        "Impulse Responses:  loaded % from %\n".postf(
+          irs.lookup.size, irs.folderPath,
+        );
+        d.add(\irs -> irs);
+      }
+    );
 
     StageLimiter.activate;
-
     "Ready to go!".postln;
-
   });
 
 }).start;

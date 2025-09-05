@@ -1,26 +1,37 @@
 SampleFolder {
   var <folderPath, <lookup, <buffers;
 
-  *new { |server, folderPath, action|
-    ^super.newCopyArgs(folderPath, Dictionary.new, Array.new).init(server, action)
+  *new { |folderPath|
+    ^super.newCopyArgs(folderPath, Dictionary.new, Array.new)
   }
 
-  init { |server, finalAction|
-    Continuation.iterator(folderPath.entries,
+  *loadFolderAsync { |server, folderPath, finalAction|
+    var sampleFolder = SampleFolder.new(folderPath);
+    Continuation(
+      folderPath.entries,
       { |sampleFile, continuation|
-        var key = sampleFile.fileNameWithoutExtension.asSymbol;
-        var b = Buffer.readChannel(server, sampleFile.fullPath, channels:[0], action:
-        {
-          lookup[key] = b;
-          buffers = buffers.add(b);
-          continuation.value;
-        });
+        var key, b;
+        key = sampleFile.fileNameWithoutExtension.asSymbol;
+        b = Buffer.readChannel(
+          server, sampleFile.fullPath, channels:[0], action:
+          {
+            sampleFolder.add(key, b);
+            continuation.value;
+          }
+        );
       },
-    ).value({|samplefolder| finalAction.value(this) });
+      { finalAction.value(sampleFolder) }
+    ).value();
   }
 
   at {|key|
     ^if(key.isNumber, {buffers[key]}, {lookup[key]})
+  }
+
+  add {|key, buffer|
+    lookup[key] = buffer;
+    buffers = buffers.add(buffer);
+    ^this;
   }
 
   size { ^buffers.size }

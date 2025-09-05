@@ -1,32 +1,36 @@
 ImpulseResponseFolder {
-  var <folderPath, <fftsizes, <lookup, <buffers;
+  var <folderPath, <fftSizes, <lookup, <buffers;
 
-  *new { |server, folderPath, fftsizes, action|
-    ^super.newCopyArgs(folderPath, fftsizes).init(server, action)
+  *new { |folderPath, fftSizes|
+    ^super.newCopyArgs(folderPath, fftSizes, Dictionary.new, Array.new)
   }
 
-  init { |server, action|
+  *loadFolderAsync { |server, folderPath, fftSizes, finalAction|
+    var irFolder = ImpulseResponseFolder.new(folderPath, fftSizes);
     var wavFiles = folderPath.entries.select({ |file| file.extension == "wav" });
-    lookup = Dictionary.new;
-    buffers = Array.new();
-
-    Continuation.iterator([wavFiles, fftsizes].allTuples,
-      {|sfSize, continuation|
-        var sf = sfSize[0];
-        var fftsize = sfSize[1];
+    var combinations = [wavFiles, fftSizes].allTuples;
+    Continuation(combinations,
+      {|sfInfo, continuation|
+        var sf = sfInfo[0];
+        var fftsize = sfInfo[1];
         var key = "%_%".format(sf.fileNameWithoutExtension, fftsize).asSymbol;
         var b = ImpulseResponse(server, sf.fullPath, fftsize, {
-          "    loaded % at fft size %\n".postf(sf.fullPath, fftsize);
-          buffers = buffers.add(b);
-          lookup[key] = b;
+          irFolder.add(key, b);
           continuation.value;
         });
       },
-    ).value({ action.value(this); });
+      { finalAction.value(irFolder) }
+    ).value();
   }
 
   at {|key|
     ^if(key.isNumber, {buffers[key]}, {lookup[key]})
+  }
+
+  add {|key, buffer|
+    lookup[key] = buffer;
+    buffers = buffers.add(buffer);
+    ^this;
   }
 
   size { ^buffers.size }
