@@ -4,18 +4,19 @@ Continuation {
   // in turn to a function, but not moving onto the next one
   // until the function has called the continuation passed in
   // Simplifies callback chaining
-  *iterator { |collection, f, idx=0|
-    ^Continuation.iterate(collection.iter, f, idx)
+  *new { |collection, f, finalAction=({|c| c.value}), idx=0|
+    ^Continuation.fromIterator(collection.iter, f, finalAction, idx);
   }
 
-  *iterate { |iterator, f, idx=0|
-    ^{|finalAction|
+  *fromIterator { |iterator, f, finalAction=({|c| c.value}), idx=0|
+    ^{
       var v = iterator.next;
-      if (v.isNil, finalAction,
+      if (v.isNil,
+        finalAction,
         {
           f.value(
             v,
-            { Continuation.iterate(iterator, f, idx + 1).value(finalAction) },
+            Continuation.fromIterator(iterator, f, finalAction, idx + 1),
             idx,
           )
         }
@@ -24,15 +25,10 @@ Continuation {
   }
 
   *chain { |continuationList|
-    ^Continuation.iterate(continuationList.iter, { |func, continuation, idx|
-      func.value(continuation, idx)
-    });
-  }
-
-  *wrap { |f|
-    ^{ |continuation|
-      f.value;
-      continuation.value;
+    ^{ |finalAction|
+      Continuation.fromIterator(continuationList.iter, { |item, continuation|
+        item.value(continuation);
+      }, finalAction).value()
     }
   }
 
