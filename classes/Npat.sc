@@ -5,7 +5,7 @@ Npat {
       \root, -5,
       \amp, 1,
     );
-    ^Ndef(name, Pbindf(defaults, *pairs))
+    ^Ndef(name)[0] = Pbindf(defaults, *pairs)
   }
 }
 
@@ -16,10 +16,8 @@ NpatLoop {
       \root, -5,
       \amp, 1,
     );
-    ^Ndef(name,
-      Pn(Pfindur(length,
-        Pbindf(defaults, *pairs)
-      ), inf)
-    )
+    ^Ndef(name)[0] = Pn(Pfindur(length,
+                       Pbindf(defaults, *pairs)
+                     ), inf)
   }
 }
