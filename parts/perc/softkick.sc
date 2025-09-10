@@ -1,15 +1,14 @@
 
-NPatLoop(\kick, 16,
+NpatLoop(\kick, 16,
   \instrument, \modkick,
-  \amp, Pseq([1.3, 1, 1], inf),
-  \decay, 0.5,
-  \rdecay, 0.002,
-  \mdecay, 0.3,
+  \decay, 1.2,
+  \ramp, 4,
+  \rampdecay, 0.002,
+  \moddepth, Pwrand([0.5, 2, 4], [10, 2, 1].normalizeSum, inf),
+  \moddecay, 0.5,
   \pfreq, 50,
-  \ramp, 2,
   \gain, 1.5,
-  \mod, 0.5,
   \freq, 50,
-  \dur, Pseq([2], inf),
+  \dur, Pseq([2, 3, 1, 3, 2, 2, Pn(1/4, 4), 2, 2], inf) / 2,
 )
 Ndef(\kick).quant = 8;

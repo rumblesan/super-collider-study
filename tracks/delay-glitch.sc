@@ -1,15 +1,14 @@
 
-NPatLoop(\ping, 16,
+NpatLoop(\ping, 16,
   \instrument, \ping,
-  \decay, Pwrand([0.4, 1], [10, 2].normalizeSum, inf),
+  \decay, Pwrand([0.4, 1], [10, 0].normalizeSum, inf),
   \octave, 5,
   \degree, Pwrand([0, 2, 7, -12, 10], [1, 3, 4, 0].normalizeSum, inf),
-  \dur, Pseq([4, 4, 1, 0.25, 0.25, 0.5], inf),
   \ptrig, Pseq([1, 1, 0, 1, 1, 0, 0], inf),
   \pmod, Prand([1, 0, 0, 3, 7, 0], inf),
-  \pdecay, Prand([0.05], inf),
+  \pdecay, 0.05,
   \distamp, 0,
-  \amp, 1,
+  \dur, Pseq([4, 4, 1, 0.25, 0.25, 0.5], inf),
 )
 
 Ndef(\ping).quant = 4;
@@ -34,22 +33,22 @@ Ndef(\clicker).clear;
 Ndef(\delaymix, {
   Mix.new([
     Ndef(\ping).ar(1),
-    //Ndef(\clicker).ar(1) * -3.dbamp,
+    ChannelStrip(Ndef(\clicker).ar(2), -9.dbamp, 0),
   ])
 })
 Ndef(\delaymix).scope
 Ndef(\delaymix).clear
 
 Ndef(\gldelay)[0] = \simpledelay;
-Ndef(\gldelay) <<> Ndef(\ping)
-Ndef(\gldelay).clear
-Ndef(\gldelay).play
+Ndef(\gldelay) <<> Ndef(\delaymix)
 
 (
   Ndef(\gldelay)[1] = \pset -> Pbind(
     \drywet, 0.5,
     \delay, Pseq([0.4, 0.9, Prand([0.01, 0.1])], inf),
+    //\delay, Pseq([Pn(1/4, 2), 1/2, Pn(1/3, 2), 1/2], inf),
     \feedback, Pwrand([0.1, 0.4, 0.98], [2, 10, 0].normalizeSum, inf),
+    //\feedback, 0.5,
     \dur, 0.25,
   )
 )

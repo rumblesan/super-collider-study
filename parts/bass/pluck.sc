@@ -1,6 +1,6 @@
 // NEEDS WORK
 
-Ndef(\pluck)[0] = Pbind(
+Npat(\pluck,
   \instrument, \karpluspluck,
   \feedback, 0.95,
   \fdiff, 1.5,
@@ -28,13 +28,11 @@ Ndef(\pluck).filter(
 
 Ndef(\pluck).map(\downsampling, Ndef(\plsamp))
 
-Ndef(\plsamp,
-  Pcontrol(
-    \mod,
-    \value, Pseq([Pn(0, 2), Prand([0, 0.9, 0.99], 2), Pn(0, 2), 0.9, Pn(0, 3), 0.9, Pn(0, 2), 0.96], inf),
-    \slew, 0,
-    \dur, 0.5,
-  )
+NpatControl(\plsamp,
+  \mod,
+  \value, Pseq([Pn(0, 2), Prand([0, 0.9, 0.99], 2), Pn(0, 2), 0.9, Pn(0, 3), 0.9, Pn(0, 2), 0.96], inf),
+  \slew, 0,
+  \dur, 0.5,
 )
 
 Ndef(\plsamp).quant = 4;

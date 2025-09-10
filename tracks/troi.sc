@@ -1,20 +1,16 @@
 
 
-// -20
-Ndef(\bass,
-  Pbind(
-    \instrument, \buzz1,
-    \degree, -5,
-    \octave, Pwrand([3, 2, 4], [10, 0, 1].normalizeSum, inf),
-    \attack, 0.1,
-    \decay, 0.5,
-    \duration, 8,
-    \foldgain, 1,
-    \amp, 1,
-    \dur, 16,
-  )
+NpatLoop(\bass, 16,
+  \instrument, \buzz1,
+  \degree, -5,
+  \octave, 3,
+  \attack, 0.1,
+  \decay, 0.5,
+  \duration, 8,
+  \foldgain, 1,
+  \amp, 1,
+  \dur, 16,
 )
-Ndef(\bass).clear;
 Ndef(\bass).quant = 16;
 
 Ndef(\bass).map(\clipgain, Ndef(\clippinglow))
@@ -33,7 +29,7 @@ Ndef(\clippinglow,
 Ndef(\clippinglow).quant = 4;
 
 
-Ndef(\kick, Pbind(
+NpatLoop(\kick, 16,
   \instrument, \bkick,
   \freq, 50,
   \attack, 0.0,
@@ -41,11 +37,11 @@ Ndef(\kick, Pbind(
   \ramp, 16,
   \rampdecay, 0.01,
   \noiseattack, 0.01,
-  \noisedecay, Pseq([Pn(0.01, 4), 0.5, 0.01, 0.5, Pn(0.02, 3)], inf),
-  //\noise, 0.3,
+  \noisedecay, 0.01,
+  \noise, 0,
   \gain, 5,
   \amp, 1,
-  \dur, Pseq([1, 1, 1.5, 0.5, 0.5, 2], inf),
+  \dur, Pseq([3, 3, 2, 2, 2, 3, 3], inf),
 )
 )
 
@@ -78,20 +74,17 @@ Ndef(\foldmod).scope
 Ndef(\foldmod).clear
 
 
-Ndef(\perc,
-  Pbind(
-    \instrument, \pblip,
-    \degree, -5,
-    \octave, 4,
-    //\attack, 0.01,
-    \attack, Pwrand([0.01, 0.2, 0.3], [12, 2, 1].normalizeSum, inf),
-    \width, Pseq([0.09, 0.01, 0.2], inf),
-    \decay, Pwhite(0.05, 0.1, inf),
-    \amp, 1,
-    \dur, Pseq([1, 2, 1, 1, 1, 3, 2, 1, 4, 2, 2, 1], inf)/4,
-  )
+NpatLoop(\perc, 16,
+  \instrument, \pblip,
+  \octave, 4,
+  \attack, 0.01,
+  //\attack, Pwrand([0.01, 0.2, 0.3], [12, 2, 1].normalizeSum, inf),
+  \width, Pseq([0.09, 0.01, 0.2], inf),
+  //\width, 0.1,
+  \decay, Pwhite(0.15, 0.2, inf),
+  \amp, 1,
+  \dur, Pseq([1, 2, 1, 1, 1, 3, 2, 1, 4, 2, 2, 1], inf)/4,
 )
-Ndef(\perc).clear;
 
 Ndef(\lead, PmonoArtic(
   \tb,

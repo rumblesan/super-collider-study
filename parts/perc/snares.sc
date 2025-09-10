@@ -1,6 +1,4 @@
-
-
-Ndef(\snare, Pbind(
+Npat(\snare,
   \instrument, \snaredrum,
   \amp, 1,
   \noise, 0.3,
@@ -9,7 +7,8 @@ Ndef(\snare, Pbind(
   \decay, 0.4,
   \freq, 150,
   \noiseMod, 0.25,
-  \dur, 2,
+  \dur, Pseq([
+    Rest(2), 2,
+    Rest(2), 2,
+  ], inf),
 )
-)
-Ndef(\basicSnare).clear;

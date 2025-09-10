@@ -53,7 +53,7 @@ Ndef(\bassThump).quant = 4
 
 
 
-Ndef(\notbass, Pbind(
+Npat(\notbass,
   \instrument, \fm3filter,
   \octave, 4,
   \degree, -3,
@@ -69,5 +69,3 @@ Ndef(\notbass, Pbind(
   \cutoff, 300,
   \dur, Pseq([12 ], inf),
 )
-)
-Ndef(\notbass).clear

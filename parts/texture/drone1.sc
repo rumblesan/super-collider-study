@@ -1,11 +1,8 @@
-// NEEDS WORK
 
-Ndef(\cort, Pbind(
+Npat(\cort,
   \instrument, \sawpad,
   \octave, Pwrand([3, 4], [10, 3].normalizeSum, inf),
   \octave, 5,
-  \scale, Scale.minor,
-  \root, -5,
   \detune, 0.009,
   \degree, Pseq([
     [0, 3, 5, 7]
@@ -15,18 +12,15 @@ Ndef(\cort, Pbind(
   \foffset, 0,
   \attack, 3,
   \release, 4,
-  \amp, 1,
   \dur, 16,
-)
+  \pan, Pseq([1, -1, 1, -1], inf) * 0.3
 )
 Ndef(\cort).quant = 16;
-Ndef(\cort).clear;
 
-Ndef(\higher, Pbind(
+Npat(\higher,
   \instrument, \sawpad,
   \octave, Pwrand([4, 5, 6], [10, 4, 2].normalizeSum, inf),
   \scale, Scale.minor,
-  \root, -5,
   \detune, 0.0003,
   \degree, Pseq([
     0, Prand([5, 3]), [0, 7],
@@ -38,20 +32,9 @@ Ndef(\higher, Pbind(
   \fattack, 5,
   \attack, 3,
   \release, 4,
-  \amp, 1,
   \dur, Pwrand([10, 4], [11, 2].normalizeSum, inf),
-)
+  \pan, Pseq([1, -1, 1, -1, -1, 1, -1, 1, 1], inf) * 0.8
 )
 Ndef(\higher).quant = 10;
-Ndef(\higher).clear;
 
-Ndef(\higher).map(\pulsewidth, Ndef(\higherWidthMod))
-
-Ndef(\higherWidthMod, Pcontrol(
-  \mod,
-  \value, Pseq([0.1, 0.7, 0.3, 0.8], inf),
-  \slew, 1,
-  \dur, Pseq([4, 1, 1, 6, 7, 1, 1, 4], inf)
-))
-Ndef(\higherWidthMod).quant = 4;
-Ndef(\higherWidthMod).clear;
+// map higher pulsewidth

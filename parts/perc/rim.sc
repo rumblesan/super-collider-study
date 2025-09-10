@@ -1,16 +1,10 @@
-
-
 NpatLoop(\rim, 16,
   \instrument, \rim,
-  \attack, 0.01,
   \degree, 3,
-  \decay, Pwhite(0.04, 0.04, inf),
-  \legato, Pseq([0.5, Pn(0.2, 3), 0.5, Pn(0.07, 3), 0.7, 0.1], inf),
-  \click, Pseq([1.1, 0.8, 0.9, 1.1, 0.8, 1.2], inf),
-  //\click, 1.0,
+  \decay, Pseq([Pn(0.02, 3), 0.1, Pwhite(0.02, 0.09, 3), 0.1, Pn(0.02, 3)], inf),
+  \click, Pseq([Pn(5, 3), Pn(10, 5), Pn(3, 5)], inf),
+  \pan, Pwhite(-0.4, 0.4, inf),
   \dur, Pseq([
-    Pn(0.5, 4), 1
-  ], inf) / 2,
+    2, 2, Pr(4, 3), 3, 1, Pr(3, 2), 3, 1, 3,
+  ], inf) / 4,
 )
-)
-Ndef(\rim).clear;

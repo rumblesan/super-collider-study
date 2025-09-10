@@ -1,10 +1,8 @@
 
-p.clock.tempo = 160/60;
-
 Npat(\tc1,
   \instrument, \fm3filter,
   \octave, 6,
-  \ratio1, Pseq([Pn(1.7, 4), Pn(3.6, 4), Pn(1, 2), Pn(6, 6)], inf),
+  \ratio1, 1.7,
   \mod, Pseq([Pn(0.2, 5), Pn(3.4, 3), Pn(0.2, 2), Pn(1.7, 1)], inf) * 3,
   \mod1, 8,
   \attack, 0.00,
@@ -13,9 +11,10 @@ Npat(\tc1,
   \resonance, 0.3,
   \gain, Pseq([3], inf),
   \cutoff, 200,
+  \pan, Pseq([Pn(0.2, 2), Pn(-0.2, 3), Pn(0.5, 3), Pn(-0.6, 3), Pn(0.2, 3), Pn(-0.3, 4)], inf),
   \dur, Pseq([
-    1, 1, Pn(0.5, 3), 1, 0.5, 1, Pn(0.5, 4)
-  ], inf) / 4
+    1, 1, Pn(0.5, 3), 1, 0.5, 1, Pn(0.5, 4), 1.5, 0.5, 0.5,
+  ], inf) / 2
 )
 
 (
@@ -38,3 +37,11 @@ Ndef(\tc1clip, Pcontrol(
 Ndef(\tc1clip).quant = 4;
 
 Ndef(\tc1).free
+
+Ndef(\tc1).map(\cutoff, Ndef(\cutoffmod))
+NpatControl(\cutoffmod,
+  \mod,
+  \value, Pseq([Pn(200, 3), 400, 200, 500, Pn(200, 4), 500], inf),
+  \slew, 0,
+  \dur, 0.5
+)

@@ -1,6 +1,6 @@
 
 
-Ndef(\clap, Pbind(
+NpatLoop(\clap, 16,
   \instrument, \clap,
   //\filterFreq, 1500,
   //\attack, 0.01,
@@ -11,5 +11,4 @@ Ndef(\clap, Pbind(
   //\gain, 3,
   \amp, 1,
   \dur, 2,
-))
-Ndef(\clap).clear;
+)

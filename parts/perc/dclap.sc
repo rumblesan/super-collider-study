@@ -1,5 +1,5 @@
 
-NPatLoop(\dclap, 16,
+NpatLoop(\dclap, 16,
   \instrument, \digiclap,
   \feedback, 0.5,
   \degree, 0,

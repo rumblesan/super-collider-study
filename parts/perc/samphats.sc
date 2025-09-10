@@ -1,6 +1,6 @@
 // NEEDS WORK
 
-Ndef(\samphats, Pbind(
+NpatLoop(\samphats, 16,
   \instrument, \splay,
   \bufnum, d[\texture][\vinyl],
   \rate, 8.0,
@@ -19,7 +19,5 @@ Ndef(\samphats, Pbind(
     Rest(1)
   ], inf)/4,
 )
-)
 
 Ndef(\samphats).quant = 4;
-Ndef(\samphats).free
