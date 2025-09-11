@@ -24,8 +24,8 @@ Ndef(\verb)[1] = \pset -> Pbind(
 
 Ndef(\out, MainOut.new); Ndef(\out).play;
 
-Ndef(\verb) <>> Ndef(\out)
 Ndef(\mix) <>> Ndef(\verb)
+Ndef(\verb) <>> Ndef(\out)
 
 s.meter
 
