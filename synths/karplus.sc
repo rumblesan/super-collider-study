@@ -3,9 +3,9 @@
     amp=0.8,
     decay=1.5, fdiff=1, colour=0, gain=2;
     var env, imp, exciters, input, comb;
-    env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: 2);
+    env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: Done.freeSelf);
 
-    imp = Env.perc(0.0, 0.01, 1).kr(gate: gate);
+    imp = Env.perc(0.0, 0.01, 1).ar;
     exciters = [SinOsc.ar(freq * fdiff), WhiteNoise.ar];
     input = LinSelectX.ar(colour * exciters.size, exciters);
 
@@ -19,7 +19,7 @@
     var env, imp, exciters, input, pluck;
     env = EnvGen.kr(Env.linen(0, decay, 0), doneAction: 2);
 
-    imp = Impulse.kr(0.1);
+    imp = Impulse.ar(0.1);
     exciters = [SinOsc.ar(freq * fdiff), WhiteNoise.ar];
     input = LinSelectX.ar(colour * exciters.size, exciters);
 
@@ -46,7 +46,7 @@
 
     fb = LocalIn.ar(1) * feedback;
 
-    imp = Env.perc(0.0, 0.04, 1).kr();
+    imp = Env.perc(0.0, 0.04, 1).ar();
     exciters = [SinOsc.ar(freq * fdiff), WhiteNoise.ar];
     input = LinSelectX.ar(colour * exciters.size, exciters) * imp;
     filtered = OnePole.ar(input + fb, 0.7);

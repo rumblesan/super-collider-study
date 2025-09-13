@@ -13,9 +13,9 @@
     cutoff=1000, resonance=0.5, gain=1.0
     ;
     var venv, modulator2, mod2Env, modulator1, mod1Env, carrier, mix, filter;
-    venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
-    mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
+    venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    mod2Env = Env.adsr(attack2, decay2, level2, release2).ar(gate: gate);
+    mod1Env = Env.adsr(attack1, decay1, level1, release1).ar(gate: gate);
 
     modulator2 = SinOsc.ar(freq * ratio2 * (1 + modBend2), mul: mod2Env);
     modulator1 = SinOsc.ar(

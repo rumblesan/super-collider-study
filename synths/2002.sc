@@ -3,7 +3,7 @@
   SynthDef(\buzz1, {
     var freq = \freq.kr(200);
 
-    var venv = Env.asr(\attack.kr(0.01), \amp.kr(0.8), \release.kr(0.01)).kr(Done.freeSelf, \gate.kr(1));
+    var venv = Env.asr(\attack.kr(0.01), \amp.kr(0.8), \release.kr(0.01)).ar(Done.freeSelf, \gate.kr(1));
 
     var snd = LinSelectX.ar(\wave.kr(0.0), [
       SinOsc.ar(freq), BlitB3Tri.ar(freq), Saw.ar(freq), Pulse.ar(freq)
@@ -28,9 +28,10 @@
   SynthDef(\buzz2, {
     var freq = \freq.kr(200);
 
-    var venv = Env.asr(\attack.kr(0.01), \amp.kr(0.8), \release.kr(0.01)).kr(Done.freeSelf, \gate.kr(1));
-    var sampenv = Env.linen(\sampenvattack.kr(0.01), \sampenvduration.kr(0.1), \sampenvdecay.kr(0.01), \sampenvdepth.kr(1)).kr();
+    var venv = Env.asr(\attack.kr(0.01), \amp.kr(0.8), \release.kr(0.01)).ar(Done.freeSelf, \gate.kr(1));
+    var sampenv = Env.linen(\sampenvattack.kr(0.01), \sampenvduration.kr(0.1), \sampenvdecay.kr(0.01), \sampenvdepth.kr(1)).ar;
     var snd = SinOsc.ar(freq);
+    snd = snd * (1 + (WhiteNoise.ar * \noise.kr(0.01)));
     snd = Decimator.ar(snd, (\samplerate.kr(1.0) * (1 - sampenv)) * 44100, \bits.kr(24));
     snd = (snd * \gain.kr(1.3)).clip2;
     snd = snd * venv;
@@ -42,7 +43,7 @@
 (
   SynthDef(\pblip, {
     var snd = LFPulse.ar(\freq.kr(220), 0, \width.kr(0.5));
-    var venv = Env.perc(\attack.kr(0.0), \decay.kr(0.05)).kr(Done.freeSelf);
+    var venv = Env.perc(\attack.kr(0.0), \decay.kr(0.05)).ar(Done.freeSelf);
     venv = venv * (1 + \penv.kr(1));
     snd = snd * venv * \amp.kr(1.0);
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));

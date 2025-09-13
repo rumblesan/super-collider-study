@@ -8,8 +8,8 @@
     output1Mix=0,
     mod21=0
     ;
-    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).ar(gate: gate);
 
     var modulator1 = SinOsc.ar(
       (freq * ratio1 * (1 + modBend1)), mul: mod1Env
@@ -35,9 +35,9 @@
     output1Mix=0,
     mod21=0
     ;
-    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
-    var pEnv = Env.adsr(modEnvAttack, modEnvDecay, modEnvLevel, modEnvRelease).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).ar(gate: gate);
+    var pEnv = Env.adsr(modEnvAttack, modEnvDecay, modEnvLevel, modEnvRelease).ar(gate: gate);
 
     var modulator1 = SinOsc.ar(
       (freq * ratio1 * (1 + modBend1) * (1 + (pEnv * envModMod))), mul: mod1Env
@@ -63,9 +63,9 @@
     output2Mix=0,
     mod21=0
     ;
-    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
-    var mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).ar(gate: gate);
+    var mod2Env = Env.adsr(attack2, decay2, level2, release2).ar(gate: gate);
 
     var modulator2 = SinOsc.ar(freq * ratio2 * (1 + modBend2), mul: mod2Env);
     var modulator1 = SinOsc.ar(
@@ -105,10 +105,10 @@
     output3Mix=0,
     mod31=0
     ;
-    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var mod3Env = Env.adsr(attack3, decay3, level3, release3).kr(gate: gate);
-    var mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
-    var mod1Env = Env.adsr(attack1, decay1, level2, release1).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    var mod3Env = Env.adsr(attack3, decay3, level3, release3).ar(gate: gate);
+    var mod2Env = Env.adsr(attack2, decay2, level2, release2).ar(gate: gate);
+    var mod1Env = Env.adsr(attack1, decay1, level2, release1).ar(gate: gate);
 
     var modulator3 = SinOsc.ar(freq * ratio3 + (freq * modBend3), mul: mod3Env);
     var modulator2 = SinOsc.ar(freq * ratio2 + (freq * modBend2), mul: mod2Env);

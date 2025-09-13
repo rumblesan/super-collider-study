@@ -8,7 +8,7 @@
     var n = WhiteNoise.ar;
     var f = RHPF.ar(RLPF.ar(n, lpfreq, q), hpfreq, q);
     var g = (f * gain).clip2;
-    var env = Env.asr(attack, amp, decay).kr(2, gate: gate);
+    var env = Env.asr(attack, amp, decay).ar(Done.freeSelf, gate: gate);
     var snd = g * env;
     Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
   }).add;

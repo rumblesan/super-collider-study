@@ -5,7 +5,7 @@
 
     var noise = WhiteNoise.ar * \noise.kr(0.2);
 
-    var stickenv = Env.perc(0.0001, \stickdecay.kr(0.1)).ar();
+    var stickenv = Env.perc(0.0001, \stickdecay.kr(0.1)).ar;
     var stickmodosc = SinOsc.ar(freq * 0.58 * 1.003) * \stickmod.kr(1);
     var stickosc = SinOsc.ar(freq * 12.11 * (noise + 1), stickmodosc);
 

@@ -14,16 +14,16 @@ SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
 
   var lfo, widthLfo, modEnv, volEnv, snd;
 
-  lfo = SinOsc.kr(lfoRate, mul: lfoMod.min(0.999));
-  widthLfo = SinOsc.kr(widthModRate, mul: widthMod, add: 0.5);
+  lfo = SinOsc.ar(lfoRate, mul: lfoMod.min(0.999));
+  widthLfo = SinOsc.ar(widthModRate, mul: widthMod, add: 0.5);
 
   modEnv = Env.adsr(
     mattack, mdecay, msustainLevel, mrelease
-  ).kr(gate: gate);
+  ).ar(gate: gate);
 
   volEnv = Env.adsr(
     attack, decay, sustainLevel, release
-  ).kr(gate: gate, doneAction: Done.freeSelf);
+  ).ar(gate: gate, doneAction: Done.freeSelf);
 
   snd = Mix.new([
     SinOsc.ar(freq),

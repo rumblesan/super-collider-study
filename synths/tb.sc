@@ -10,8 +10,8 @@
     wave=0.2, gain=0.3
     ;
       var f = Lag.kr(freq, freqlag);
-      var fenv = Env.adsr(fattack, fdecay, flevel, frelease).kr(gate: gate);
-      var venv = Env.adsr(attack, decay, level, release).kr(2, gate: gate);
+      var fenv = Env.adsr(fattack, fdecay, flevel, frelease).ar(gate: gate);
+      var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate: gate);
       var osc = XFade2.ar(Pulse.ar(f), Saw.ar(f), (wave * 2) - 1) * gain;
       var snd = Mix.new([
         osc,

@@ -23,7 +23,7 @@ SynthDef(\bplay,
 SynthDef(\splay, {arg out=0, bufnum, rate=1, gate=1,
         start=0, attack=0.0, release=0.5, amp=0.5;
         var snd = PlayBuf.ar(1, bufnum, BufRateScale.ir(bufnum) * rate, 1, BufDur.kr(bufnum) * start * 44100);
-        var env = Env.asr(attack, amp, release).kr(gate: gate, doneAction:2);
+        var env = Env.asr(attack, amp, release).ar(gate: gate, doneAction: Done.freeSelf);
         Out.ar(out, snd * env);
 }).add;
 

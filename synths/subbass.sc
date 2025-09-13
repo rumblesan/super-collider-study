@@ -5,7 +5,7 @@
       \attack.kr(0.1),
       1,
       \release.kr(0.5)
-    ).kr(Done.freeSelf, \gate.kr(1));
+    ).ar(Done.freeSelf, \gate.kr(1));
 
     var oscCount = 2;
     var snd = Mix.new(oscCount.collect({|i|

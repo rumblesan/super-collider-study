@@ -2,10 +2,10 @@
 
 SynthDef(\thumper, {
 
-  var penv = Env.perc(\pattack.kr(0.01), \pdecay.kr(0.1), \pmod.kr(0.1), \pcurve.kr(-4.0)).kr(0);
-  var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.5), \amp.kr(0)).kr(2);
-  var nenv = Env.perc(\nattack.kr(0.01), \ndecay.kr(0.2), \noise.kr(0)).kr(0);
-  var menv = Env.perc(\mattack.kr(0.01), \mdecay.kr(0.2), \modEnv.kr(0)).kr(0);
+  var penv = Env.perc(\pattack.kr(0.01), \pdecay.kr(0.1), \pmod.kr(0.1), \pcurve.kr(-4.0)).ar;
+  var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.5), \amp.kr(0)).ar(Done.freeSelf);
+  var nenv = Env.perc(\nattack.kr(0.01), \ndecay.kr(0.2), \noise.kr(0)).ar;
+  var menv = Env.perc(\mattack.kr(0.01), \mdecay.kr(0.2), \modEnv.kr(0)).ar;
 
   var noiseSig = WhiteNoise.ar * nenv;
   var makeup = 16;

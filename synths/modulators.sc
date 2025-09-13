@@ -1,8 +1,8 @@
 (
   SynthDef(\percenv, {|out, trig, attack=0.01, decay=0.1, curve=(-4), value=1, offset=0|
-    Out.kr(
+    Out.ar(
       out,
-      Env.perc(attack, decay, value, curve).kr(
+      Env.perc(attack, decay, value, curve).ar(
         levelBias: offset,
         gate: trig,
       ))
@@ -14,7 +14,7 @@
 
   SynthDef(\envfollower, {|out, gain=1, attack=0.01, decay=0.7, offset=0, value=1|
     var env = EnvDetect.ar(\in.ar(0) * gain, attack, decay).min(1);
-    Out.kr(
+    Out.ar(
       out,
       (env * value) + offset
     );

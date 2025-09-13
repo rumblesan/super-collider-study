@@ -8,7 +8,7 @@
       SinOsc.ar(freq * d * noise.wrapAt(idx))
     }));
 
-    var venv = Env.asr(\attack.kr(1), \amp.kr(1.0), \release.kr(3)).kr(Done.freeSelf, \gate.kr(1));
+    var venv = Env.asr(\attack.kr(1), \amp.kr(1.0), \release.kr(3)).ar(Done.freeSelf, \gate.kr(1));
 
     snd = snd * venv;
 

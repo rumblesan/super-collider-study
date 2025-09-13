@@ -13,10 +13,10 @@
       2,
       2 + detune,
     ] * freq;
-    var env = Env.adsr(attack, decay, sustainLevel, release, peakLevel: amp).kr(2, gate: gate);
+    var env = Env.adsr(attack, decay, sustainLevel, release, peakLevel: amp).ar(Done.freeSelf, gate: gate);
     var fenv = Env.adsr(
       fattack, fdecay, fsustainLevel, frelease
-    ).kr(gate: gate);
+    ).ar(gate: gate);
     var oscs = Mix.new(oscFreqMods.collect({|f|
       VarSaw.ar(f, width: pulsewidth, mul: oscFreqMods.size.reciprocal);
     }));

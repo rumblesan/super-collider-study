@@ -11,9 +11,9 @@
     foldDepth1=0, foldDepth2=0,
     mod21=0
     ;
-    var venv = Env.adsr(attack, decay, level, release).kr(2, gate);
-    var mod1Env = Env.adsr(attack1, decay1, level1, release1).kr(gate: gate);
-    var mod2Env = Env.adsr(attack2, decay2, level2, release2).kr(gate: gate);
+    var venv = Env.adsr(attack, decay, level, release).ar(Done.freeSelf, gate);
+    var mod1Env = Env.adsr(attack1, decay1, level1, release1).ar(gate: gate);
+    var mod2Env = Env.adsr(attack2, decay2, level2, release2).ar(gate: gate);
 
     var modulator2 = SinOsc.ar(freq * ratio2 * (1 + modBend2), mul: mod2Env);
     var modulator1 = SinOsc.ar(

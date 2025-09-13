@@ -8,7 +8,7 @@
     wavetableWaves,
     offset=0|
 
-    var env = Env.asr(attack, amp, release).kr(2, gate: gate);
+    var env = Env.asr(attack, amp, release).ar(Done.freeSelf, gate: gate);
     var tablepos = wavetableBufNum + (offset.mod(1) * wavetableWaves);
     var snd = VOsc.ar(tablepos, freq * (1 + pitchMod), mul: env);
     Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
@@ -21,7 +21,7 @@
     wavetableWavesX, wavetableWavesY,
     offsetX=0, offsetY=0|
 
-    var env = Env.asr(attack, amp, release).kr(2, gate: gate);
+    var env = Env.asr(attack, amp, release).ar(Done.freeSelf, gate: gate);
     var x = offsetX.mod(1) * wavetableWavesX;
     var y = offsetY.mod(1) * wavetableWavesY * (wavetableWavesX - 1);
     var tablepos = wavetableBufNum + x + y;
