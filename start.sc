@@ -8,18 +8,12 @@ Ndef(\mix, {|samplerate = 1.0, bits = 24|
 
 Ndef(\verb)[0] = \dirtverb;
 Ndef(\verb).set(
-  \drywet, 0.6,
+  \drywet, 0.2,
+  \predelay, 0.00,
   \size, 0.35,
-  \decay, 0.33,
-  \damping, 0.2,
-  \downsampling, 0.0,
-  \gain, 1.0,
+  \decay, 0.13,
+  \damping, 0.9,
 )
-
-
-Ndef(\verb)[1] = \pset -> Pbind(
-  \dur, 5,
-);
 
 
 Ndef(\out, MainOut.new); Ndef(\out).play;
@@ -30,4 +24,3 @@ Ndef(\verb) <>> Ndef(\out)
 s.meter
 
 Ndef(\out).proxyspace.clean(Ndef(\out))
-Ndef(\verb).clear
