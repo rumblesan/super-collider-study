@@ -1,6 +1,7 @@
 
 
-NpatLoop(\clap, 16,
+Npat(\clap,
+  \loop, 16,
   \instrument, \clap,
   //\filterFreq, 1500,
   //\attack, 0.01,

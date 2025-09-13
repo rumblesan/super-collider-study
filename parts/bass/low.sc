@@ -1,4 +1,5 @@
-NpatLoop(\bass, 16,
+Npat(\bass,
+  \loop, 16,
   \instrument, \fm3filter,
   \octave, 3,
   \degree, 0,
@@ -29,24 +30,22 @@ Ndef(\bass).free
 
 Ndef(\bass).map(\mod1, Ndef(\bassmod1));
 
-Ndef(\bassmod1, Pcontrol(
+NpatControl(\bassmod1,
   \mod,
   \value, Pwhite(0.0, 0.5, inf) * 8,
   \slew, 0.15,
   \dur, 0.5
 )
-)
 Ndef(\bassmod1).quant = 4;
 
 Ndef(\bass).map(\bend, Ndef(\bassThump));
 
-Ndef(\bassThump, Pcontrol(
+NpatControl(\bassThump,
   \percenv,
   \curve, -22,
   \decay, 0.2,
   \value, 3,
   \dur, Pseq([4, 1, 4, 1, 2], inf),
-)
 )
 Ndef(\bassThump).quant = 4
 

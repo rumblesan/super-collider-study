@@ -1,4 +1,5 @@
-NpatLoop(\grind, 16,
+Npat(\grind,
+  \loop, 16,
   \instrument, \buzz1,
   \octave, 2,
   \degree, 0,

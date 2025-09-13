@@ -26,12 +26,11 @@ Ndef(\tc1).filter(1, {|in, clip=0.95|
 Ndef(\tc1).map(\clip, Ndef(\tc1clip))
 Ndef(\tc1).unmap(\clip)
 
-Ndef(\tc1clip, Pcontrol(
+NpatControl(\tc1clip,
   \mod,
   \value, Pseq([1, 1.8, 1, 1, 1.3, 5], inf),
   \slew, 0,
   \dur, 1/2
-)
 )
 
 Ndef(\tc1clip).quant = 4;

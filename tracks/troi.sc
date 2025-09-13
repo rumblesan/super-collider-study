@@ -1,6 +1,7 @@
 
 
-NpatLoop(\bass, 16,
+Npat(\bass,
+  \loop, 16,
   \instrument, \buzz1,
   \degree, -5,
   \octave, 3,
@@ -18,18 +19,17 @@ Ndef(\bass).unmap(\clipgain)
 Ndef(\bass).map(\foldgain, Ndef(\foldmod))
 Ndef(\bass).unmap(\foldgain)
 
-Ndef(\clippinglow,
-  Pcontrol(
-    \mod,
-    \value, Pseq([1.1, 1.5, 1.1, Pwhite(1, 3, 3), 1.1, 2], inf) * 3,
-    \slew, 0,
-    \dur, Pseq([4, 2, 4, 3, 1], inf) / 2,
-  )
+NpatControl(\clippinglow,
+  \mod,
+  \value, Pseq([1.1, 1.5, 1.1, Pwhite(1, 3, 3), 1.1, 2], inf) * 3,
+  \slew, 0,
+  \dur, Pseq([4, 2, 4, 3, 1], inf) / 2,
 )
 Ndef(\clippinglow).quant = 4;
 
 
-NpatLoop(\kick, 16,
+Npat(\kick,
+  \loop, 16,
   \instrument, \bkick,
   \freq, 50,
   \attack, 0.0,
@@ -47,26 +47,22 @@ NpatLoop(\kick, 16,
 
 Ndef(\kick).quant = 4;
 
-Ndef(\foldmod,
-  Pcontrol(
-    \mod,
-    \value, Pseq([1, 2, 5], inf),
-    \slew, 0,
-    \dur, Pseq([4, 2, 7], inf) / 2,
-  )
+NpatControl(\foldmod,
+  \mod,
+  \value, Pseq([1, 2, 5], inf),
+  \slew, 0,
+  \dur, Pseq([4, 2, 7], inf) / 2,
 )
 Ndef(\foldmod).quant = 4;
 Ndef(\foldmod).clear
 
-Ndef(\foldmod,
-  Pcontrol(
-    \envfollower,
-    \gain, 1,
-    \value, 1,
-    \offset, 2,
-    \attack, 0.01,
-    \decay, 0.07,
-  )
+NpatControl(\foldmod,
+  \envfollower,
+  \gain, 1,
+  \value, 1,
+  \offset, 2,
+  \attack, 0.01,
+  \decay, 0.07,
 )
 Ndef(\foldmod) <<> Ndef(\kick);
 
@@ -74,7 +70,8 @@ Ndef(\foldmod).scope
 Ndef(\foldmod).clear
 
 
-NpatLoop(\perc, 16,
+Npat(\perc,
+  \loop, 16,
   \instrument, \pblip,
   \octave, 4,
   \attack, 0.01,

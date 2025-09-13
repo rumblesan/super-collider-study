@@ -1,5 +1,6 @@
 
-NpatLoop(\ping, 16,
+Npat(\ping,
+  \loop, 16,
   \instrument, \buzz1,
   \octave, 5,
   \degree, 0,
@@ -16,7 +17,8 @@ NpatLoop(\ping, 16,
 Ndef(\).quant = 8;
 
 
-NpatLoop(\ping, 16,
+Npat(\ping,
+  \loop, 16,
   \instrument, \ping,
   \decay, Pseq([Pn(0.3, 2), Pn(0.5, 2), Pn(0.3, 3), 0.7], inf),
   \octave, 6,

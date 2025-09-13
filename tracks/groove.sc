@@ -1,44 +1,50 @@
-Ndef(\kick, Pbind(
+Npat(\kick,
+  \loop, 16,
   \instrument, \bkick,
   \freq, 50,
-  \attack, 0.1,
-  \decay, 0.3,
+  \attack, 0.01,
+  \decay, 0.4,
   \ramp, 25,
-  \rampdecay, 0.035,
-  \noisedecay, 0.01,
-  \gain, 2,
+  \rampdecay, 0.05,
+  \noisedecay, 0.1,
+  \gain, 8,
 
   \amp, 1,
-  \dur, Pseq([3, 3, 2,
+  \dur, Pseq([3,
+    Prand([3, 2, 1], 1),
+    Pr(4, 1),
     0.5, 2.5,
     Prand([3, Pn(1, 3)]),
     2], inf),
   //\dur, 2,
 )
-)
 Ndef(\kick).quant = 4;
 Ndef(\kick).clear;
 
 
-Ndef(\perc,
-  Pbind(
-    \instrument, \buzz2,
-    \degree, Pseq([
-      Pn(-3, 16),
-      //Pn(-1, 12),
-      //Pn(0, 18),
-      //Pn(-1, 10),
-    ], inf),
-    \attack, 0.01,
-    \decay, 0.001,
-    \bits, Pwrand([6, 3, 2], [10, 7, 3].normalizeSum, inf),
-    \gain, 21,
-    \duration, Pwrand([0.01, 0.1], [15, 2].normalizeSum, inf),
-    \amp, 1,
-    \dur, Pseq([1,1,
-      Prand([1, 2]),
-      2,1,1,2,2,1,1,1], inf) / 4
-  )
+Npat(\perc,
+  \loop, 24,
+  \instrument, \buzz2,
+  \degree, Pseq([
+    Pn(-3, 16),
+    Pn(-1, 12),
+    Pn(0, 18),
+    Pn(-1, 10),
+  ], inf),
+  \attack, Pwrand([0.01, 0.1], [10, 1].normalizeSum, inf),
+  \decay, 0.001,
+  \decay, Pwhite(0.0001, 0.2, inf),
+  \noise, Pseq([
+    Pn(0, 3), 3, Pn(0.2, 3), 2, Pn(0, 7)
+  ], inf),
+  \bits, Pwrand([6, 3, 2], [10, 7, 3].normalizeSum, inf),
+  //\bits, 5,
+  \gain, 21,
+  \legato, Pwhite(0.5, 0.8, inf),
+  \amp, 1,
+  \dur, Pseq([1,3,
+    Prand([1, 2, 3]),
+    2,3,1,2,3,1,3,1], inf) / 4
 )
 
 Ndef(\perc).quant = 4;

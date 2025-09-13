@@ -1,5 +1,6 @@
 
-NpatLoop(\kick, 16,
+Npat(\kick,
+  \loop, 16,
   \instrument, \modkick,
   \decay, 1.2,
   \ramp, 4,

@@ -1,4 +1,5 @@
-NpatLoop(\hats, 16,
+Npat(\hats,
+  \loop, 16,
   \instrument, \fmhat,
   \freq, 800,
   \ratio, 8.726,

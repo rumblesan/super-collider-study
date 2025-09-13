@@ -1,5 +1,5 @@
 
-NpatLoop(\bass, 24,
+Npat(\bass,
   \instrument, \sinbass,
   \degree, 0,
   \octave, 3,
@@ -12,7 +12,8 @@ NpatLoop(\bass, 24,
 )
 Ndef(\bass).quant = 4;
 
-NpatLoop(\blip, 16,
+Npat(\blip,
+  \loop, 16,
   \instrument, \blip,
   \degree, 0,
   \decay, 0.5,
@@ -28,7 +29,8 @@ Ndef(\blip).quant = 8;
 Ndef(\blip).clear;
 
 
-NpatLoop(\ping, 16,
+Npat(\ping,
+  \loop, 16,
   \instrument, \ping,
   \degree, Prand([
     Pn(0, 7),
@@ -52,7 +54,8 @@ NpatLoop(\ping, 16,
 Ndef(\ping).clear;
 
 
-NpatLoop(\kick, 28,
+Npat(\kick,
+  \loop, 28,
   \instrument, \elkick,
   \freq, 50,
   \octave, 1,

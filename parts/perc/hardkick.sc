@@ -1,5 +1,6 @@
 
-NpatLoop(\hardkick, 24,
+Npat(\hardkick,
+  \loop, 24,
   \instrument, \modkick,
   \amp, Pseq([1.1, 1, 1], inf),
   \decay, 0.5,
@@ -15,7 +16,8 @@ NpatLoop(\hardkick, 24,
 Ndef(\hardkick).quant = 4;
 
 Ndef(\harderkick).quant = 4;
-NpatLoop(\harderkick, 24,
+Npat(\harderkick,
+  \loop, 24,
   \instrument, \bkick,
   \amp, Pseq([1.1, 1, 1], inf),
   \decay, 2,
@@ -27,4 +29,4 @@ NpatLoop(\harderkick, 24,
   \dur, Pseq([
     2, 1, 2, Pn(0.25, 4), 2, Pn(2, 2), Pn(0.25, 8), Pn(2, 1)
   ], inf) / 2,
-  )
+)

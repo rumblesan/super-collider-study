@@ -1,6 +1,7 @@
 // NEEDS WORK
 
-NpatLoop(\samphats, 16,
+Npat(\samphats,
+  \loop, 16,
   \instrument, \splay,
   \bufnum, d[\texture][\vinyl],
   \rate, 8.0,

@@ -50,12 +50,11 @@ Ndef(\bass, PmonoArtic(
 Ndef(\bass).unmap(\lfoRate)
 Ndef(\bass).map(\lfoRate, Ndef(\lfomod))
 
-Ndef(\lfomod, Pcontrol(
+NpatControl(\lfomod,
   \mod,
   \value, Pseq([0, 1, 0.5, 1, 0, 0, 1, 1], inf) * 4,
   \slew, 0,
   \dur, 2
-)
 )
 Ndef(\lfomod).quant = 4;
 

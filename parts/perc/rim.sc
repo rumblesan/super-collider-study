@@ -1,4 +1,5 @@
-NpatLoop(\rim, 16,
+Npat(\rim,
+  \loop, 16,
   \instrument, \rim,
   \degree, 3,
   \decay, Pseq([Pn(0.02, 3), 0.1, Pwhite(0.02, 0.09, 3), 0.1, Pn(0.02, 3)], inf),

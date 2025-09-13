@@ -1,7 +1,8 @@
 
 p.clock.tempo = 160/60;
 
-NpatLoop(\tc2, 24,
+Npat(\tc2,
+  \loop, 24,
   \instrument, \fm3filter,
   \octave, 4,
   \degree, 0,
@@ -29,12 +30,11 @@ Ndef(\tc2).filter(1, {|in, clip=0.95|
 
 Ndef(\tc2).map(\clip, Ndef(\tc2clip))
 
-Ndef(\tc2clip, Pcontrol(
+NpatControl(\tc2clip,
   \mod,
   \value, Pseq([5, 4, 5, 0.1, 9, 9, 5, 5, 9], inf),
   \slew, 0.01,
   \dur, 1/2
-)
 )
 
 Ndef(\tc2clip).quant = 4;

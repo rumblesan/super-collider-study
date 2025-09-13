@@ -1,4 +1,5 @@
-NpatLoop(\bass, 16,
+Npat(\bass,
+  \loop, 16,
   \instrument, \subbass,
   \degree, 0,
   \octave, 3,

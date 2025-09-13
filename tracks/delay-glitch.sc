@@ -1,5 +1,6 @@
 
-NpatLoop(\ping, 16,
+Npat(\ping,
+  \loop, 16,
   \instrument, \ping,
   \decay, Pwrand([0.4, 1], [10, 0].normalizeSum, inf),
   \octave, 5,

@@ -26,7 +26,7 @@ Ndef(\piston).clear
 
 Ndef(\piston).map(\pitchMod, Ndef(\pistonKick))
 
-Ndef(\pistonKick, Pcontrol(
+NpatControl(\pistonKick,
   \percenv,
   \attack, 0.01,
   \decay, 0.03,
@@ -34,7 +34,6 @@ Ndef(\pistonKick, Pcontrol(
   \value, 15,
   \offset, 0,
   \dur, Pseq([3, 3, 2, Rest(4)], inf),
-)
 )
 Ndef(\pistonKick).quant = 4;
 Ndef(\pistonKick).clear

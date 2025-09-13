@@ -1,6 +1,7 @@
 // NEEDS WORK
 
-NpatLoop(\gloss, 16,
+Npat(\gloss,
+  \loop, 16,
   \instrument, \splay,
   \bufnum, d[\vox][0],
   \amp, 1,

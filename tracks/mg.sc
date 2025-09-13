@@ -16,47 +16,42 @@
   }).add;
 )
 
-Ndef(\grow, Pbind(
-    \instrument, \abrade,
-    \freq, Pwrand([50, 75, 100, 25], [20, 3, 0, 4].normalizeSum, inf),
-    \attack, 0.01,
-    \decay, 0.08,
-    \legato, 0.009,
-    \mod, 0.5,
-    \gain, Pseq([8, 3, 8, 5, 8, 10, 8, 8, 5], inf) + 2,
-    \clip, Pseq([8, 3, 5, 8, 10, 8, 8, 5], inf),
-    \amp, 1,
-    \dur, Pseq([4, 2, 1, 1, 0.5, 0.5, 1], inf),
-  )
+Npat(\grow,
+  \instrument, \abrade,
+  \freq, Pwrand([50, 75, 100, 25], [20, 3, 0, 4].normalizeSum, inf),
+  \attack, 0.01,
+  \decay, 0.08,
+  \legato, 0.009,
+  \mod, 0.5,
+  \gain, Pseq([8, 3, 8, 5, 8, 10, 8, 8, 5], inf) + 2,
+  \clip, Pseq([8, 3, 5, 8, 10, 8, 8, 5], inf),
+  \amp, 1,
+  \dur, Pseq([4, 2, 1, 1, 0.5, 0.5, 1], inf),
 )
 Ndef(\grow).clear;
 
 Ndef(\grow).map(\mod, Ndef(\fm))
 
-Ndef(\fm,
-  Pcontrol(
-    \mod,
-    \value, Pseq([0.1, Pn(0.9, 1), Pn(0.3, 5)], inf),
-    \slew, 0,
-    \dur, Pseq([1, 1, 8, 1, 1, 3, 1, 2], inf) / 2,
-    \dur, 0.25,
-  )
+NpatControl(\fm,
+  \mod,
+  \value, Pseq([0.1, Pn(0.9, 1), Pn(0.3, 5)], inf),
+  \slew, 0,
+  \dur, Pseq([1, 1, 8, 1, 1, 3, 1, 2], inf) / 2,
+  \dur, 0.25,
 )
 Ndef(\fm).quant = 4;
 
 Ndef(\grow).map(\bend, Ndef(\blip))
-Ndef(\blip,
-  Pcontrol(
-    \percenv,
-    \attack, 0.01,
-    \decay, 0.4,
-    \curve, -10,
-    \value, 0,
-    \offset, 0,
-    \dur, Prand([
-      Pseq([3, 3, 2]) / 2,
-      Pseq([2]) / 2,
-    ], inf)
-  )
+NpatControl(\blip,
+  \percenv,
+  \attack, 0.01,
+  \decay, 0.4,
+  \curve, -10,
+  \value, 0,
+  \offset, 0,
+  \dur, Prand([
+    Pseq([3, 3, 2]) / 2,
+    Pseq([2]) / 2,
+  ], inf)
 )
 Ndef(\blip).quant = 4;
