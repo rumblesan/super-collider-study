@@ -14,7 +14,7 @@ SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
 
   var lfo, widthLfo, modEnv, volEnv, snd;
 
-  lfo = SinOsc.ar(lfoRate, mul: lfoMod.min(0.999));
+  lfo = SinOsc.ar(lfoRate) * lfoMod.min(0.999);
   widthLfo = SinOsc.ar(widthModRate, mul: widthMod, add: 0.5);
 
   modEnv = Env.adsr(
@@ -29,7 +29,7 @@ SynthDef(\face, {arg out=0, freq=50, gate=0.5, amp=0.5,
     SinOsc.ar(freq),
     Pulse.ar(freq * (1 + detune), widthLfo),
     Pulse.ar(freq * (1 - detune), widthLfo),
-    Pulse.ar(freq * 2, widthLfo),
+    Saw.ar(freq * 2),
   ]) * 0.25;
   snd = Fold.ar(snd * (fold + 1), -1, 1);
   snd = BMoog.ar(snd * gain, cutoff * (1 + lfo), q) * volEnv * amp;
