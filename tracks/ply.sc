@@ -11,8 +11,8 @@ Npat(\kick,
     \ramp, Pwrand([3, 16], [20, 1].normalizeSum, inf),
     \rampdecay, 0.01,
     \gain, 18,
-    \moddepth, Pwrand([0, 1, 3], [20, 13, 7].normalizeSum, inf),
-    \moddecay, 0.05,
+    \modDepth, Pwrand([0, 1, 3], [20, 13, 7].normalizeSum, inf),
+    \modDecay, 0.05,
     \amp, 1,
     \dur, 3.5, // 3.5, 2.5
 )

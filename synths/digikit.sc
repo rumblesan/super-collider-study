@@ -2,15 +2,14 @@
   SynthDef(\modkick, {
     var freq = \freq.kr(50);
 
-    var modenv = Env.perc(0.0, \moddecay.kr(0.2)).ar;
+    var modenv = Env.perc(0.0, \modDecay.kr(0.2)).ar;
     var modNoise = WhiteNoise.ar * \modNoise.kr(0.0005);
-    var modosc = SinOsc.ar(freq * \ratio.kr(2)) * modenv * \moddepth.kr(0.5) * (1 + modNoise);
+    var modosc = SinOsc.ar(freq * \ratio.kr(2)) * modenv * \modDepth.kr(0.5) * (1 + modNoise);
 
     var rampenv = Env.perc(\rampattack.kr(0.01), \rampdecay.kr(0.2), curve: \rampcurve.kr((-4))).ar;
 
     var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.5), \amp.kr(0.8)).ar(Done.freeSelf);
-    var noiseEnv = Env.perc(\noiseAttack.kr(0.01), \noiseDecay.kr(0.02)).ar;
-    var snd = SinOsc.ar(freq * (rampenv * \ramp.kr(0.3) + 1) * (modosc + 1), mul: venv);
+    var snd = SinOsc.ar(freq * (rampenv * \ramp.kr(0.3) + 1) * (modosc + 1)) * venv;
 
     snd = BHiShelf.ar(snd, \eqPeak.kr(200), \eqRes.kr(1.5), \eqGain.kr(14));
     snd = (snd * \gain.kr(1.3)).tanh;
@@ -18,7 +17,7 @@
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   },
     variants:(
-      synthetic: (moddepth: 18, moddecay: 0.03, decay: 2, ratio: 2.7, ramp: 16, rampattack: 0.0, rampdecay: 0.1, gain: 2)
+      synthetic: (modDepth: 18, decay: 2, ratio: 2.7, ramp: 16, rampattack: 0.0, rampdecay: 0.1, gain: 2)
     )
   ).add;
 
