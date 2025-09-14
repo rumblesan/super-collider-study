@@ -21,6 +21,5 @@ Ndef(\out, MainOut.compressor); Ndef(\out).play;
 Ndef(\mix) <>> Ndef(\verb)
 Ndef(\verb) <>> Ndef(\out)
 
-s.meter
-
 Ndef(\out).proxyspace.clean(Ndef(\out))
+s.meter
