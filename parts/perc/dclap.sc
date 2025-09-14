@@ -12,7 +12,7 @@ Npat(\dclap,
   //\q, 0.9,
   \gain, 11,
   \amp, 1,
-  \dur, Pbjorklund2(5, 8, inf) * (4/3),
+  \dur, Pseq([Rest(2), 4, Rest(4), 2], inf)
 )
 Ndef(\dclap).quant = 8;
 Ndef(\dclap).clear;

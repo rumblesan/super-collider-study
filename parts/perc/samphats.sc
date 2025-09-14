@@ -2,7 +2,7 @@
 
 Npat(\samphats,
   \loop, 16,
-  \instrument, \splay,
+  \instrument, \monoplay,
   \bufnum, d[\texture][\vinyl],
   \rate, 8.0,
   \release, Pwhite(0.01, 0.09, inf),
