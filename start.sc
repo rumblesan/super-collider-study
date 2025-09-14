@@ -9,7 +9,6 @@ Ndef(\mix, {|samplerate = 1.0, bits = 24|
 Ndef(\verb)[0] = \dirtverb;
 Ndef(\verb).set(
   \drywet, 0.2,
-  \predelay, 0.00,
   \size, 0.35,
   \decay, 0.13,
   \damping, 0.9,

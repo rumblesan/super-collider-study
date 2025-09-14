@@ -7,7 +7,7 @@ prime numbers up to 1000
   SynthDef(\dirtverb, {arg out=0,
     drywet=0.2,
     hipass=150, lopass=12000,
-    predelay=0.06,
+    predelay=0.01,
     size=0.7, decay=0.1, diffusion=0.3,
     downsampling=0, decismooth=0.5, gain=1.0,
     damping=0.5, feedbackHipass=200,
