@@ -22,4 +22,3 @@ Ndef(\mix) <>> Ndef(\verb)
 Ndef(\verb) <>> Ndef(\out)
 
 Ndef(\out).proxyspace.clean(Ndef(\out))
-s.meter
