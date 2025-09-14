@@ -70,6 +70,32 @@ Task({
       { "Synths:             finished".postln; },
     ).value();
 
+    Continuation(
+      "modulators/*.sc".resolveRelative.pathMatch,
+      { |synthFilePath, continuation|
+        "Modulators:         loading %\n".postf(synthFilePath);
+        synthFilePath.loadPaths(warn: true, action: {|name|
+          "Modulators:         loaded %\n".postf(name);
+          0.01.wait;
+          continuation.value;
+        });
+      },
+      { "Modulators:         finished".postln; },
+    ).value();
+
+    Continuation(
+      "effects/*.sc".resolveRelative.pathMatch,
+      { |synthFilePath, continuation|
+        "Effects:            loading %\n".postf(synthFilePath);
+        synthFilePath.loadPaths(warn: true, action: {|name|
+          "Effects:            loaded %\n".postf(name);
+          0.01.wait;
+          continuation.value;
+        });
+      },
+      { "Effects:            finished".postln; },
+    ).value();
+
     ImpulseResponseFolder.loadFolderAsync(
       s,
       PathName("irs".resolveRelative),
