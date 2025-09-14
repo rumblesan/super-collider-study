@@ -16,7 +16,7 @@ Ndef(\verb).set(
 )
 
 
-Ndef(\out, MainOut.new); Ndef(\out).play;
+Ndef(\out, MainOut.compressor); Ndef(\out).play;
 
 Ndef(\mix) <>> Ndef(\verb)
 Ndef(\verb) <>> Ndef(\out)
