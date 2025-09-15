@@ -3,7 +3,7 @@
 Ndef(\mix, {|samplerate = 1.0, bits = 24|
   Decimator.ar(Mix.new([
     ChannelStrip(Silent.ar),
-  ]), samplerate * 44100, bits)
+  ]), samplerate * SampleRate.ir, bits)
 })
 
 Ndef(\verb)[0] = \dirtverb;
