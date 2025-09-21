@@ -30,7 +30,6 @@ Ndef(\pads, Pbind(
   ], inf),
   \detune, 0.02,
   \foffset, 4,
-  \amp, -6.dbamp,
   \dur, 16,
 )
 )
@@ -86,11 +85,12 @@ Ndef(\bz,
 )
 Ndef(\bz).clear;
 
+// not sure about this bit
 Ndef(\fn,
   Pbind(
     \instrument, \clikr,
     \degree, 0,
-    \attack, 0.1,
+    \attack, 0.0,
     \decay, 0.05,
 
     \amp, 1,

@@ -1,10 +1,13 @@
+// WIP
+
 p.clock.tempo = 160/60;
 
 
-Ndef(\kick, Pbind(
+Npat(\kick,
+  \loop, 16,
   \instrument, \bkick,
   \freq, 50,
-  \attack, Pwrand([0.1, 0.9], [10, 1].normalizeSum, inf)
+  \attack, Pwrand([0.1, 0.9], [10, 1].normalizeSum, inf),
   \decay, 0.1,
   \ramp, 25,
   \rampattack, 0.0,
@@ -17,25 +20,18 @@ Ndef(\kick, Pbind(
     3, 3, 2, 1,1,1, 3, 2
   ], inf) / 2,
 )
-)
-Ndef(\kick).clear;
 
 
-(
-Ndef(\mkalead, Pbind(
+Npat(\mkalead,
+  \loop, 32,
   \instrument, \fm3filter,
 
-  \scale, Scale.minor,
-  \octave, 5,
-  \root, -5,
   \degree, Pseq([0, 0, 0, 0, 0, 0, 0, 0], inf),
-
-  \amp, 1,
 
   \attack, 0.01,
   \release, 0.08,
-  \legato, Pwrand([0.01, 0.2, 0.5], [20, 0, 3].normalizeSum, inf),
-  //\legato, 0.2,
+  //\legato, Pwrand([0.01, 0.2, 0.5], [20, 0, 3].normalizeSum, inf),
+  \legato, 0.2,
   \mod, Pseq([1.5], inf),
 
   \mod1, 8,
@@ -55,8 +51,8 @@ Ndef(\mkalead, Pbind(
 ))
 )
 
-(
-Ndef(\mkapad, Pbind(
+Npat(\mkapad,
+  \loop, 32,
   \instrument, \fm3filter,
 
   \scale, Scale.minor,
@@ -85,7 +81,6 @@ Ndef(\mkapad, Pbind(
   \attack2, 0.01,
   \decay2, 0.1,
   \dur, Pseq([6, 7, 4, 4, 7], inf) * 3
-))
 )
 
 Ndef(\mkalead).clear
