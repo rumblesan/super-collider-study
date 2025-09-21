@@ -1,32 +1,16 @@
-// NEEDS WORK
 
-Ndef(\bass, Pbind(
+// pDepth (also tighten up attack for percussion), noiseMod, mod, modLevel, ratio, short legato, gain
+Npat(\bass,
+  \loop, 32,
   \instrument, \pm2,
-  \root, -5,
   \octave, 3,
-  \degree, 0,
 
-  \attack, 0.1,
-  \decay, 0.3,
-  \level, 0.0,
-  \release, 0.5,
+  \mod, 3,
+  \modLevel, 0.5,
+  \noiseMod, 0.4,
+  \gain, 2,
+  \ratio, 2.01,
+  \legato, 0.3,
 
-  \pattack, 0.01,
-  \pdecay, 0.03,
-  \pdepth, Prand([3, 4, 0], inf),
-
-  \mod, 3.1,
-  \ratio, Pseq([Pn(1, 5), 1.2, Pn(1, 7), 1.233], inf) * 2,
-  \attack1, 0.3,
-  \decay1, 0.3,
-  \level1, 0.0,
-  \release1, 0.5,
-
-  \amp, Pseq([1, 0.8, 0.8], inf),
-  \legato, 0.8,
-  \dur, 8,
+  \dur, 2,
 )
-)
-Ndef(\lbass).quant = 8
-Ndef(\lbass).play
-Ndef(\lbass).clear
