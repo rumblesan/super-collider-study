@@ -1,0 +1,10 @@
+Npat(\kick,
+  \instrument, \modkick,
+  \freq, 50,
+  \decay, 0.4,
+  \ramp, 1,
+  \rampdecay, 0.03,
+  \modDepth, 0.1,
+  \gain, 1.0,
+  \dur, 2,
+)
