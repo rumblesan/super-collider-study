@@ -2,7 +2,7 @@
 
   SynthDef(\sinbass, {
     var snd, venv;
-    venv = Env.asr(\attack.kr(1), 1, \release.kr(3)).ar(Done.freeSelf, \gate.kr(1));
+    venv = Env.asr(\attack.kr(1), 1, \decay.kr(3)).ar(Done.freeSelf, \gate.kr(1));
     snd = SinOsc.ar(\freq.kr(50) + \bend.kr(0));
     snd = ((snd * \gain.kr(1.0)).tanh) * 1.3;
     snd = snd * \amp.kr(1.0);
@@ -29,7 +29,7 @@
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
-  SynthDef('elkick', {
+  SynthDef(\elkick, {
     var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.8)).ar(Done.freeSelf);
 
     var penv = Env.perc(\rampattack.kr(0.0), \rampdecay.kr(0.02)).ar * \ramp.kr(2.0);

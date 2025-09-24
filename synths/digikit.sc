@@ -22,7 +22,7 @@
   ).add;
 
 
-  SynthDef('bkick',
+  SynthDef(\bkick,
     {
       var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.8)).ar(Done.freeSelf);
 
@@ -42,26 +42,21 @@
   ).add;
 
 
-  SynthDef(\snaredrum, {arg out=0, freq=100,
-    decay = 0.6,
-    noiseMod = 0.2,
-    filterDecay = 0.2,
-    noise = 0.3, noiseDecay = 0.1;
-
-    var fenv = Env.perc(0.0, filterDecay).ar;
-    var venv = Env.perc(0.0, decay).ar(Done.freeSelf);
-    var nenv = Env.perc(0.0, noiseDecay).ar;
+  SynthDef(\snaredrum, {
+    var fenv = Env.perc(0.0, \filterDecay.kr(0.2)).ar;
+    var venv = Env.perc(0.0, \decay.kr(0.6)).ar(Done.freeSelf);
+    var nenv = Env.perc(0.0, \noiseDecay.kr(0.1)).ar;
 
     var snaposc = LPF.ar(HPF.ar(WhiteNoise.ar(1),500), 10000) * nenv;
-    var drumosc = Pulse.ar(freq, (0.5 + (snaposc * noiseMod)));
+    var drumosc = Pulse.ar(\freq.kr(100), (0.5 + (snaposc * \noiseMod.kr(0.2))));
     var filtered = LPF.ar(drumosc,(fenv * 1000) + 30);
     var output = Mix.new([
       filtered,
-      snaposc * noise
+      snaposc * \noise.kr(0.3)
     ]);
     var snd = output * venv;
 
-    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 
@@ -93,13 +88,13 @@
   }).add;
 
 
-  SynthDef(\rim, {arg out, freq=50, hipass=200, decay=0.2, click=0.3, amp=0.8;
-    var cenv = Env.perc(0.0, 1.8, click).ar;
-    var venv = Env.perc(0.0, decay, amp).ar(Done.freeSelf);
-    var osc = SinOscFB.ar(freq, feedback: cenv, mul: venv);
-    var snd = HPF.ar(osc, hipass);
+  SynthDef(\rim, {
+    var cenv = Env.perc(0.0, 1.8, \click.kr(0.3)).ar;
+    var venv = Env.perc(0.0, \decay.kr(0.2), \amp.kr(0.8)).ar(Done.freeSelf);
+    var osc = SinOscFB.ar(\freq.kr(50), feedback: cenv, mul: venv);
+    var snd = HPF.ar(osc, \hipass.kr(200));
 
-    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 
@@ -133,32 +128,26 @@
   }).add;
 
 
-  SynthDef(\clikr, {arg out, attack=0.0, decay=1, freq=200, harmonics=200, amp=1;
-    var env = Env.asr(attack, amp, decay).ar(Done.freeSelf, \gate.kr(1));
-    var osc = Blip.ar(freq, harmonics);
+  SynthDef(\clikr, {
+    var env = Env.asr(\attack.kr(0.0), \amp.kr(1), \decay.kr(1)).ar(Done.freeSelf, \gate.kr(1));
+    var osc = Blip.ar(\freq.kr(200), \harmonics.kr(200));
     var snd = osc * env;
-    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
   SynthDef(\fmhat, {
-    arg out=0, freq=220, amp=0.8,
-    attack=0.01, decay=0.1, level=1,
-    pitchEnvAttack=0.01, pitchEnvDecay=0.1, pitchEnvDepth=0,
-    bend=0,
-    ratio=1.0, hpcutoff=1000,
-    noiseMod=0.1, noiseLevel=0.4,
-    modEnvAttack=0.1, modDepth=0.1, modEnvDecay=0.5;
-    var venv = Env.perc(attack, decay).ar(Done.freeSelf);
-    var penv = Env.perc(pitchEnvAttack, pitchEnvDecay, pitchEnvDepth).ar(levelBias: 1);
-    var menv = Env.perc(modEnvAttack, modEnvDecay).ar * modDepth;
+    var freq = \freq.kr(100);
+    var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.1)).ar(Done.freeSelf);
+    var penv = Env.perc(\pitchEnvAttack.kr(0.01), \pitchEnvDecay.kr(0.1), \pitchEnvDepth.kr(0)).ar;
+    var menv = Env.perc(\modEnvAttack.kr(0.1), \modEnvDecay.kr(0.5)).ar * \modDepth.kr(0.1);
 
-    var modOsc = SinOsc.ar(freq * ratio, mul: menv, add: 1);
-    var noiseOsc = WhiteNoise.ar(mul:noiseMod, add: 1.0);
-    var fmOut = SinOsc.ar(freq * modOsc * penv * (1+bend) * noiseOsc, mul: venv * amp);
-    var noise = WhiteNoise.ar() * noiseLevel * venv * amp;
-    var snd = HPF.ar(fmOut + noise, hpcutoff);
+    var modOsc = (SinOsc.ar(freq * \ratio.kr(1)) * menv);
+    var noiseOsc = (WhiteNoise.ar * \noiseMod.kr(0.1));
+    var fmOut = SinOsc.ar(freq * (modOsc + 1) * (penv + 1) * (\bend.kr(0) + 1) * (noiseOsc + 1));
+    var noise = WhiteNoise.ar() * \noise.kr(0.4);
+    var snd = HPF.ar(fmOut + noise, \hipass.kr(1000)) * \amp.kr(1) * venv;
 
-    Out.ar(out, Pan2.ar(snd, \pan.kr(0)));
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
 
