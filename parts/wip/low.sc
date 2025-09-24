@@ -3,10 +3,10 @@ Npat(\bass,
   \instrument, \fm3filter,
   \octave, 3,
   \degree, 0,
-  \mod, Pseq([Pn(0.3, 3), 2, 3, Pn(0.4, 3)], inf),
+  \mod, 0.3,
   \attack, 0.00,
   \release, 0.00,
-  \gain, Pseq([Pn(0.4, 2), 2, Pn(0.4, 2), 0.7], inf) * 3,
+  \gain, 0.6,
 
   \mod1, 5,
   \ratio1, 13.5,
@@ -15,18 +15,13 @@ Npat(\bass,
   \ratio2, 3.5,
   \output2Mix, 0.0,
 
-  \legato, 0.8,
   \resonance, 0.3,
-  \cutoff, 600,
+  \cutoff, 800,
   \dur, Pseq([
-    3, 3, 2, 2, 0.5, 0.5,
-    1.5, 2, 0.5, 0.5, 1.5
+    3, 3, 2,
   ], inf),
 )
 
-Ndef(\bass).quant = 8
-
-Ndef(\bass).free
 
 Ndef(\bass).map(\mod1, Ndef(\bassmod1));
 

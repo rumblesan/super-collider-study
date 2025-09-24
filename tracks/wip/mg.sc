@@ -1,3 +1,4 @@
+// needs work
 (
   SynthDef(\abrade, {
     var freq = \freq.kr(50) * (1 + \bend.kr(0));
@@ -12,21 +13,22 @@
     ).kr(Done.freeSelf, \gate.kr(1));
     var mix = ((snd + highs) * \gain.kr(0.5)).tanh;
     var clipped = (mix * \clip.kr(0.5)).clip2;
-    Out.ar(\out.kr(0), clipped * env * \amp.kr(1.0));
+    snd = clipped * env * \amp.kr(1.0);
+    Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 )
 
 Npat(\grow,
   \instrument, \abrade,
-  \freq, Pwrand([50, 75, 100, 25], [20, 3, 0, 4].normalizeSum, inf),
+  \freq, 50,
   \attack, 0.01,
   \decay, 0.08,
   \legato, 0.009,
   \mod, 0.5,
-  \gain, Pseq([8, 3, 8, 5, 8, 10, 8, 8, 5], inf) + 2,
+  \gain, 8,
   \clip, Pseq([8, 3, 5, 8, 10, 8, 8, 5], inf),
   \amp, 1,
-  \dur, Pseq([4, 2, 1, 1, 0.5, 0.5, 1], inf),
+  \dur, Pseq([3, 2, 2.5, 1, 1.5], inf),
 )
 Ndef(\grow).clear;
 

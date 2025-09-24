@@ -1,4 +1,4 @@
-"Setup.scd".load;
+// kind of meh
 
 Ndef(\kick)
 
@@ -20,11 +20,9 @@ Ndef(\kick)[0] = Pbind(
 )
 
 
-(
 Ndef(\kick).filter(1, {|in, distortion=0.8|
   (in * distortion).tanh * 1.2;
 })
-)
 
 Ndef(\kick).set(\distortion, 1)
 
