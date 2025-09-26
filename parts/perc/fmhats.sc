@@ -1,3 +1,4 @@
+// decay, modDepth (1 - 5)
 Npat(\hats,
   \loop, 16,
   \instrument, \fmhat,
@@ -11,10 +12,10 @@ Npat(\hats,
   \attack, 0.001,
   \decay, 0.1,
   \legato, 0.05,
-  \noiseLevel, 0.1,
+  \noise, 0.1,
   \noiseMod, 8.5,
-  \hpcutoff, 8000,
+  \hipass, 8000,
   \dur, Pseq([
-    1
+    1,
   ], inf) / 2,
 )

@@ -1,15 +1,14 @@
 (
-  SynthDef(\simpledelay, {arg out=0, in;
+  SynthDef(\simpledelay, {arg out=0;
     var maxDelay = 4;
-    var signal = (LocalIn.ar(1) * \feedback.kr(0.1)) + in;
+    var in = \in.ar(0!2);
+    var signal = (LocalIn.ar(2) * \feedback.kr(0.1)) + in;
     var delayed = DelayN.ar(signal, maxDelay, \delay.kr(0.4));
     var filtered = LPF.ar(delayed, \lopass.kr(6000));
 
     LocalOut.ar(filtered);
     Out.ar(out,
-      Pan2.ar(
-        XFade2.ar(in, delayed, (\drywet.kr(0.2) * 2) - 1)
-      )
+      XFade2.ar(in, delayed, (\drywet.kr(0.2) * 2) - 1)
     );
   }, [0, \ar]).add;
 

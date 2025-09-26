@@ -1,4 +1,3 @@
-
 Npat(\ping,
   \loop, 16,
   \instrument, \ping,
@@ -12,33 +11,23 @@ Npat(\ping,
   \dur, Pseq([4, 4, 1, 0.25, 0.25, 0.5], inf),
 )
 
-Ndef(\ping).quant = 4;
-Ndef(\ping).clear;
-Ndef(\ping).play;
 
-Ndef(\clicker, Pbind(
+Npat(\clicker,
   \instrument, \clikr,
   \dur, Pwrand([1, 0.5, 0.25], [1, 3, 19].normalizeSum, inf),
   \degree, Pwrand([0, 3, 4, -12], [10, 3, 3].normalizeSum, inf),
   \octave, 5,
   \harmonics, Pseq([200, 10, 10], inf),
-  \amp, 1,
   \decay, Pwrand([0.1, 0.5, 1], [5, 5, 1].normalizeSum, inf),
   \sustain, Prand([0.3, 0.5, 0.3], inf),
 )
-)
-Ndef(\clicker).quant = 4;
-Ndef(\clicker).clear;
 
 
 Ndef(\delaymix, {
   Mix.new([
-    Ndef(\ping).ar(1),
-    ChannelStrip(Ndef(\clicker).ar(2), -9.dbamp, 0),
+    ChannelStrip(Silent.ar, -0.dbamp, 0),
   ])
 })
-Ndef(\delaymix).scope
-Ndef(\delaymix).clear
 
 Ndef(\gldelay)[0] = \simpledelay;
 Ndef(\gldelay) <<> Ndef(\delaymix)
@@ -46,10 +35,8 @@ Ndef(\gldelay) <<> Ndef(\delaymix)
 (
   Ndef(\gldelay)[1] = \pset -> Pbind(
     \drywet, 0.5,
-    \delay, Pseq([0.4, 0.9, Prand([0.01, 0.1])], inf),
-    //\delay, Pseq([Pn(1/4, 2), 1/2, Pn(1/3, 2), 1/2], inf),
-    \feedback, Pwrand([0.1, 0.4, 0.98], [2, 10, 0].normalizeSum, inf),
-    //\feedback, 0.5,
+    \delay, 0.5,
+    \feedback, 0.5,
     \dur, 0.25,
   )
 )

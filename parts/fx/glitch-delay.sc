@@ -10,7 +10,7 @@ Ndef(\gldelay) <<> Ndef(\delaymix)
 
 (
   Ndef(\gldelay)[1] = \pset -> Pbind(
-    \drywet, 0.5,
+    \drywet, 1.0,
     \delay, 0.25,
     \feedback, 0.75,
     \dur, 0.25,

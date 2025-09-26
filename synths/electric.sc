@@ -43,4 +43,16 @@
     Out.ar(\out.kr(0), Pan2.ar(snd, \pan.kr(0)));
   }).add;
 
+  SynthDef(\trz, {
+
+    var noise = Mix.new(10.collect({|i| Impulse.ar(220 + (i * \spread.kr(20))) }));
+    var modosc = SinOsc.ar(\freq.kr(200));
+    var snd = GlitchBPF.ar(noise, \ffreq.kr(220) * ((modosc * \moddepth.kr(0.2)) + 1), 0.9);
+    var venv = Env.perc(\attack.kr(0.01), \decay.kr(0.3)).kr(Done.freeSelf);
+    snd = snd * venv;
+    snd = (snd * \gain.kr(3)).tanh;
+    snd = Pan2.ar(snd * \amp.kr(1.0), \pan.kr(0));
+
+    Out.ar(\out.kr(0), snd);
+  }).add;
 )

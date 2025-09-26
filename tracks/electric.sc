@@ -1,76 +1,65 @@
 
 Npat(\bass,
+  \loop, 16,
   \instrument, \sinbass,
   \degree, 0,
   \octave, 3,
   \attack, 0.0,
   \decay, 0.05,
-  \legato, 0.8,
+  \legato, Pseq([Pn(0.2, 3), 0.8, Pn(0.2, 2)], inf),
   \dur, Pseq([
-    4, 1, 1, 3, 1,
+    1.5, 2.5, 1, 1, 1, r, r
   ], inf),
 )
-Ndef(\bass).quant = 4;
 
+// impulsefreq, pan, q
 Npat(\blip,
-  \loop, 16,
   \instrument, \blip,
-  \degree, 0,
-  \decay, 0.5,
-  \q, Pwhite(0.1, 0.5, inf),
+  \q, Pwrand([0.1, 0.2, 0.3], [10, 2, 1].normalizeSum, inf),
   \freq, 1500,
-  \impulsefreq, Pseq([Pn(15, 7), 50, Pn(10, 2), Pn(0, 5), 50], inf) * 2,
+  \impulsefreq, Pseq([Pn(50, 2), 100, 15, Pn(50, 2)], inf),
   \gain, 50,
-  \pan, Pseq([-1, 1, 0, 0, -1, 0, -1, 1, 1, -1, 0, 1], inf) * 0.3,
-  \amp, Pseq([1, 1, 0.8, 1, 0.8], inf),
-  \dur, (Pseq([1, 2, 1, 1, 1, 2, 1, 1, 2, 1, 1], inf)) + 0.25,
-)
-Ndef(\blip).quant = 8;
-Ndef(\blip).clear;
-
-
-Npat(\ping,
-  \loop, 16,
-  \instrument, \ping,
-  \degree, Prand([
-    Pn(0, 7),
-    Pseq([4, 0, 0, 3], 1),
-    Pn(0, 7),
-    Pn(6, 3),
-  ], inf),
-  \octave, Pseq([Pn(5, 5), Pn(6, 2), 5, 4, 5, 5], inf),
-  \root, -5,
-  \attack, 0.0,
-  \distamp, Pseq([Pn(0.1, 7), 0.3, Pn(0.02, 5), 0.9], inf),
-  \decay, 0.75,
-  \dur, Pseq([
-    3, 3, 1,
+  \pan, Pseq([-1, 1, -1, 0, 1, 0, -1, 1, 1, 1], inf) * 0.5,
+  \dur, Pseq([1, r, 1, 1,
     Prand([
-      Pseq([2, 4, 2], 2),
-      Pseq([3, 3, 2], 2),
-    ], inf)
-  ], inf) + 0.5,
+      Pseq([1, r, 1.5, 0.5]),
+      Pseq([2.5, r, 0.5]),
+    ], 2),
+    r, 1.5, r, r,
+    r, 0.5, r], inf)
 )
-Ndef(\ping).clear;
+
+
+// degree, octave, distamp
+Npat(\ping,
+  \instrument, \ping,
+  \degree, 0,
+  \octave, Pwrand([5, 6], [10, 3].normalizeSum, inf),
+  \attack, 0.0,
+  \distamp, 0.1,
+  \decay, Pseq([0.1, 0.1, 0.5, 0.1, 0.1, 0.2], inf),
+  \dur, Pseq([1, r, 2, r, 2, 3, r], inf),
+)
 
 
 Npat(\kick,
-  \loop, 28,
+  \loop, 16,
   \instrument, \elkick,
   \freq, 50,
-  \octave, 1,
-  \attack, 0.05,
-  \decay, 0.2,
-  \ramp, 20,
-  \gain, 1.4,
-
+  \attack, Pwrand([0.05, 0.3], [15, 1].normalizeSum, inf),
+  \decay, Pseq([0.2, 0.2, 0.4, 0.2, 0.5, 0.2, 0.5], inf),
+  \ramp, Pwrand([10, 20, 40], [5, 15, 2].normalizeSum, inf),
+  \gain, Pseq([1.5, 1.5, 2, 1.5, 2.5, 1.5, 1.5, 2], inf),
   \dur, Pseq([
-    2, 1, 2.5, 0.5, 3, 2, Pn(0.5, 3), 1.5, 3, 1
+    3, 3, 2,
+    Prand([
+    Pseq([1, 1, 2, 2, 2]),
+    Pseq([2, 2, Pr(5, 1), 2]),
+    ], 2)
   ], inf) / 2,
 )
-Ndef(\kick).quant = 4;
-Ndef(\kick).clear;
 
+// decay, colour(0.2 - 0.9), degree (0, [1,4,7], [1,4], [2,7],
 Npat(\pluck,
   \instrument, \karpluspluck,
   \degree, Pseq([
@@ -83,10 +72,8 @@ Npat(\pluck,
     [2, 7],
     Pn(6, 3),
   ], inf),
-  \octave, 6,
-  \colour, Pwrand([0.2, 0.5, 0.9], [12, 3, 1].normalizeSum, inf),
-  //\colour, 0.2,
+  \octave, Pseq([Pn(6, 4), 7], inf),
+  \colour, Pwhite(0.2, 0.4, inf),
   \decay, 2.5,
-  \dur, Pseq([1, 1.5, 6, 3, 7.5, Rest(3)], inf),
+  \dur, Pseq([1, 1.5, 3, 3, 4.5, Rest(3)], inf),
 )
-Ndef(\pluck).clear;

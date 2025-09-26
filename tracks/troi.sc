@@ -1,4 +1,4 @@
-
+// Needs work
 
 Npat(\bass,
   \loop, 16,
@@ -12,7 +12,6 @@ Npat(\bass,
   \amp, 1,
   \dur, 16,
 )
-Ndef(\bass).quant = 16;
 
 Ndef(\bass).map(\clipgain, Ndef(\clippinglow))
 Ndef(\bass).unmap(\clipgain)
@@ -43,9 +42,7 @@ Npat(\kick,
   \amp, 1,
   \dur, Pseq([3, 3, 2, 2, 2, 3, 3], inf),
 )
-)
 
-Ndef(\kick).quant = 4;
 
 NpatControl(\foldmod,
   \mod,
@@ -53,8 +50,6 @@ NpatControl(\foldmod,
   \slew, 0,
   \dur, Pseq([4, 2, 7], inf) / 2,
 )
-Ndef(\foldmod).quant = 4;
-Ndef(\foldmod).clear
 
 NpatControl(\foldmod,
   \envfollower,

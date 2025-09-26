@@ -1,9 +1,11 @@
+//
+
 Npat(\kick,
   \loop, 16,
   \instrument, \bkick,
   \freq, 50,
   \attack, 0.01,
-  \decay, 0.4,
+  \decay, 1.4,
   \ramp, 25,
   \rampdecay, 0.05,
   \noisedecay, 0.1,
@@ -18,10 +20,8 @@ Npat(\kick,
     2], inf),
   //\dur, 2,
 )
-Ndef(\kick).quant = 4;
-Ndef(\kick).clear;
 
-
+// feels iffy still
 Npat(\perc,
   \loop, 24,
   \instrument, \buzz2,
@@ -37,15 +37,13 @@ Npat(\perc,
   \noise, Pseq([
     Pn(0, 3), 3, Pn(0.2, 3), 2, Pn(0, 7)
   ], inf),
+  \noise, 0,
   \bits, Pwrand([6, 3, 2], [10, 7, 3].normalizeSum, inf),
-  //\bits, 5,
+  \bits, 5,
   \gain, 21,
-  \legato, Pwhite(0.5, 0.8, inf),
+  \legato, 0.5,
   \amp, 1,
   \dur, Pseq([1,3,
     Prand([1, 2, 3]),
     2,3,1,2,3,1,3,1], inf) / 4
 )
-
-Ndef(\perc).quant = 4;
-Ndef(\perc).clear

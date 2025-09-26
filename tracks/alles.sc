@@ -1,27 +1,24 @@
-// TODO check this out again
+// percussion and bass is solid but lead needs work
+// could probably do with a clap/snare of some sort
+
 Npat(\bass,
   \instrument, \subbass,
-  \degree, Pseq([-3, -2, 0, 1], inf),
-  //\degree, Pseq([-3], inf),
+  \degree, 0,
   \octave, 3,
-  \attack, 1,
-  \release, 4,
+  \attack, 0.1,
+  \release, 0.1,
   \filterOffset, 8,
-  \detune, 0.03,
+  \detune, 0.01,
   \gain, 5,
-  \amp, 1,
-  \dur, 16,
+  \dur, Pseq([4, Rest(4)], inf),
 )
-Ndef(\bass).clear;
-Ndef(\bass).quant = 16;
 
 NpatControl(\basspw,
   \mod,
   \value, Pseq([4, 2, 2, 3], inf) / 8,
   \slew, 1,
-  \dur, Pseq([4, 2, 2, 1, 1, 4], inf)
+  \dur, 1,
 )
-Ndef(\basspw).quant = 4;
 
 Ndef(\bass).map(\pulsewidth, Ndef(\basspw))
 
@@ -31,26 +28,17 @@ Npat(\kick,
   \instrument, \bkick,
   \freq, 50,
   \attack, 0.1,
-  \decay, Pseq([0.5, 0.5, 0.01, 0.01, 0.5, 0.9, 0.01, 0.01], inf),
   \decay, 0.3,
   \ramp, 25,
-  \rampattack, 0.0,
   \rampdecay, 0.035,
-  \noisedecay, 0.01,
+  \noisedecay, Pseq([Pn(0.01, 3), 0.1, Pn(0.01, 4), 0.1], inf),
   \gain, 2,
-
-  \amp, 1,
-  \dur, Pseq([3, 3, 2,
-    0.5, 2.5,
-    Prand([3, Pn(1, 3)]),
-    2], inf),
-  //\dur, 2,
+  \dur, Pseq([1, r, r, 1, r, 1, r, r, r, 1, r, r, r, 1, 1, r], inf) / 4,
 )
-Ndef(\kick).quant = 4;
-Ndef(\kick).clear;
 
 
 
+// degree, bits, decay, duration, legato
 Npat(\perc,
   \instrument, \buzz2,
   \degree, Pseq([
@@ -60,24 +48,23 @@ Npat(\perc,
     //Pn(-1, 10),
   ], inf),
   \attack, 0.01,
+  \legato, Pwhite(0.01, 0.04, inf),
   \decay, 0.001,
-  \bits, Pwrand([6, 3, 2], [10, 7, 3].normalizeSum, inf),
+  \bits, 6,
   \gain, 21,
-  \duration, Pwrand([0.01, 0.1], [15, 2].normalizeSum, inf),
-  \amp, 1,
   \dur, Pseq([1,1,
     Prand([1, 2]),
     2,1,1,2,2,1,1,1], inf) / 4
 )
-Ndef(\perc).clear;
 
 
 
 
+// Needs work
 Ndef(\lead, PmonoArtic(
   \tb,
   \amp, 1,
-  \octave, Pwrand([4, 5], [1, 5].normalizeSum, inf),
+  \octave, 4,
   \root, -5,
   \scale, Scale.minor,
   \legato, Pwrand([0.8, 1], [5, 2].normalizeSum, inf),
@@ -96,7 +83,7 @@ Ndef(\lead, PmonoArtic(
   \flevel, 0.6,
   \frelease, 0.5,
   \freqlag, Pif( Pkey(\legato) > 0.8, 1.0, 0.1),
-) <> Pn(Pfindur(16, Pacid(
+) <> Pn(Pfindur(32, Pacid(
     \degree, Pseq([6, 5, 3, 0, 7, 3, -3, 0], inf),
     \pulses, Pseq([2, 1, 4, 2, 2, 1, 1, 2], inf),
     \types, Pseq(".. -  ..", inf),

@@ -1,5 +1,5 @@
 
-p.clock.tempo = 160/60;
+// promising but bz and fn aren't great
 
 (
   SynthDef(\pad1, {
@@ -67,6 +67,7 @@ Ndef(\clap, Pbind(
 )
 Ndef(\clap).clear;
 
+// suspect...
 Ndef(\bz,
   Pbind(
     \instrument, \buzz2,

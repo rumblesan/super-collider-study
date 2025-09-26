@@ -3,7 +3,7 @@ Ndef(\grains1, {
     var rate = \rate.ar(10);
     var trigger = Impulse.ar(rate);
     var dur = (1.0 / rate) * \durmod.ar(1.0);
-    var b = d[\texture][3];
+    var b = d[\milkwood][3];
     var centerPos = \pos.ar(0.1) * b.numFrames * b.sampleRate;
     TGrains.ar(
       2,
