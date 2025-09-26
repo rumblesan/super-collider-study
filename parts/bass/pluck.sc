@@ -1,3 +1,4 @@
+// damping, colour?, degree (0, 2, 4, 5)
 Npat(\bass,
   \loop, 32,
   \instrument, \karpluspluck,
@@ -6,10 +7,9 @@ Npat(\bass,
   \gain, 10.0,
   \decay, 4.0,
   \colour, 0.02,
-  \damping, Pwrand([0.9, 0.6], [10, 3].normalizeSum, inf),
-  \scale, Scale.minor,
+  \damping, 0.9,
   \octave, 3,
-  \degree, Pseq([Pn(0, 2), Prand([0, 2, 5], 2), Prand([0, 2, 4], 2)], inf),
+  \degree, 0,
   \dur, Pseq([4, 4, 2, 4, 2], inf),
 )
 
