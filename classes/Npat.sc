@@ -1,8 +1,9 @@
 Npat {
   *new { |name ... pairs|
     var args = Dictionary.newFrom(pairs);
-    ^if (args.includes(\loop), {
-      Npat.withLoop(name, args.at(\loop), pairs);
+    var loopLength = args.removeAt(\loop);
+    ^if (loopLength.isInteger, {
+      Npat.withLoop(name, loopLength, pairs);
     }, {
       Npat.noLoop(name, pairs);
     })
