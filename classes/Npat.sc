@@ -17,6 +17,12 @@ Npat {
   }
 
   *withLoop{ |name, loopLength, args|
+    ^Ndef(name)[0] = Pn(
+                       Pfindur(
+                         loopLength,
+                         Pbindf(Npat.defaultValues, *args)
+                       ),
+                     inf)
   }
 
   *noLoop { |name, args|
